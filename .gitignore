@@ -1,0 +1,23 @@
+# Playdate Output.
+builds/*
+*.pdx
+
+# Dev environment (to be reviewed).
+*.code-workspace
+.sentry-native
+Build and Run*
+build_and_run.sh
+
+# Editors.
+*.kra~
+*.png~
+*~
+*.swp
+*.swo
+*#
+
+# Thumbnails.
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini

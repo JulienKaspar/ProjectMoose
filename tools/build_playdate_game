@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Mark as executable
+# chmod +x <file>
+
+# Important paths for building script
+# NOTE: Update these paths to reflect your system
+playdate_simulator_path=/.../PlaydateSDK-2.7.4/bin/PlaydateSimulator
+pdc_path=/.../PlaydateSDK-2.7.4/bin/pdc
+sdk_path=/.../PlaydateSDK-2.7.4/
+game_source=/.../project/source/
+export_path=/.../project/builds/buildname
+
+# Execute pdc to build the game
+$pdc_path -sdkpath $sdk_path $game_source $export_path
+
+echo "Game was built at" $export_path".pdx"
+
+# TODO: Try to check if the simulator is already running. If yes, kill it and then launch.
+#       Would be really useful for making sure to always have the latest version open.
+
+# if pgrep -x "PlaydateSimulator" > /dev/null
+# then
+#     echo "Running"
+# else
+#     echo "Stopped"
+# fi
+
+echo "Starting up the Simulator"
+echo "HINT: Make sure to open the game directory in the simulator so the game starts automatically each time."
+
+$playdate_simulator_path

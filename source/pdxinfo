@@ -1,0 +1,7 @@
+name=Game WIP
+author=Team Snooze
+description=WIP for PlayJam5
+bundleID=com.playjam.projectsnooze
+version=0.0.1
+buildNumber=1
+imagePath=images/launcher

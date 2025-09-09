@@ -1,0 +1,9 @@
+{
+    "playdate-debug.sourcePath": "source",
+    "playdate-debug.outputPath": "builds",
+    "playdate-debug.productName": "Game WIP",
+    "Lua.workspace.library": ["$PLAYDATE_SDK_PATH/CoreLibs"],
+    "Lua.diagnostics.globals": ["playdate", "import"],
+    "Lua.diagnostics.disable": ["undefined-global", "undefined-field", "inject-field", "lowercase-global"],
+    "Lua.runtime.nonstandardSymbol": ["+=", "-=", "*=", "/=", "//=", "%=", "<<=", ">>=", "&=", "|=", "^="],
+}

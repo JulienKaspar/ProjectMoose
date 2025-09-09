@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "playdate",
+            "request": "launch",
+            "name": "Playdate: Debug",
+            "preLaunchTask": "${defaultBuildTask}",
+            "source": "${workspaceFolder}/source",
+            "output": "${workspaceFolder}/builds.pdx"
+        }
+  ]
+}
