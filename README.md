@@ -1,4 +1,4 @@
-# PlayJam8
+# Project Moose (PlayJam8)
 
 This is our submission for the PlayJam 8 for the Playdate.
 
