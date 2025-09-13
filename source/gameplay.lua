@@ -1,5 +1,15 @@
+-- Global variables
+
 GYRO_X, GYRO_Y = 200, 120
 
+-- Gameplay state variables that should be reset
+
+GAMEPLAY_STATE = {
+    example = false
+}
+
+
+-- Local methods
 
 -- NOTE: Copied from the project loose project
 local function check_gyro_and_gravity()
@@ -88,6 +98,8 @@ end
 
 function Reset_gameplay()
     -- Done on every (re)start of the play.
+
+    GAMEPLAY_STATE.example = false
 end
 
 
