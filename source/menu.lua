@@ -85,7 +85,7 @@ local function draw_ui()
     -- Start menu draws a selected option indicator.
     if MENU_STATE.screen == MENU_SCREEN.start then
         gfx.pushContext()
-            gfx.setColor(gfx.kColorWhite)
+            gfx.setColor(gfx.kColorBlack)
             gfx.fillCircleAtPoint(73, 110 + 27*MENU_STATE.focused_option, 7)
         gfx.popContext()
 
