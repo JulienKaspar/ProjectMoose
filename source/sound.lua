@@ -7,3 +7,9 @@ SOUND = {
   menu_confirm = sp.new("sound/menu_item_confirm"),
   menu_highlight = sp.new("sound/menu_item_highlight"),
 }
+
+function Init_sounds()
+
+  -- Create any sounds needed for the game
+  
+end
