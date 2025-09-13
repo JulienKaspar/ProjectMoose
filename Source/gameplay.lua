@@ -111,7 +111,7 @@ function Handle_input()
     GYRO_X = Clamp(GYRO_X + gravityX * 10, 0, 400)
     GYRO_Y = Clamp(GYRO_Y + gravityY * 10, 0, 240)
 
-    check_gyro_and_gravity()
+    -- check_gyro_and_gravity()
     if playdate.buttonIsPressed( playdate.kButtonA ) then
         if not SOUND.cat_meow:isPlaying() then
             SOUND.cat_meow:play()

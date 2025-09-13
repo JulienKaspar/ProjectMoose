@@ -38,12 +38,12 @@ Enter_menu_start()
 function playdate.update()
     -- Called before every frame is drawn.
 
-    if MENU_STATE.menu_screen ~= MENU_SCREEN.gameplay then
+    if MENU_STATE.screen ~= MENU_SCREEN.gameplay then
         -- In Menu system.
         Handle_menu_input()
     end
     -- Intentionally check again (no else), the menu might have just started gameplay
-    if MENU_STATE.menu_screen == MENU_SCREEN.gameplay then
+    if MENU_STATE.screen == MENU_SCREEN.gameplay then
         -- In gameplay.
         Handle_input()
     end
