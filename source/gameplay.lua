@@ -108,8 +108,8 @@ end
 
 function Handle_input()
     local gravityX, gravityY, _gravityZ = playdate.readAccelerometer()
-    GYRO_X = clamp(GYRO_X + gravityX * 10, 0, 400)
-    GYRO_Y = clamp(GYRO_Y + gravityY * 10, 0, 240)
+    GYRO_X = Clamp(GYRO_X + gravityX * 10, 0, 400)
+    GYRO_Y = Clamp(GYRO_Y + gravityY * 10, 0, 240)
 
     check_gyro_and_gravity()
     if playdate.buttonIsPressed( playdate.kButtonA ) then

@@ -10,6 +10,7 @@ import "sound"
 import "gameplay"
 import "visuals"
 import "menu"
+import "utils"
 
 
 local gfx <const> = playdate.graphics
