@@ -156,11 +156,11 @@ end
 
 function Init_menus()
 
-    UI_TEXTURES.gameover = gfxi.new("images/bg")
-    UI_TEXTURES.start = gfxi.new("images/bg")
-    UI_TEXTURES.howto = gfxi.new("images/bg")
-    UI_TEXTURES.credits = gfxi.new("images/bg")
-
+    UI_TEXTURES.gameover = gfxi.new("images/gameover_temp.png")
+    UI_TEXTURES.start = gfxi.new("images/start_screen_temp.png")
+    UI_TEXTURES.howto = gfxi.new("images/howto_temp.png")
+    UI_TEXTURES.credits = gfxi.new("images/credits_temp.png")
+    
     MENU_STATE.screen = MENU_SCREEN.start
     MENU_STATE.active_screen_texture = UI_TEXTURES.start
     MENU_STATE.focused_option = 0
