@@ -103,4 +103,19 @@ local assembly_instructions = {
             position = geo.vector2D(-6, -11),
         },
     },
+    fish = {
+        collision_main = {
+            position = geo.vector2D(-9, 4),
+            rotation = -6.10786,
+            dimensions = geo.vector2D(25.5, 21.5),
+        },
+        collision_tail = {
+            position = geo.vector2D(13, -9),
+            rotation = -46.1007,
+            dimensions = geo.vector2D(21.9, 11.5),
+        },
+        anchor_tail = {
+            position = geo.vector2D(3, -3),
+        },
+    },
 }
