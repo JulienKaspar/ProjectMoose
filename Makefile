@@ -6,6 +6,10 @@ PRODUCT = moose.pdx
 # Locate the SDK
 SDK = ${PLAYDATE_SDK_PATH}
 ifeq ($(SDK),)
+SDK = $(shell egrep '^\s*SDKRoot' ~/.Playdate/config | head -n 1 | cut -c9-)
+endif
+
+ifeq ($(SDK),)
 $(error SDK path not found; set ENV value PLAYDATE_SDK_PATH)
 endif
 
