@@ -9,6 +9,8 @@ static const lua_reg jointClass[];
 #define CLASSNAME_WORLD "playbox.world"
 #define CLASSNAME_BODY "playbox.body"
 #define CLASSNAME_JOINT "playbox.joint"
+#define PIXEL_WORLD_SCALE 0.0125f
+#define WORLD_PIXEL_SCALE 80.0f
 
 void registerPlaybox(void) {
   const char* err = NULL;
@@ -43,8 +45,8 @@ static PBJoint* getJointArg(int n) { return pd->lua->getArgObject(n, CLASSNAME_J
 int playbox_body_new(lua_State* L) {
   PBBody* body = PBBodyCreate();
   
-  float w = pd->lua->getArgFloat(1);
-  float h = pd->lua->getArgFloat(2);
+  float w = pd->lua->getArgFloat(1) * PIXEL_WORLD_SCALE;
+  float h = pd->lua->getArgFloat(2) * PIXEL_WORLD_SCALE;
   float m = pd->lua->getArgFloat(3);
   
   if(m == 0.0f) {
@@ -76,8 +78,8 @@ int playbox_body_addForce(lua_State* L) {
 
 int playbox_body_setCenter(lua_State* L) {
   PBBody* body = getBodyArg(1);
-  body->position.x = pd->lua->getArgFloat(2);
-  body->position.y = pd->lua->getArgFloat(3);
+  body->position.x = pd->lua->getArgFloat(2) * PIXEL_WORLD_SCALE;
+  body->position.y = pd->lua->getArgFloat(3) * PIXEL_WORLD_SCALE;
   return 0;
 }
 
@@ -153,8 +155,8 @@ int playbox_body_setI(lua_State* L) {
 
 int playbox_body_getCenter(lua_State* L) {
   PBBody* body = getBodyArg(1);
-  pd->lua->pushFloat(body->position.x);
-  pd->lua->pushFloat(body->position.y);
+  pd->lua->pushFloat(body->position.x * WORLD_PIXEL_SCALE);
+  pd->lua->pushFloat(body->position.y * WORLD_PIXEL_SCALE);
   return 2;
 }
 
@@ -166,8 +168,8 @@ int playbox_body_getRotation(lua_State* L) {
 
 int playbox_body_getSize(lua_State* L) {
   PBBody* body = getBodyArg(1);
-  pd->lua->pushFloat(body->width.x);
-  pd->lua->pushFloat(body->width.y);
+  pd->lua->pushFloat(body->width.x * WORLD_PIXEL_SCALE);
+  pd->lua->pushFloat(body->width.y * WORLD_PIXEL_SCALE);
   return 2;
 }
 
@@ -406,6 +408,14 @@ int playbox_world_getNumberOfContacts(lua_State* L) {
   return 1;
 }
 
+int playbox_world_setGravity(lua_State* L) {
+  PBWorld* world = getWorldArg(1);
+  float gravity_x = pd->lua->getArgFloat(2);
+  float gravity_y = pd->lua->getArgFloat(3);
+  world->gravity = PBVec2Make(gravity_x, gravity_y);
+  return 0;
+}
+
 static const lua_reg worldClass[] = {
 { "new", playbox_world_new },
 { "__gc", playbox_world_delete },
@@ -415,6 +425,7 @@ static const lua_reg worldClass[] = {
 { "removeJoint", playbox_world_removeJoint },
 { "clear", playbox_world_clear },
 { "update", playbox_world_step },
+{ "setGravity", playbox_world_setGravity },
 { "getArbiterCount", playbox_world_getArbiterCount },
 { "getArbiterPosition", playbox_world_getArbiterPosition },
 { "setPixelScale", playbox_world_setPixelScale },

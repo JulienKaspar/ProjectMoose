@@ -8,76 +8,14 @@ GAMEPLAY_STATE = {
     example = false
 }
 
+import "world"
+
+local gfx <const> = playdate.graphics
+local geometry <const> = playdate.geometry
+
+local selected_box = 1
 
 -- Local methods
-
--- NOTE: Copied from the project loose project
-local function check_gyro_and_gravity()
-    -- Get values from gyro.
-    local raw_gravity_x, raw_gravity_y, raw_gravity_z = playdate.readAccelerometer()
-    -- Occasionally when simulator starts to upload the game to the actual
-    -- device the gyro returns nil as results.
-    -- Note: check all values and not just x for nil so that the IDE linter is sure it's numbers.
-    if raw_gravity_x == nil or raw_gravity_y == nil or raw_gravity_z == nil then
-        return
-    end
-
-    -- Calculate G's (length of acceleration vector)
-    SHAKE_VAL = raw_gravity_x * raw_gravity_x + raw_gravity_y * raw_gravity_y + raw_gravity_z * raw_gravity_z
-
-    -- Update the average "normal" gyroscope position. This depends on the tilt that players are
-    -- comfortable holding the playdate and might change over time. aka Normalize Gravity.
-    if IS_GYRO_INITIALIZED == false then
-        -- For the initial value, use the gyro at the start of the game, so that
-        -- it calibrates as quickly as possible to the current device orientation.
-        AVG_GRAVITY_X = raw_gravity_x
-        AVG_GRAVITY_Y = raw_gravity_y
-        AVG_GRAVITY_Z = raw_gravity_z
-        IS_GYRO_INITIALIZED = true
-    else
-        -- Exponential moving average:
-        --   https://en.wikipedia.org/wiki/Exponential_smoothing
-        --
-        -- The weight from the number of samples can be estimated as `2 / (n + 1)`.
-        -- See the Relationship between SMA and EMA section of the
-        --   https://en.wikipedia.org/wiki/Moving_average
-        local num_smooth_samples <const> = 120
-        local alpha <const> = 2 / (num_smooth_samples + 1)
-
-        AVG_GRAVITY_X = alpha * raw_gravity_x + (1 - alpha) * AVG_GRAVITY_X
-        AVG_GRAVITY_Y = alpha * raw_gravity_y + (1 - alpha) * AVG_GRAVITY_Y
-        AVG_GRAVITY_Z = alpha * raw_gravity_z + (1 - alpha) * AVG_GRAVITY_Z
-
-        local len <const> = math.sqrt(AVG_GRAVITY_X*AVG_GRAVITY_X + AVG_GRAVITY_Y*AVG_GRAVITY_Y + AVG_GRAVITY_Z*AVG_GRAVITY_Z)
-        AVG_GRAVITY_X /= len
-        AVG_GRAVITY_Y /= len
-        AVG_GRAVITY_Z /= len
-    end
-
-    -- NOTE: Commented out because it's probably not used?
-    -- Only update the gyro onscreen position when it's fairly stable (player isn't actively shaking the console).
-    -- if SHAKE_VAL < 1.1 then
-    --     local v1 <const> = vec2d.new(0, 1)
-    --     local v2 <const> = vec2d.new(AVG_GRAVITY_Y, AVG_GRAVITY_Z)
-    --     local angle <const> = v2:angleBetween(v1) / 180 * math.pi
-
-    --     local co <const> = math.cos(angle)
-    --     local si <const> = math.sin(angle)
-
-    --     local gravity_x <const> = raw_gravity_x
-    --     local gravity_y <const> = raw_gravity_y*co - raw_gravity_z*si
-    --     --    gravity_z <const> = raw_gravity_y*si + raw_gravity_z*co
-
-    --     local axis_sign <const> = Sign(raw_gravity_z)
-    --     local gyroSpeed <const> = 60
-
-    --     GYRO_X = Clamp(GYRO_X + gravity_x * gyroSpeed * axis_sign, 0, 400)
-    --     GYRO_Y = Clamp(GYRO_Y + gravity_y * gyroSpeed, 0, 240)
-    --     GAMEPLAY_STATE.cursor_pos.x = GYRO_X
-    --     GAMEPLAY_STATE.cursor_pos.y = GYRO_Y
-    -- end
-end
-
 
 
 -- Resource Management
@@ -117,4 +55,87 @@ function Handle_input()
             SOUND.cat_meow:play()
         end
     end
+end
+
+function update(dt)
+    world:update(dt)
+
+    if playdate.buttonJustPressed(playdate.kButtonB) then
+        selected_box += 1
+        if selected_box > BOX_COUNT then
+            selected_box = 1
+        end
+      end
+
+    print(selected_box)
+
+    local box = boxes[selected_box]
+
+    local target_x, _ = box:getCenter()
+    local claw_x, claw_y = claw:getCenter()
+    local new_x = Clamp((target_x - claw_x), -1, 1) + claw_x
+    claw:setCenter(new_x, claw_y)
+
+    local gravityX, gravityY, _ = playdate.readAccelerometer()
+    local angle = Clamp(math.atan2(gravityX, gravityY), -MAX_ANGLE, MAX_ANGLE)
+    claw:setRotation(angle)
+
+  -- TODO: limit resolution
+    if angle ~= world_angle then
+        world_angle = angle
+        world:setGravity(math.sin(angle) * 9.81, math.cos(angle) * 9.81)
+    end
+
+    if playdate.buttonJustPressed(playdate.kButtonA) then
+        box:addForce(0, -9000)
+    end
+
+    if playdate.buttonIsPressed(playdate.kButtonLeft) then
+        box:addForce(-300, 0)
+    end
+
+    if playdate.buttonIsPressed(playdate.kButtonRight) then
+        box:addForce(300, 0)
+    end
+end
+
+function draw()
+    local bg = gfx.image.new("images/environment/bg.png")
+    bg:draw(0, 0)
+
+  -- Draw claw
+  local claw_image = gfx.image.new("images/claw/temp_claw.png")
+  local x, y = claw:getCenter()
+  local angle = -claw:getRotation() * 180 / math.pi
+  claw_image:drawRotated(x, y, angle)
+
+  -- Draw environment
+  draw_polygon(floor)
+  draw_polygon(left_wall)
+  draw_polygon(right_wall)
+
+  -- Draw boxes
+  gfx.setStrokeLocation(gfx.kStrokeInside)
+  for i, box in ipairs(boxes) do
+    local box_polygon = geometry.polygon.new(box:getPolygon())
+    box_polygon:close()
+    if i == selected_box then
+      gfx.setColor(gfx.kColorBlack)
+    else
+      gfx.setColor(gfx.kColorWhite)
+    end
+    gfx.fillPolygon(box_polygon)
+    gfx.setColor(gfx.kColorBlack)
+    gfx.setLineWidth(3)
+    gfx.drawPolygon(box_polygon)
+  end
+
+
+  gfx.setLineWidth(1)
+  gfx.setDitherPattern(0.5)
+
+  -- Draw FPS on device
+  if not playdate.isSimulator then
+    playdate.drawFPS(380, 15)
+  end
 end
