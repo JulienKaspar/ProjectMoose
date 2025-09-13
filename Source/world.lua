@@ -1,7 +1,7 @@
-local pd = playdate
-
 local gfx <const> = playdate.graphics
 local geometry <const> = playdate.geometry
+
+import "toys"
 
 local WORLD_WIDTH <const> = 400
 local WORLD_HEIGHT <const> = 240
@@ -17,9 +17,7 @@ claw = nil
 floor = nil
 left_wall = nil
 right_wall = nil
-
-boxes = table.create(BOX_COUNT, 0)
-box_patterns = table.create(BOX_COUNT, 0)
+peedee_toy = nil
 
 local MASS_MIN <const> = 50
 local MASS_MAX <const> = 120
@@ -39,6 +37,9 @@ function Init_world()
   -- Create world
   world = playbox.world.new(0.0, 9.81, 10)
   world:setPixelScale(WORLD_PIXEL_SCALE)
+
+  peedee_toy = Toy:new(nil, TOYS_INSTRUCTIONS.peedee, world)
+  peedee_toy:move(geometry.vector2D.new(100, 50))
 
   -- Create floor
   floor = playbox.body.new(WORLD_WIDTH, WALL_WIDTH, 0)
@@ -63,17 +64,4 @@ function Init_world()
   claw:setFriction(CLAW_FRICTION)
   world:addBody(claw)
 
-  -- Create boxes
-  for i = 1, BOX_COUNT do
-    local box_mass <const> = math.random(MASS_MIN, MASS_MAX)
-    local box = playbox.body.new((math.random()*0.5 + 0.2)*WORLD_PIXEL_SCALE, (math.random()*0.5 + 0.2) * WORLD_PIXEL_SCALE, box_mass)
-    box:setCenter((math.random()*0.6+0.2) * WORLD_WIDTH, 0)
-    box:setFriction(0.8)
-    box:setRotation(math.random() * 0.3 + 0.1)
-    world:addBody(box)
-    boxes[#boxes + 1] = box
-
-    -- Box color connected to its mass. Lighter pattern = less mass.
-    box_patterns[#box_patterns + 1] = math.max(math.min(1.0 - box_mass/MASS_MAX, 0.9), 0.1)
-  end
 end

@@ -60,18 +60,8 @@ end
 function update(dt)
     world:update(dt)
 
-    if playdate.buttonJustPressed(playdate.kButtonB) then
-        selected_box += 1
-        if selected_box > BOX_COUNT then
-            selected_box = 1
-        end
-      end
 
-    print(selected_box)
-
-    local box = boxes[selected_box]
-
-    local target_x, _ = box:getCenter()
+    local target_x, _ = peedee_toy.bodies[1]:getCenter()
     local claw_x, claw_y = claw:getCenter()
     local new_x = Clamp((target_x - claw_x), -1, 1) + claw_x
     claw:setCenter(new_x, claw_y)
@@ -87,15 +77,15 @@ function update(dt)
     end
 
     if playdate.buttonJustPressed(playdate.kButtonA) then
-        box:addForce(0, -9000)
+        peedee_toy.bodies[1]:addForce(0, -9000)
     end
 
     if playdate.buttonIsPressed(playdate.kButtonLeft) then
-        box:addForce(-300, 0)
+        peedee_toy.bodies[1]:addForce(-300, 0)
     end
 
     if playdate.buttonIsPressed(playdate.kButtonRight) then
-        box:addForce(300, 0)
+        peedee_toy.bodies[1]:addForce(300, 0)
     end
 end
 
@@ -114,21 +104,20 @@ function draw()
   draw_polygon(left_wall)
   draw_polygon(right_wall)
 
-  -- Draw boxes
-  gfx.setStrokeLocation(gfx.kStrokeInside)
-  for i, box in ipairs(boxes) do
-    local box_polygon = geometry.polygon.new(box:getPolygon())
+  -- Draw toy
+  for i, body in ipairs(peedee_toy.bodies) do
+    local box_polygon = geometry.polygon.new(body:getPolygon())
     box_polygon:close()
-    if i == selected_box then
-      gfx.setColor(gfx.kColorBlack)
-    else
-      gfx.setColor(gfx.kColorWhite)
-    end
+    gfx.setColor(gfx.kColorWhite)
     gfx.fillPolygon(box_polygon)
-    gfx.setColor(gfx.kColorBlack)
-    gfx.setLineWidth(3)
-    gfx.drawPolygon(box_polygon)
+
+    local image = peedee_toy.sprites[i]
+
+    local pos = geometry.vector2D.new(body:getCenter()) --- + (TOYS_INSTRUCTIONS.peedee.bodies[i].position / 2)
+    local angle = body:getRotation() + math.rad(TOYS_INSTRUCTIONS.peedee.bodies[i].rotation)
+    image:drawRotated(pos.x, pos.y, math.deg(angle), 0.25)
   end
+
 
 
   gfx.setLineWidth(1)
