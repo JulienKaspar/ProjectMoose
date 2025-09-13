@@ -238,8 +238,8 @@ static const lua_reg bodyClass[] = {
 int playbox_joint_new(lua_State* L) {
   PBBody* body1 = getBodyArg(1);
   PBBody* body2 = getBodyArg(2);
-  float anchor_x = pd->lua->getArgFloat(3);
-  float anchor_y = pd->lua->getArgFloat(4);
+  float anchor_x = pd->lua->getArgFloat(3) * PIXEL_WORLD_SCALE;
+  float anchor_y = pd->lua->getArgFloat(4) * PIXEL_WORLD_SCALE;
   
   PBJoint* joint = PBJointCreate(body1, body2, PBVec2Make(anchor_x, anchor_y));
   pd->lua->pushObject(joint, CLASSNAME_JOINT, 0);
