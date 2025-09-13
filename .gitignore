@@ -1,6 +1,9 @@
 # Playdate Output.
+build/*
 builds/*
 *.pdx
+*.so
+*.elf
 
 # Dev environment (to be reviewed).
 *.code-workspace
