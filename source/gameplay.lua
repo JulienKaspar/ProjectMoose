@@ -116,6 +116,5 @@ function Handle_input()
         if not SOUND.cat_meow:isPlaying() then
             SOUND.cat_meow:play()
         end
-        print("Hello!")
     end
 end
