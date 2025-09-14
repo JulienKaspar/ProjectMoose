@@ -89,15 +89,33 @@ end
 
 
 local function draw_hud()
-    gfx.pushContext()
-        -- Top left corner: Score!
-        gfx.setColor(gfx.kColorBlack)
-        gfx.fillRoundRect(7, 6, 78, 22, 3)
-        gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-        gfx.setColor(gfx.kColorWhite)
-        gfx.setFont(TEXTURES.font)
-        gfx.drawText("99", 10, 10)
-    gfx.popContext()
+    if MENU_STATE.screen ~= MENU_SCREEN.gameplay 
+        and MENU_STATE.screen ~= MENU_SCREEN.gameover 
+    then
+        return
+    end
+
+    local heart1_pos = geometry.vector2D.new(31, 1)
+    local heart2_pos = geometry.vector2D.new(71, 1)
+    local heart3_pos = geometry.vector2D.new(111, 1)
+    
+    if GAMEPLAY_STATE.current_strikes == 0 then
+        TEXTURES.heart_full:draw(heart1_pos.dx, heart1_pos.dy)
+        TEXTURES.heart_full:draw(heart2_pos.dx, heart2_pos.dy)
+        TEXTURES.heart_full:draw(heart3_pos.dx, heart3_pos.dy)
+    elseif GAMEPLAY_STATE.current_strikes == 1 then
+        TEXTURES.heart_full:draw(heart1_pos.dx, heart1_pos.dy)
+        TEXTURES.heart_full:draw(heart2_pos.dx, heart2_pos.dy)
+        TEXTURES.heart_broken:draw(heart3_pos.dx, heart3_pos.dy)
+    elseif GAMEPLAY_STATE.current_strikes == 2 then
+        TEXTURES.heart_full:draw(heart1_pos.dx, heart1_pos.dy)
+        TEXTURES.heart_broken:draw(heart2_pos.dx, heart2_pos.dy)
+        TEXTURES.heart_broken:draw(heart3_pos.dx, heart3_pos.dy)
+    elseif GAMEPLAY_STATE.current_strikes == 3 then
+        TEXTURES.heart_broken:draw(heart1_pos.dx, heart1_pos.dy)
+        TEXTURES.heart_broken:draw(heart2_pos.dx, heart2_pos.dy)
+        TEXTURES.heart_broken:draw(heart3_pos.dx, heart3_pos.dy)
+    end
 end
 
 
@@ -184,6 +202,8 @@ function Init_visuals()
     -- Load image layers.
     TEXTURES.bg = gfxi.new("images/environment/bg")
     TEXTURES.fg = gfxi.new("images/environment/fg")
+    TEXTURES.heart_full = gfxi.new("images/ui_elements/heart_full")
+    TEXTURES.heart_broken = gfxi.new("images/ui_elements/heart_broken")
 
     -- Set the multiple things in their Z order of what overlaps what.
     Set_draw_pass(-40, draw_game_background)
@@ -191,7 +211,7 @@ function Init_visuals()
     -- Set_draw_pass(-30, draw_toys())
     -- Set_draw_pass(-20, draw_claw())
     Set_draw_pass(0, draw_game_foreground)
-    -- Set_draw_pass(10, draw_hud)
+    Set_draw_pass(10, draw_hud)
     Set_draw_pass(20, draw_debug)
     --Set_draw_pass(20, draw_test_dither_patterns)
 end
