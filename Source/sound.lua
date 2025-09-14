@@ -18,7 +18,11 @@ SOUND = {
   toy_grunt_3 = sp.new("sound/toy_grunt_3"),
   toy_grunt_4 = sp.new("sound/toy_grunt_4"),
   toy_grabbed = sp.new("sound/toy_grabbed"),
-
+  child_disappointed = sp.new("sound/child_disappointed"),
+  child_sigh = sp.new("sound/child_sigh"),
+  child_laugh = sp.new("sound/child_laugh"),
+  game_over = sp.new("sound/game_over"),
+  toy_ascend = sp.new("sound/toy_ascend"),
 }
 
 function Init_sounds()
