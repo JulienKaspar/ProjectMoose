@@ -8,7 +8,7 @@ local WORLD_CENTER_X <const> = 200
 local CEILING_HEIGHT <const> = -250
 local CEILING_HEIGHT_MIN <const> = -300
 local CEILING_HEIGHT_MAX <const> = -25
-local CABLE_LENGTH <const> = 200
+local CABLE_LENGTH <const> = 226
 local CLAW_LENGTH <const> = 40
 local CLAW_MASS <const> = 500
 
