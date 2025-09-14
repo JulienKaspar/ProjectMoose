@@ -4,10 +4,10 @@
         {
             "type": "playdate",
             "request": "launch",
-            "name": "Playdate: Debug",
+            "name": "Playdate: Build & Run",
             "preLaunchTask": "${defaultBuildTask}",
-            "source": "${workspaceFolder}/source",
-            "output": "${workspaceFolder}/builds.pdx"
+            "source": "${workspaceFolder}/Source",
+            "output": "${workspaceFolder}/moose.pdx"
         }
   ]
 }

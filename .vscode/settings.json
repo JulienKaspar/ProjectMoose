@@ -1,6 +1,6 @@
 {
     "playdate-debug.sourcePath": "Source",
-    "playdate-debug.outputPath": "build",
+    "playdate-debug.outputPath": "",
     "playdate-debug.productName": "moose",
     "Lua.workspace.library": ["$PLAYDATE_SDK_PATH/CoreLibs"],
     "Lua.diagnostics.globals": ["playdate", "import"],
