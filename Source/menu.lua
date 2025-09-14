@@ -105,7 +105,7 @@ local function draw_ui()
         UI_TEXTURES.credits:draw(0, 0)
     
     elseif MENU_STATE.screen == MENU_SCREEN.gameover then
-        UI_TEXTURES.gameover:draw(0, 0)
+        UI_TEXTURES.game_over_indicator:draw(124, 52)
     end
 end
 
@@ -186,11 +186,12 @@ function Init_menus()
     UI_ANIMATIONS.logo:playAnimation()
     UI_ANIMATIONS.logo:moveTo(112,83)
 
-    UI_TEXTURES.gameover = gfxi.new("images/gameover_temp.png")
+    UI_TEXTURES.game_over_indicator = gfxi.new("images/menus/menu_text/one_more_try_nah")
     UI_TEXTURES.start = gfxi.new("images/start_screen_temp.png")
     UI_TEXTURES.main = gfxi.new("images/environment/game_mockups.png")
     UI_TEXTURES.credits = gfxi.new("images/credits_temp.png")
     UI_TEXTURES.startgame_credits_indicator = gfxi.new("images/menus/menu_text/startgame_credits_indicator")
+
     
     MENU_STATE.screen = MENU_SCREEN.start
 
