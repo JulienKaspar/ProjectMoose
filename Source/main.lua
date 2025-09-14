@@ -49,6 +49,7 @@ function playdate.update()
     -- Intentionally check again (no else), the menu might have just started gameplay
     if MENU_STATE.screen == MENU_SCREEN.gameplay then
         -- In gameplay.
+        Handle_input()
         local dt <const> = 1.0 / playdate.display.getRefreshRate()
         update(dt)
     end

@@ -50,20 +50,22 @@ function Enter_menu_start()
     end
 end
 
+
 local function enter_menu_main()
     MENU_STATE.screen = MENU_SCREEN.main
 end
+
 
 local function enter_menu_credits()
     MENU_STATE.screen = MENU_SCREEN.credits
 end
 
-local function enter_menu_gameover()
-    MENU_STATE.screen = MENU_SCREEN.gameover
 
+function Enter_game_over_screen()
+    MENU_STATE.screen = MENU_SCREEN.gameover
     Stop_gameplay()
-    -- Play gameover effects & transitions.
 end
+
 
 function Enter_gameplay()
     MENU_STATE.screen = MENU_SCREEN.gameplay
@@ -110,11 +112,11 @@ end
 
 function Handle_menu_input()
     if MENU_STATE.screen == MENU_SCREEN.gameover then
-        if playdate.buttonIsPressed( playdate.kButtonA ) then
+        if playdate.buttonJustPressed( playdate.kButtonA ) then
             SOUND.menu_confirm:play()
             Enter_gameplay()
         end
-        if playdate.buttonJustReleased( playdate.kButtonB ) then
+        if playdate.buttonJustPressed( playdate.kButtonB ) then
             SOUND.menu_confirm:play()
             Enter_menu_start()
         end
@@ -193,7 +195,7 @@ function Init_menus()
     MENU_STATE.screen = MENU_SCREEN.start
 
     -- Set the multiple things in their Z order of what overlaps what.
-    
+
     Set_draw_pass(100, draw_ui) -- UI goes on top of everything.
     UI_ANIMATIONS.logo:setZIndex(110)
     UI_ANIMATIONS.loading:setZIndex(200)

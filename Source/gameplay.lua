@@ -2,10 +2,13 @@
 
 GYRO_X, GYRO_Y = 200, 120
 
+local maximum_strikes <const> = 3
+
 -- Gameplay state variables that should be reset
 
 GAMEPLAY_STATE = {
-    example = false
+    example = false,
+    current_strikes = 0,
 }
 
 import "world"
@@ -41,8 +44,16 @@ function Reset_gameplay()
     -- Done on every (re)start of the play.
 
     GAMEPLAY_STATE.example = false
+    GAMEPLAY_STATE.current_strikes = 0
 end
 
+
+function try_ending_game()
+    if GAMEPLAY_STATE.current_strikes >= maximum_strikes then
+        Reset_gameplay()
+        Enter_game_over_screen()
+    end
+end
 
 
 -- Update Loop
@@ -52,16 +63,18 @@ function Handle_input()
     GYRO_X = Clamp(GYRO_X + gravityX * 10, 0, 400)
     GYRO_Y = Clamp(GYRO_Y + gravityY * 10, 0, 240)
 
-    -- check_gyro_and_gravity()
-    if playdate.buttonIsPressed( playdate.kButtonA ) then
-        if not SOUND.cat_meow:isPlaying() then
-            SOUND.cat_meow:play()
-        end
+    -- Placeholder debug for accumilating strikes
+    if playdate.buttonJustPressed( playdate.kButtonB ) then
+        GAMEPLAY_STATE.current_strikes += 1
     end
 end
 
+
 function update(dt)
     world:update(dt)
+
+    -- See if the game is lost or won
+    try_ending_game()
 
     -- TODO(weizhen): stop reading the accelerometer if moving?
     local gravityX, gravityY, _ = playdate.readAccelerometer()
