@@ -180,6 +180,12 @@ int playbox_body_getVelocity(lua_State* L) {
   return 2;
 }
 
+int playbox_body_getAngularVelocity(lua_State* L) {
+  PBBody* body = getBodyArg(1);
+  pd->lua->pushFloat(body->angularVelocity);
+  return 1;
+}
+
 int playbox_body_getPolygon(lua_State* L) {
   PBBody* body = getBodyArg(1);
   PBWorld* world = body->world;
@@ -221,6 +227,7 @@ static const lua_reg bodyClass[] = {
 { "setVelocity", playbox_body_setVelocity },
 { "getVelocity", playbox_body_getVelocity },
 { "setAngularVelocity", playbox_body_setAngularVelocity },
+{ "getAngularVelocity", playbox_body_getAngularVelocity },
 { "setForce", playbox_body_setForce },
 { "setTorque", playbox_body_setTorque },
 { "setSize", playbox_body_setSize },
