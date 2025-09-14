@@ -46,6 +46,9 @@ function Reset_gameplay_entities()
     left_wall = nil
     right_wall = nil
     peedee_toy = nil
+    for _, toy in ipairs(TOYS) do
+      toy:destructor()
+    end
     TOYS = {}
   end
   

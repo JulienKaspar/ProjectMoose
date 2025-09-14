@@ -240,3 +240,9 @@ function Toy:updateSprites()
     self.sprites[i]:moveTo(pos.x, pos.y)
   end
 end
+
+function Toy:destructor()
+    for _, sprite in ipairs(self.sprites) do
+        sprite:remove()
+    end
+end
