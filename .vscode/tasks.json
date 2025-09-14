@@ -5,7 +5,7 @@
             "label": "Playdate: Build",
             "type": "shell",
             "linux": {
-                "command": "PLAYDATE_SDK_PATH=${config:playdate.sdkPath} make"
+                "command": "PLAYDATE_SDK_PATH=${config:playdate.sdkPath} make simulator"
             },
             "osx": {
                 "command": "PLAYDATE_SDK_PATH=${config:playdate.sdkPath} make"
