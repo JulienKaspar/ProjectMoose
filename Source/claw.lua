@@ -174,7 +174,7 @@ end
 
 function Claw:update(angle)
     if claw_is_moving_down() then
-        claw:moveVertical(angle, 1)
+        claw:moveVertical(1)
     end
 
     -- Clamp position
@@ -183,22 +183,6 @@ function Claw:update(angle)
     if ceiling_y <= CEILING_HEIGHT_MIN or ceiling_y >= CEILING_HEIGHT_MAX then
          self.ceiling:setVelocity(0, 0)
     end
-
-    -- self:setRotation(angle)
-
-    -- local toy_x, toy_y = peedee_toy.bodies[1]:getCenter()
-    -- local claw_x, claw_y = self:getCenter()
-    -- local target_x = toy_x - math.tan(angle) * toy_y
-
-    -- if math.floor(target_x + 0.5) == math.floor(claw_x + 0.5) then
-    --     moving = true
-    -- end
-
-    -- if moving then
-    --     self:moveVertical(angle)
-    -- else
-    --     self:moveHorizontalTo(target_x, dt)
-    -- end
 
     -- Apply air friction
     local vel_x, vel_y = self.left:getVelocity()
@@ -266,8 +250,6 @@ function Claw:moveHorizontalTo(target_x, dt)
   self:setCenter(new_x, claw_y)
 end
 
-function Claw:moveVertical(angle, scale)
-    local vel_x = math.sin(angle) * self.speed * scale
-    local vel_y = math.cos(angle) * self.speed * scale
-    self.ceiling:setVelocity(vel_x, vel_y)
+function Claw:moveVertical(scale)
+    self.ceiling:setVelocity(0, self.speed * scale)
 end

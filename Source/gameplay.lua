@@ -142,7 +142,7 @@ function update(dt)
     claw:update(angle)
 
     if playdate.buttonIsPressed(playdate.kButtonUp) then
-        claw:moveVertical(angle + math.pi, 4)
+        claw:moveVertical(-4)
         move_claw_up()
     end
 
