@@ -48,12 +48,12 @@ function Init_world()
   world:addBody(floor)
 
   -- Create wall
-  left_wall = playbox.body.new(WALL_WIDTH, WORLD_HEIGHT)
+  left_wall = playbox.body.new(WALL_WIDTH, WORLD_HEIGHT, 0)
   left_wall:setCenter(0, WORLD_HEIGHT*0.5)
   left_wall:setFriction(WALL_FRICTION)
   world:addBody(left_wall)
 
-  right_wall = playbox.body.new(WALL_WIDTH, WORLD_HEIGHT)
+  right_wall = playbox.body.new(WALL_WIDTH, WORLD_HEIGHT, 0)
   right_wall:setCenter(WORLD_WIDTH, WORLD_HEIGHT*0.5)
   right_wall:setFriction(WALL_FRICTION)
   world:addBody(right_wall)
