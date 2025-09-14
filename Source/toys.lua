@@ -310,8 +310,14 @@ function Toy:updateSprites()
   end
 end
 
-function Toy:destructor()
+function Toy:destructor(world)
     for _, sprite in ipairs(self.sprites) do
         sprite:remove()
+    end
+    for _, body in ipairs(self.bodies) do
+        world:removeBody(body)
+    end
+    for _, joint in ipairs(self.joints) do
+        world:removeJoint(joint)
     end
 end

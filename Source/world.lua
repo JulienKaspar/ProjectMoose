@@ -112,7 +112,6 @@ end
 function Reset_gameplay_entities()
   -- Remove all entities if needed
   if world then
-    world = nil
     claw:destructor()
     claw = nil
     floor = nil
@@ -120,9 +119,10 @@ function Reset_gameplay_entities()
     right_wall = nil
     selected_toy = nil
     for _, toy in ipairs(TOYS) do
-      toy:destructor()
+      toy:destructor(world)
     end
     TOYS = {}
+    world = nil
   end
   
   -- Create world

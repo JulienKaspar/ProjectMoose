@@ -104,13 +104,17 @@ function check_toys_got_out()
     for i, toy in ipairs(TOYS) do
       local _, y = toy.bodies[1]:getCenter()
       if y < 50 then
+        local reset_selected = false
         if toy == selected_toy then
           got_right_toy = true
-          selected_toy = nil
+          reset_selected = true
         end
+        toy:destructor(world)
         table.remove(TOYS, i)
-        toy:destructor()
         toy = nil
+        if reset_selected then
+          selected_toy = nil
+        end 
       end
     end
 
