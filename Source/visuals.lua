@@ -145,15 +145,16 @@ function kiddo_is_pleased()
     ANIMATIONS.kiddo_angry:setVisible(false)
     
     -- Heart animation
-    ANIMATIONS.heart_broken_fixed:setVisible(true)
-    ANIMATIONS.heart_broken_fixed:playAnimation()
+    ANIMATIONS.heart_mending:setVisible(true)
     -- Which heart is getting mended
     if GAMEPLAY_STATE.current_strikes == 0 and GAMEPLAY_STATE.previous_strikes == 1 then
-        ANIMATIONS.heart_broken_fixed:moveTo(heart3_anim_pos.dx, heart3_anim_pos.dy)
+        ANIMATIONS.heart_mending:moveTo(heart3_anim_pos.dx, heart3_anim_pos.dy)
+        ANIMATIONS.heart_mending:playAnimation()
     elseif GAMEPLAY_STATE.current_strikes == 1 then
-        ANIMATIONS.heart_broken_fixed:moveTo(heart2_anim_pos.dx, heart2_anim_pos.dy)
+        ANIMATIONS.heart_mending:moveTo(heart2_anim_pos.dx, heart2_anim_pos.dy)
+        ANIMATIONS.heart_mending:playAnimation()
     else
-        ANIMATIONS.heart_broken_fixed:setVisible(false)
+        ANIMATIONS.heart_mending:setVisible(false)
     end
 end
 
@@ -167,13 +168,34 @@ function kiddo_gets_mad()
     ANIMATIONS.kiddo_happy:setVisible(false)
 
     -- Heart animation
-    -- TODO
+    -- Heart animation
+    ANIMATIONS.heart_breaking:setVisible(true)
+    ANIMATIONS.heart_breaking:playAnimation()
+
+    -- Which heart is getting mended
+    if GAMEPLAY_STATE.current_strikes == 1 then
+        ANIMATIONS.heart_breaking:moveTo(heart3_anim_pos.dx, heart3_anim_pos.dy)
+        ANIMATIONS.heart_breaking:playAnimation()
+    elseif GAMEPLAY_STATE.current_strikes == 2 then
+        ANIMATIONS.heart_breaking:moveTo(heart2_anim_pos.dx, heart2_anim_pos.dy)
+        ANIMATIONS.heart_breaking:playAnimation()
+    elseif GAMEPLAY_STATE.current_strikes == 3 then
+        ANIMATIONS.heart_breaking:moveTo(heart1_anim_pos.dx, heart1_anim_pos.dy)
+        ANIMATIONS.heart_breaking:playAnimation()
+    else
+        ANIMATIONS.heart_breaking:setVisible(false)
+    end
     
 end
 
 
 function on_heart_mending_finished()
-    ANIMATIONS.heart_broken_fixed:setVisible(false)
+    ANIMATIONS.heart_mending:setVisible(false)
+end
+
+
+function on_heart_breaking_finished()
+    ANIMATIONS.heart_breaking:setVisible(false)
 end
 
 
@@ -264,21 +286,36 @@ function Init_visuals()
     ANIMATIONS.kiddo_happy:moveTo(kiddo_pos.dx,kiddo_pos.dy)
 
     -- local imagetable_broken_heart = gfxit.new("images/ui_elements/heart_anims/broken_heart_fixed")
-    local imagetable_broken_heart_fixed = gfxit.new("images/ui_elements/heart_anims/broken_heart_fixed")
-
-    ANIMATIONS.heart_broken_fixed = AnimatedSprite.new(imagetable_broken_heart_fixed)
-    ANIMATIONS.heart_broken_fixed:addState(
+    local imagetable_mending_fixed = gfxit.new("images/ui_elements/heart_anims/broken_heart_fixed")
+    local imagetable_breaking_heart = gfxit.new("images/ui_elements/heart_anims/heart_breaking")
+    
+    ANIMATIONS.heart_mending = AnimatedSprite.new(imagetable_mending_fixed)
+    ANIMATIONS.heart_mending:addState(
             "main",
             1,
-            imagetable_broken_heart_fixed:getLength(),
+            imagetable_mending_fixed:getLength(),
             {
                 tickStep = 30.0/8.0,
                 loop = false,
                 onAnimationEndEvent = function (self) on_heart_mending_finished() end
             }
         ).asDefault()
-    ANIMATIONS.heart_broken_fixed:moveTo(heart3_pos.dx, heart3_pos.dy)
-    ANIMATIONS.heart_broken_fixed:setVisible(false)
+    ANIMATIONS.heart_mending:moveTo(heart3_pos.dx, heart3_pos.dy)
+    ANIMATIONS.heart_mending:setVisible(false)
+
+    ANIMATIONS.heart_breaking = AnimatedSprite.new(imagetable_breaking_heart)
+    ANIMATIONS.heart_breaking:addState(
+            "main",
+            1,
+            imagetable_breaking_heart:getLength(),
+            {
+                tickStep = 30.0/8.0,
+                loop = false,
+                onAnimationEndEvent = function (self) on_heart_breaking_finished() end
+            }
+        ).asDefault()
+    ANIMATIONS.heart_breaking:moveTo(heart3_pos.dx, heart3_pos.dy)
+    ANIMATIONS.heart_breaking:setVisible(false)
 
 
     -- Load image layers.
@@ -299,7 +336,8 @@ function Init_visuals()
     -- Set_draw_pass(-20, draw_claw())
     Set_draw_pass(0, draw_game_foreground)
     Set_draw_pass(20, draw_hud)
-    ANIMATIONS.heart_broken_fixed:setZIndex(21)
+    ANIMATIONS.heart_mending:setZIndex(21)
+    ANIMATIONS.heart_breaking:setZIndex(21)
     Set_draw_pass(30, draw_debug)
     --Set_draw_pass(20, draw_test_dither_patterns)
 end
