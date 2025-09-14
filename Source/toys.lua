@@ -209,6 +209,40 @@ TOYS_INSTRUCTIONS = {
         body2 = 3,
         position = geo.vector2D.new(-30, 3),
       }
+    },
+  chicken = {
+    bodies = {
+      {
+        position = geo.vector2D.new(1, -4),
+        rotation = -36.2071,
+        dimensions = geo.vector2D.new(38.1, 40.5),
+        img = gfx.image.new("images/toys/chicken_main.png"),
+      },
+      {
+        position = geo.vector2D.new(-11, 28),
+        rotation = -1.02813,
+        dimensions = geo.vector2D.new(14.1, 15.0),
+        img = gfx.image.new("images/toys/chicken_leg_front.png"),
+      },
+      {
+        position = geo.vector2D.new(21, 25),
+        rotation = 14.0097,
+        dimensions = geo.vector2D.new(14.1, 15.0),
+        img = gfx.image.new("images/toys/chicken_leg_back.png"),
+      }
+    },
+    joints = {
+      {
+        body1 = 1,
+        body2 = 2,
+        position = geo.vector2D.new(-3, 20),
+      }
+    },
+      {
+        body1 = 1,
+        body2 = 3,
+        position = geo.vector2D.new(10, 18),
+      }
     }
 }
 
