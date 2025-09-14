@@ -119,6 +119,36 @@ local function draw_hud()
 end
 
 
+function kiddo_goes_idle()
+    ANIMATIONS.kiddo_idle:setVisible(true)
+    ANIMATIONS.kiddo_idle:playAnimation()
+
+    ANIMATIONS.kiddo_angry:setVisible(false)
+    ANIMATIONS.kiddo_happy:setVisible(false)
+    
+end
+
+
+function kiddo_is_pleased()
+    ANIMATIONS.kiddo_happy:setVisible(true)
+    ANIMATIONS.kiddo_happy:playAnimation()
+
+    ANIMATIONS.kiddo_idle:setVisible(false)
+    ANIMATIONS.kiddo_angry:setVisible(false)
+    
+end
+
+
+function kiddo_gets_mad()
+    ANIMATIONS.kiddo_angry:setVisible(true)
+    ANIMATIONS.kiddo_angry:playAnimation()
+
+    ANIMATIONS.kiddo_idle:setVisible(false)
+    ANIMATIONS.kiddo_happy:setVisible(false)
+    
+end
+
+
 local function draw_debug()
     -- Draw FPS on device
     if not playdate.isSimulator then
@@ -179,9 +209,12 @@ function Init_visuals()
     -- init animations
 
     local imagetable_kiddo_idle = gfxit.new("images/kiddo_anims/kiddo_idle")
+    local imagetable_kiddo_anger = gfxit.new("images/kiddo_anims/kiddo_anger")
+    local imagetable_kiddo_happy = gfxit.new("images/kiddo_anims/kiddo_happy")
+    local kiddo_pos = geometry.vector2D.new(272, 100)
 
-    ANIMATIONS.kiddo = AnimatedSprite.new(imagetable_kiddo_idle)
-    ANIMATIONS.kiddo:addState(
+    ANIMATIONS.kiddo_idle = AnimatedSprite.new(imagetable_kiddo_idle)
+    ANIMATIONS.kiddo_idle:addState(
             "main",
             1,
             imagetable_kiddo_idle:getLength(),
@@ -190,8 +223,34 @@ function Init_visuals()
                 loop = true,
             }
         ).asDefault()
-    ANIMATIONS.kiddo:playAnimation()
-    ANIMATIONS.kiddo:moveTo(272,100)
+    ANIMATIONS.kiddo_idle:playAnimation()
+    ANIMATIONS.kiddo_idle:moveTo(kiddo_pos.dx,kiddo_pos.dy)
+
+    ANIMATIONS.kiddo_angry = AnimatedSprite.new(imagetable_kiddo_anger)
+    ANIMATIONS.kiddo_angry:addState(
+            "main",
+            1,
+            imagetable_kiddo_anger:getLength(),
+            {
+                tickStep = 30.0/5.0,
+                loop = false,
+                onAnimationEndEvent = function (self) kiddo_goes_idle() end
+            }
+        ).asDefault()
+    ANIMATIONS.kiddo_angry:moveTo(kiddo_pos.dx,kiddo_pos.dy)
+
+    ANIMATIONS.kiddo_happy = AnimatedSprite.new(imagetable_kiddo_happy)
+    ANIMATIONS.kiddo_happy:addState(
+            "main",
+            1,
+            imagetable_kiddo_happy:getLength(),
+            {
+                tickStep = 30.0/2.0,
+                loop = false,
+                onAnimationEndEvent = function (self) kiddo_goes_idle() end
+            }
+        ).asDefault()
+    ANIMATIONS.kiddo_happy:moveTo(kiddo_pos.dx,kiddo_pos.dy)
 
     -- Load image layers.
     TEXTURES.bg = gfxi.new("images/environment/bg")
@@ -201,11 +260,13 @@ function Init_visuals()
 
     -- Set the multiple things in their Z order of what overlaps what.
     Set_draw_pass(-40, draw_game_background)
-    ANIMATIONS.kiddo:setZIndex(-39)
+    ANIMATIONS.kiddo_idle:setZIndex(-39)
+    ANIMATIONS.kiddo_angry:setZIndex(-39)
+    ANIMATIONS.kiddo_happy:setZIndex(-39)
     -- Set_draw_pass(-30, draw_toys())
     -- Set_draw_pass(-20, draw_claw())
     Set_draw_pass(0, draw_game_foreground)
-    Set_draw_pass(10, draw_hud)
-    Set_draw_pass(20, draw_debug)
+    Set_draw_pass(20, draw_hud)
+    Set_draw_pass(30, draw_debug)
     --Set_draw_pass(20, draw_test_dither_patterns)
 end

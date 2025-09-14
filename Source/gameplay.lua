@@ -56,6 +56,20 @@ function try_ending_game()
 end
 
 
+function receive_strike()
+    GAMEPLAY_STATE.current_strikes += 1
+    GAMEPLAY_STATE.current_strikes = Clamp(GAMEPLAY_STATE.current_strikes, 0, 3)
+    kiddo_gets_mad()
+end
+
+
+function receive_correct_toy()
+    GAMEPLAY_STATE.current_strikes -= 1
+    GAMEPLAY_STATE.current_strikes = Clamp(GAMEPLAY_STATE.current_strikes, 0, 3)
+    kiddo_is_pleased()
+end
+
+
 -- Update Loop
 
 function Handle_input()
@@ -65,7 +79,10 @@ function Handle_input()
 
     -- Placeholder debug for accumilating strikes
     if playdate.buttonJustPressed( playdate.kButtonB ) then
-        GAMEPLAY_STATE.current_strikes += 1
+        receive_strike()
+    end
+    if playdate.buttonJustPressed( playdate.kButtonA ) then
+        receive_correct_toy()
     end
 end
 
