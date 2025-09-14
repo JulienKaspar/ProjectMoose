@@ -24,8 +24,6 @@ TOYS = {}
 local MASS_MIN <const> = 50
 local MASS_MAX <const> = 120
 
-local world_rotation = 0
-
 function draw_polygon(object)
   local polygon = geometry.polygon.new(object:getPolygon())
   polygon:close()
@@ -54,18 +52,18 @@ function Init_world()
 
   -- Create floor
   floor = playbox.body.new(WORLD_WIDTH, WALL_WIDTH, 0)
-  floor:setCenter(WORLD_WIDTH*0.5, WORLD_HEIGHT+WALL_WIDTH*0.5+PAD)
+  floor:setCenter(WORLD_WIDTH * 0.5, WORLD_HEIGHT + WALL_WIDTH * 0.5 + PAD)
   floor:setFriction(WALL_FRICTION)
   world:addBody(floor)
 
   -- Create wall
   left_wall = playbox.body.new(WALL_WIDTH, WORLD_HEIGHT, 0)
-  left_wall:setCenter(-WALL_WIDTH*0.5-2*PAD, WORLD_HEIGHT*0.5)
+  left_wall:setCenter(-WALL_WIDTH * 0.5 - 2 * PAD, WORLD_HEIGHT * 0.5)
   left_wall:setFriction(WALL_FRICTION)
   world:addBody(left_wall)
 
   right_wall = playbox.body.new(WALL_WIDTH, WORLD_HEIGHT, 0)
-  right_wall:setCenter(WORLD_WIDTH+WALL_WIDTH*0.5+2*PAD, WORLD_HEIGHT*0.5)
+  right_wall:setCenter(WORLD_WIDTH + WALL_WIDTH * 0.5 + 2 * PAD, WORLD_HEIGHT * 0.5)
   right_wall:setFriction(WALL_FRICTION)
   world:addBody(right_wall)
 
