@@ -1,8 +1,6 @@
 local geo = playdate.geometry
 local gfx = playdate.graphics
 
-local WORLD_PIXEL_SCALE <const> = 400.0/5.0
-
 TOYS_INSTRUCTIONS = {
   peedee = {
     bodies = {
@@ -143,7 +141,7 @@ TOYS_INSTRUCTIONS = {
   },
 }
 
-Toy = { bodies = {}, joints = {}, sprites = {}}
+Toy = { bodies = {}, joints = {}, sprites = {} }
 
 -- Base class method new
 function Toy:new(o, instr, world)
@@ -151,8 +149,8 @@ function Toy:new(o, instr, world)
   setmetatable(o, self)
   self.__index = self
   for _, body_instr in ipairs(instr.bodies) do
-    -- TODO: Compute mass from dimensions ?
-    local body = playbox.body.new(body_instr.dimensions.x, body_instr.dimensions.y, 50)
+    local mass <const> = (body_instr.dimensions.x * body_instr.dimensions.y) * 0.0
+    local body = playbox.body.new(body_instr.dimensions.x, body_instr.dimensions.y, mass)
     body:setCenter(body_instr.position.x, body_instr.position.y)
     body:setRotation(math.rad(body_instr.rotation))
     body:setFriction(0.8)
