@@ -8,7 +8,7 @@ local maximum_strikes <const> = 3
 -- Gameplay state variables that should be reset
 
 GAMEPLAY_STATE = {
-    current_strikes = 1,
+    current_strikes = 0,
     previous_strikes = 0,
     claw_movement = 'down'
 }
