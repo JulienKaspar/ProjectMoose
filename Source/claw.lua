@@ -16,6 +16,7 @@ local SCALE <const> = 0.25
 local FRICTION <const> = 1000
 
 import "world"
+import "gameplay"
 
 -- TODO(weizhen): make state
 local moving = false
@@ -151,7 +152,31 @@ function Claw:init(ZIndex)
     self.sprites[#self.sprites + 1] = sprite
 end
 
-function Claw:update()
+function claw_is_moving_up()
+    return GAMEPLAY_STATE.claw_movement == 'up'
+end
+
+function claw_is_moving_down()
+    return GAMEPLAY_STATE.claw_movement == 'down'
+end
+
+function move_claw_up()
+   GAMEPLAY_STATE.claw_movement = 'up'
+end
+
+function move_claw_down()
+   GAMEPLAY_STATE.claw_movement = 'down'
+end
+
+function stop_claw()
+    GAMEPLAY_STATE.claw_movement = 'stopped'
+end
+
+function Claw:update(angle)
+    if claw_is_moving_down() then
+        claw:moveVertical(angle, 1)
+    end
+
     -- Clamp position
     local ceiling_x, ceiling_y = self.ceiling:getCenter()
     self.ceiling:setCenter(ceiling_x, Clamp(ceiling_y, CEILING_HEIGHT_MIN, CEILING_HEIGHT_MAX))

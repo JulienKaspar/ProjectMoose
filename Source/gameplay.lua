@@ -4,13 +4,15 @@ GYRO_X, GYRO_Y = 200, 120
 
 local maximum_strikes <const> = 3
 
+
 -- Gameplay state variables that should be reset
 
 GAMEPLAY_STATE = {
     current_strikes = 1,
     previous_strikes = 0,
-    claw_moving_up = false,
+    claw_movement = 'down'
 }
+
 
 import "world"
 
@@ -32,7 +34,7 @@ function Init_gameplay()
     -- Done only once on start of the game, to load and setup const resources.
 
     playdate.startAccelerometer()
-    GAMEPLAY_STATE.claw_moving_up = false
+    move_claw_down()
 end
 
 
@@ -47,7 +49,7 @@ function Reset_gameplay()
     Reset_gameplay_entities()
     GAMEPLAY_STATE.current_strikes = 0
     GAMEPLAY_STATE.previous_strikes = 0
-    GAMEPLAY_STATE.claw_moving_up = false
+    move_claw_down()
 end
 
 
@@ -97,7 +99,7 @@ end
 
 function check_toys_got_out()
   local cx, cy = claw.ceiling:getCenter()
-  if GAMEPLAY_STATE.claw_moving_up and cy < -270 then
+  if claw_is_moving_up() and cy < -270 then
     local got_right_toy = false
     for i, toy in ipairs(TOYS) do
       local _, y = toy.bodies[1]:getCenter()
@@ -122,7 +124,7 @@ function check_toys_got_out()
     else
       receive_correct_toy()
     end
-    GAMEPLAY_STATE.claw_moving_up = false
+    move_claw_down()
   end
 end
 
@@ -137,16 +139,11 @@ function update(dt)
     local gravityX, gravityY, _ = pd.readAccelerometer()
     angle = Clamp(math.atan2(gravityX, gravityY), -MAX_ANGLE, MAX_ANGLE)
 
-    claw:update()
-
-    if playdate.buttonIsPressed(playdate.kButtonDown) then
-        claw:moveVertical(angle, 1)
-        GAMEPLAY_STATE.claw_moving_up = false
-    end
+    claw:update(angle)
 
     if playdate.buttonIsPressed(playdate.kButtonUp) then
         claw:moveVertical(angle + math.pi, 4)
-        GAMEPLAY_STATE.claw_moving_up = true
+        move_claw_up()
     end
 
   -- TODO: limit resolution
