@@ -24,34 +24,29 @@ TOYS_INSTRUCTIONS = {
         position = geo.vector2D.new(16, -21),
       }
     }
-    -- collision_main = {
-    --     position = geo.vector2D.new(-12, 1),
-    --     rotation = 10.8854,
-    --     dimensions = geo.vector2D.new(50, 60),
-    -- },
-    -- collision_arm = {
-    --     position = geo.vector2D.new(-31, -17),
-    --     rotation = -34.2189,
-    --     dimensions = geo.vector2D.new(21, 19),
-    -- },
-    -- anchor_arm = {
-    --     position = geo.vector2D.new(16, -21),
-    -- },
   },
   monkey = {
-    collision_main = {
-      position = geo.vector2D.new(10, 2),
-      rotation = 2.10368,
-      dimensions = geo.vector2D.new(37.4, 72.8),
+    bodies = {
+      {
+        position = geo.vector2D.new(10, 2),
+        rotation = 2.10368,
+        dimensions = geo.vector2D.new(37.4, 72.8),
+        img = gfx.image.new("images/toys/monkey_main.png"),
+      },
+      {
+        position = geo.vector2D.new(26, 24),
+        rotation = -51.2069,
+        dimensions = geo.vector2D.new(20.7, 20.1),
+        img = gfx.image.new("images/toys/monkey_tail.png"),
+      }
     },
-    collision_tail = {
-      position = geo.vector2D.new(26, 24),
-      rotation = -51.2069,
-      dimensions = geo.vector2D.new(20.7, 20.1),
-    },
-    anchor_tail = {
-      position = geo.vector2D.new(7, 22),
-    },
+    joints = {
+      {
+        body1 = 1,
+        body2 = 2,
+        position = geo.vector2D.new(7, 22),
+      }
+    }
   },
   mouse = {
     collision_main = {
@@ -141,7 +136,7 @@ TOYS_INSTRUCTIONS = {
   },
 }
 
-Toy = { bodies = {}, joints = {}, sprites = {} }
+Toy = { bodies = {}, joints = {}, sprites = {}, initial_rotations = {}}
 
 -- Base class method new
 function Toy:new(o, instr, world)
@@ -157,6 +152,7 @@ function Toy:new(o, instr, world)
     world:addBody(body)
     self.sprites[#self.sprites + 1] = body_instr.img
     self.bodies[#self.bodies + 1] = body
+    self.initial_rotations[#self.initial_rotations + 1] = body_instr.rotation 
   end
   for _, joint_instr in ipairs(instr.joints) do
     local body1 = self.bodies[joint_instr.body1]

@@ -123,23 +123,25 @@ function draw()
   draw_polygon(left_wall)
   draw_polygon(right_wall)
 
-  -- Draw toy
-  for i, body in ipairs(peedee_toy.bodies) do
-    --- DEBUG boxes
-    -- local box_polygon = geometry.polygon.new(body:getPolygon())
-    -- box_polygon:close()
-    -- gfx.setColor(gfx.kColorWhite)
-    -- gfx.fillPolygon(box_polygon)
+  -- Draw toys
+  for _, toy in ipairs(TOYS) do
+    for i, body in ipairs(toy.bodies) do
+      --- DEBUG boxes
+      local box_polygon = geometry.polygon.new(body:getPolygon())
+      box_polygon:close()
+      gfx.setColor(gfx.kColorWhite)
+      gfx.fillPolygon(box_polygon)
 
-    local image = peedee_toy.sprites[i]
-    local pos <const> = geometry.vector2D.new(body:getCenter())
-    --- Undo the initial rotation of the sprite
-    local angle <const> = body:getRotation() + math.rad(TOYS_INSTRUCTIONS.peedee.bodies[i].rotation)
-    image:drawRotated(pos.x, pos.y, math.deg(angle), 0.25)
+      local image = toy.sprites[i]
+      local pos <const> = geometry.vector2D.new(body:getCenter())
+      --- Undo the initial rotation of the sprite
+      local angle <const> = body:getRotation() + math.rad(toy.initial_rotations[i])
+      image:drawRotated(pos.x, pos.y, math.deg(angle), 0.25)
+    end
   end
 
-    local fg = gfx.image.new("images/environment/fg.png")
-    fg:draw(0, 0)
+  local fg = gfx.image.new("images/environment/fg.png")
+  fg:draw(0, 0)
 
   gfx.setLineWidth(1)
   gfx.setDitherPattern(0.5)

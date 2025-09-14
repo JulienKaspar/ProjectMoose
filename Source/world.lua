@@ -19,6 +19,7 @@ floor = nil
 left_wall = nil
 right_wall = nil
 peedee_toy = nil
+TOYS = {}
 
 local MASS_MIN <const> = 50
 local MASS_MAX <const> = 120
@@ -41,6 +42,11 @@ function Init_world()
 
   peedee_toy = Toy:new(nil, TOYS_INSTRUCTIONS.peedee, world)
   peedee_toy:move(geometry.vector2D.new(100, 50))
+  TOYS[#TOYS + 1] = peedee_toy
+
+  local monkey_toy = Toy:new(nil, TOYS_INSTRUCTIONS.monkey, world)
+  monkey_toy:move(geometry.vector2D.new(170, 140))
+  TOYS[#TOYS + 1] = monkey_toy
 
   -- Create floor
   floor = playbox.body.new(WORLD_WIDTH, WALL_WIDTH, 0)
