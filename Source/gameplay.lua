@@ -7,7 +7,8 @@ local maximum_strikes <const> = 3
 -- Gameplay state variables that should be reset
 
 GAMEPLAY_STATE = {
-    current_strikes = 1,
+    current_strikes = 0,
+    previous_strikes = 0,
 }
 
 import "world"
@@ -44,6 +45,7 @@ function Reset_gameplay()
     -- Done on every (re)start of the play.
     Reset_gameplay_entities()
     GAMEPLAY_STATE.current_strikes = 0
+    GAMEPLAY_STATE.previous_strikes = 0
 end
 
 
@@ -58,6 +60,7 @@ end
 
 
 function receive_strike()
+    GAMEPLAY_STATE.previous_strikes = GAMEPLAY_STATE.current_strikes
     GAMEPLAY_STATE.current_strikes += 1
     GAMEPLAY_STATE.current_strikes = Clamp(GAMEPLAY_STATE.current_strikes, 0, 3)
     kiddo_gets_mad()
@@ -65,6 +68,7 @@ end
 
 
 function receive_correct_toy()
+    GAMEPLAY_STATE.previous_strikes = GAMEPLAY_STATE.current_strikes
     GAMEPLAY_STATE.current_strikes -= 1
     GAMEPLAY_STATE.current_strikes = Clamp(GAMEPLAY_STATE.current_strikes, 0, 3)
     kiddo_is_pleased()
