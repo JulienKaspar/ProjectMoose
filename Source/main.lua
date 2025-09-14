@@ -56,5 +56,5 @@ function playdate.update()
 
     -- TODO: Once these are sprites, they can be drawn in the visuals.lua with Z draw passes like everything else
     draw_toys()
-    draw_claw()
+    -- draw_claw()
 end
