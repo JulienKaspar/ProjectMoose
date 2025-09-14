@@ -8,8 +8,8 @@ WORLD_WIDTH = 400
 WORLD_HEIGHT = 240
 WORLD_PIXEL_SCALE = 80
 local WALL_FRICTION <const> = 0.2
-local WALL_HEIGHT <const> = 3
-local PAD <const> = 5
+local WALL_WIDTH <const> = 50
+local PAD <const> = 10
 MAX_ANGLE = 0.5
 BOX_COUNT = 20
 
@@ -44,18 +44,18 @@ function Init_world()
 
   -- Create floor
   floor = playbox.body.new(WORLD_WIDTH, WALL_WIDTH, 0)
-  floor:setCenter(WORLD_WIDTH*0.5, WORLD_HEIGHT+PAD)
+  floor:setCenter(WORLD_WIDTH*0.5, WORLD_HEIGHT+WALL_WIDTH*0.5+PAD)
   floor:setFriction(WALL_FRICTION)
   world:addBody(floor)
 
   -- Create wall
   left_wall = playbox.body.new(WALL_WIDTH, WORLD_HEIGHT, 0)
-  left_wall:setCenter(0, WORLD_HEIGHT*0.5)
+  left_wall:setCenter(-WALL_WIDTH*0.5-2*PAD, WORLD_HEIGHT*0.5)
   left_wall:setFriction(WALL_FRICTION)
   world:addBody(left_wall)
 
   right_wall = playbox.body.new(WALL_WIDTH, WORLD_HEIGHT, 0)
-  right_wall:setCenter(WORLD_WIDTH, WORLD_HEIGHT*0.5)
+  right_wall:setCenter(WORLD_WIDTH+WALL_WIDTH*0.5+2*PAD, WORLD_HEIGHT*0.5)
   right_wall:setFriction(WALL_FRICTION)
   world:addBody(right_wall)
 
