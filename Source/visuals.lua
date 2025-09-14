@@ -7,6 +7,9 @@ local geometry <const> = playdate.geometry
 TEXTURES = {}
 ANIMATIONS = {}
 
+IMAGE_ROTATION_INCREMENT = 36
+IMAGE_SCALING = 0.25
+
 
 -- Debug / Development
 
@@ -167,24 +170,6 @@ local function draw_debug()
     draw_polygon(claw.ceiling)
 end
 
-function draw_toys()
-  for _, toy in ipairs(TOYS) do
-    for i, body in ipairs(toy.bodies) do
-      --- DEBUG boxes
-      local box_polygon = geometry.polygon.new(body:getPolygon())
-      box_polygon:close()
-      gfx.setColor(gfx.kColorWhite)
-      gfx.fillPolygon(box_polygon)
-
-      local image = toy.sprites[i]
-      local pos <const> = geometry.vector2D.new(body:getCenter())
-      --- Undo the initial rotation of the sprite
-      local angle <const> = body:getRotation() + math.rad(toy.initial_rotations[i])
-      image:drawRotated(pos.x, pos.y, math.deg(angle), 0.25)
-    end
-  end
-end
-
 
 -- Set a draw pass on Z depth
 
@@ -270,4 +255,20 @@ function Init_visuals()
     Set_draw_pass(20, draw_hud)
     Set_draw_pass(30, draw_debug)
     --Set_draw_pass(20, draw_test_dither_patterns)
+end
+
+function makeRotationImageTable(image)
+    local w, h = image:getSize()
+    local max_wh = math.floor(math.sqrt(w * w + h * h)) + 1
+    local image_table = gfx.imagetable.new(IMAGE_ROTATION_INCREMENT + 1, max_wh, max_wh)
+    local image_index = 0
+    for angle = 0 , 360, 360/IMAGE_ROTATION_INCREMENT do
+        image_index += 1
+        local rotated_image = gfx.image.new(max_wh, max_wh)
+        gfx.lockFocus(rotated_image)
+        image:drawRotated(max_wh/2, max_wh/2, angle, IMAGE_SCALING)
+        gfx.unlockFocus()
+        image_table:setImage(image_index, rotated_image)
+    end
+    return image_table
 end

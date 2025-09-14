@@ -186,10 +186,11 @@ function Toy.new(instr, world)
 end
 
 function Toy:init(instr, world)
-  self.sprites = {}
+  self.imagetables = {}
   self.bodies = {}
   self.initial_rotations = {}
   self.joints = {}
+  self.sprites = {}
   for _, body_instr in ipairs(instr.bodies) do
     local mass <const> = (body_instr.dimensions.x * body_instr.dimensions.y) * 0.025
     local body = playbox.body.new(body_instr.dimensions.x, body_instr.dimensions.y, mass)
@@ -197,9 +198,12 @@ function Toy:init(instr, world)
     body:setRotation(math.rad(body_instr.rotation))
     body:setFriction(100)
     world:addBody(body)
-    self.sprites[#self.sprites + 1] = body_instr.img
+    local image_table = makeRotationImageTable(body_instr.img)
+    self.imagetables[#self.imagetables + 1] = image_table
     self.bodies[#self.bodies + 1] = body
-    self.initial_rotations[#self.initial_rotations + 1] = body_instr.rotation 
+    self.initial_rotations[#self.initial_rotations + 1] = body_instr.rotation
+    self.sprites[#self.sprites + 1] = gfx.sprite.new()
+    self.sprites[#self.sprites]:add()
   end
   for _, joint_instr in ipairs(instr.joints) do
     local body1 = self.bodies[joint_instr.body1]
@@ -217,5 +221,22 @@ function Toy:move(offset)
     local pos = geo.vector2D.new(body:getCenter())
     pos = pos + offset
     body:setCenter(pos.x, pos.y)
+  end
+end
+
+function Toy:updateSprites()
+  for i, body in ipairs(self.bodies) do
+    local image_table = self.imagetables[i]
+    local pos <const> = geo.vector2D.new(body:getCenter())
+    --- Undo the initial rotation of the sprite
+    local angle = body:getRotation() + math.rad(self.initial_rotations[i])
+    while angle < 0.0 do
+      angle += 2.0 * math.pi
+    end
+    local angle_incr <const> = 360 / IMAGE_ROTATION_INCREMENT
+    local n = (math.floor(math.deg(angle) / angle_incr) % image_table:getLength()) + 1
+    local image = image_table:getImage(n)
+    self.sprites[i]:setImage(image)
+    self.sprites[i]:moveTo(pos.x, pos.y)
   end
 end

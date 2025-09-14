@@ -38,6 +38,9 @@ Enter_loading_screen()
 function playdate.update()
     -- Always redraw and update entities (sprites) and timers.
     gfx.clear()
+    for _, toy in ipairs(TOYS) do
+      toy:updateSprites()
+    end
     gfx.sprite.update()
     playdate.timer.updateTimers()
 
@@ -54,7 +57,4 @@ function playdate.update()
         local dt <const> = 1.0 / playdate.display.getRefreshRate()
         update(dt)
     end
-
-    -- TODO: Once these are sprites, they can be drawn in the visuals.lua with Z draw passes like everything else
-    draw_toys()
 end
