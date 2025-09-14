@@ -39,16 +39,32 @@ function Init_world()
   world:setPixelScale(WORLD_PIXEL_SCALE)
 
   peedee_toy = Toy.new(TOYS_INSTRUCTIONS.peedee, world)
-  peedee_toy:move(geometry.vector2D.new(100, 50))
+  peedee_toy:move(geometry.vector2D.new(80, 50))
   TOYS[#TOYS + 1] = peedee_toy
 
   local monkey_toy = Toy.new(TOYS_INSTRUCTIONS.monkey, world)
-  monkey_toy:move(geometry.vector2D.new(170, 140))
+  monkey_toy:move(geometry.vector2D.new(130, 140))
   TOYS[#TOYS + 1] = monkey_toy
 
   local mouse_toy = Toy.new(TOYS_INSTRUCTIONS.mouse, world)
-  mouse_toy:move(geometry.vector2D.new(250, 140))
+  mouse_toy:move(geometry.vector2D.new(180, 140))
   TOYS[#TOYS + 1] = mouse_toy
+
+  local toast_toy = Toy.new(TOYS_INSTRUCTIONS.toast, world)
+  toast_toy:move(geometry.vector2D.new(230, 140))
+  TOYS[#TOYS + 1] = toast_toy
+
+  local crab_toy = Toy.new(TOYS_INSTRUCTIONS.crab, world)
+  crab_toy:move(geometry.vector2D.new(270, 140))
+  TOYS[#TOYS + 1] = crab_toy
+
+  local cactus_toy = Toy.new(TOYS_INSTRUCTIONS.cactus, world)
+  cactus_toy:move(geometry.vector2D.new(300, 140))
+  TOYS[#TOYS + 1] = cactus_toy
+
+  local fish_toy = Toy.new(TOYS_INSTRUCTIONS.fish, world)
+  fish_toy:move(geometry.vector2D.new(330, 140))
+  TOYS[#TOYS + 1] = fish_toy
 
   -- Create floor
   floor = playbox.body.new(WORLD_WIDTH, WALL_WIDTH, 0)

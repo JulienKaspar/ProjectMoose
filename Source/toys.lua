@@ -83,67 +83,98 @@ TOYS_INSTRUCTIONS = {
     }
   },
   toast = {
-    collision_main = {
-      position = geo.vector2D.new(0, 0),
-      rotation = -3.29623,
-      dimensions = geo.vector2D.new(69.6, 54.5),
+    bodies = {
+      {
+        position = geo.vector2D.new(0, 0),
+        rotation = -3.29623,
+        dimensions = geo.vector2D.new(69.6, 54.5),
+        img = gfx.image.new("images/toys/toast.png"),
+      }
     },
+    joints = {}
   },
   crab = {
-    sprite_claw_right = {
-      position = geo.vector2D.new(4, 0),
+    -- sprite_claw_right = {
+    --   position = geo.vector2D.new(4, 0),
+    -- },
+    bodies = {
+      {
+        position = geo.vector2D.new(1, 10),
+        rotation = -1.75174,
+        dimensions = geo.vector2D.new(44.7, 24.8),
+        img = gfx.image.new("images/toys/crab_main.png"),
+      },
+      {
+        position = geo.vector2D.new(31, -11),
+        rotation = 42.7352,
+        dimensions = geo.vector2D.new(20.5, 20.6),
+        img = gfx.image.new("images/toys/crab_claw_right.png"),
+      },
+      {
+        position = geo.vector2D.new(-31, -13),
+        rotation = -37.8537,
+        dimensions = geo.vector2D.new(22.6, 20),
+        img = gfx.image.new("images/toys/crab_claw_left.png"),
+      }
     },
-    collision_main = {
-      position = geo.vector2D.new(1, 10),
-      rotation = -1.75174,
-      dimensions = geo.vector2D.new(44.7, 24.8),
-    },
-    collision_claw_right = {
-      position = geo.vector2D.new(31, -11),
-      rotation = 42.7352,
-      dimensions = geo.vector2D.new(20.5, 20.6),
-    },
-    collision_claw_left = {
-      position = geo.vector2D.new(-31, -13),
-      rotation = -37.8537,
-      dimensions = geo.vector2D.new(22.6, 20),
-    },
-    anchor_claw_right = {
-      position = geo.vector2D.new(22, -2),
-    },
-    anchor_claw_left = {
-      position = geo.vector2D.new(-18, -1),
-    },
+    joints = {
+      {
+        body1 = 1,
+        body2 = 2,
+        position = geo.vector2D.new(22, -2),
+      },
+      {
+        body1 = 1,
+        body2 = 3,
+        position = geo.vector2D.new(-18, -1),
+      },
+    }
   },
   cactus = {
-    collision_main = {
-      position = geo.vector2D.new(2, 1),
-      rotation = -15.7791,
-      dimensions = geo.vector2D.new(14.9, 41.7),
+    bodies = {
+      {
+        position = geo.vector2D.new(2, 1),
+        rotation = -15.7791,
+        dimensions = geo.vector2D.new(14.9, 41.7),
+        img = gfx.image.new("images/toys/cactus_main.png"),
+      },
+      {
+        position = geo.vector2D.new(-11, -13),
+        rotation = 30.7259,
+        dimensions = geo.vector2D.new(11.9, 12.1),
+        img = gfx.image.new("images/toys/cactus_arm.png"),
+      }
     },
-    collision_arm = {
-      position = geo.vector2D.new(-11, -13),
-      rotation = 30.7259,
-      dimensions = geo.vector2D.new(11.9, 12.1),
-    },
-    anchor_arm = {
-      position = geo.vector2D.new(-6, -11),
-    },
+    joints = {
+      {
+        body1 = 1,
+        body2 = 2,
+        position = geo.vector2D.new(-6, -11),
+      }
+    }
   },
   fish = {
-    collision_main = {
-      position = geo.vector2D.new(-9, 4),
-      rotation = -6.10786,
-      dimensions = geo.vector2D.new(25.5, 21.5),
+    bodies = {
+      {
+        position = geo.vector2D.new(-9, 4),
+        rotation = -6.10786,
+        dimensions = geo.vector2D.new(25.5, 21.5),
+        img = gfx.image.new("images/toys/fish_main.png"),
+      },
+      {
+        position = geo.vector2D.new(13, -9),
+        rotation = -46.1007,
+        dimensions = geo.vector2D.new(21.9, 11.5),
+        img = gfx.image.new("images/toys/fish_tail.png"),
+      }
     },
-    collision_tail = {
-      position = geo.vector2D.new(13, -9),
-      rotation = -46.1007,
-      dimensions = geo.vector2D.new(21.9, 11.5),
-    },
-    anchor_tail = {
-      position = geo.vector2D.new(3, -3),
-    },
+    joints = {
+      {
+        body1 = 1,
+        body2 = 2,
+        position = geo.vector2D.new(3, -3),
+      }
+    }
   },
 }
 
