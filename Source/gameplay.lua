@@ -56,9 +56,8 @@ end
 function try_ending_game()
     if GAMEPLAY_STATE.current_strikes >= maximum_strikes then
         Enter_game_over_screen()
-    -- NOTE: Commentented out until we have an actual win condition
-    -- elseif GAMEPLAY_STATE.current_strikes < 0 then
-    --     Enter_win_screen()
+    elseif #TOYS == 0 then
+        Enter_win_screen()
     end
 end
 
