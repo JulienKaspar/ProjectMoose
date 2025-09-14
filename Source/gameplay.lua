@@ -129,7 +129,8 @@ function draw()
     image:drawRotated(pos.x, pos.y, math.deg(angle), 0.25)
   end
 
-
+    local fg = gfx.image.new("images/environment/fg.png")
+    fg:draw(0, 0)
 
   gfx.setLineWidth(1)
   gfx.setDitherPattern(0.5)
