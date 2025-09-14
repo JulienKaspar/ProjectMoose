@@ -259,7 +259,8 @@ end
 
 function makeRotationImageTable(image)
     local w, h = image:getSize()
-    local max_wh = math.floor(math.sqrt(w * w + h * h)) + 1
+    local sw, sh = w / 4, h / 4
+    local max_wh = math.floor(math.sqrt(sw * sw + sh * sh)) + 1
     local image_table = gfx.imagetable.new(IMAGE_ROTATION_INCREMENT + 1, max_wh, max_wh)
     local image_index = 0
     for angle = 0 , 360, 360/IMAGE_ROTATION_INCREMENT do
