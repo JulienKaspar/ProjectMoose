@@ -83,6 +83,13 @@ int playbox_body_setCenter(lua_State* L) {
   return 0;
 }
 
+int playbox_body_moveBy(lua_State* L) {
+  PBBody* body = getBodyArg(1);
+  body->position.x += pd->lua->getArgFloat(2) * PIXEL_WORLD_SCALE;
+  body->position.y += pd->lua->getArgFloat(3) * PIXEL_WORLD_SCALE;
+  return 0;
+}
+
 int playbox_body_setRotation(lua_State* L) {
   PBBody* body = getBodyArg(1);
   body->rotation = pd->lua->getArgFloat(2);
@@ -221,6 +228,7 @@ static const lua_reg bodyClass[] = {
 { "__gc", playbox_body_delete },
 { "addForce", playbox_body_addForce },
 { "setCenter", playbox_body_setCenter },
+{ "moveBy", playbox_body_moveBy },
 { "getCenter", playbox_body_getCenter },
 { "setRotation", playbox_body_setRotation },
 { "getRotation", playbox_body_getRotation },

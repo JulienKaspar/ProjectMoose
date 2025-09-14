@@ -34,7 +34,7 @@ function Init_gameplay()
     -- Done only once on start of the game, to load and setup const resources.
 
     playdate.startAccelerometer()
-    move_claw_down()
+    claw:move_down()
 end
 
 
@@ -49,7 +49,7 @@ function Reset_gameplay()
     Reset_gameplay_entities()
     GAMEPLAY_STATE.current_strikes = 0
     GAMEPLAY_STATE.previous_strikes = 0
-    move_claw_down()
+    claw:move_down()
 end
 
 
@@ -99,7 +99,7 @@ end
 
 function check_toys_got_out()
   local cx, cy = claw.ceiling:getCenter()
-  if claw_is_moving_up() and cy < -270 then
+  if claw_is_moving_up() and cy < CEILING_DETECTION_HEIGHT then
     local got_right_toy = false
     for i, toy in ipairs(TOYS) do
       local _, y = toy.bodies[1]:getCenter()
@@ -124,7 +124,7 @@ function check_toys_got_out()
     else
       receive_correct_toy()
     end
-    move_claw_down()
+    claw:move_down()
   end
 end
 
@@ -139,12 +139,7 @@ function update(dt)
     local gravityX, gravityY, _ = pd.readAccelerometer()
     angle = Clamp(math.atan2(gravityX, gravityY), -MAX_ANGLE, MAX_ANGLE)
 
-    claw:update(angle)
-
-    if playdate.buttonIsPressed(playdate.kButtonUp) then
-        claw:moveVertical(-4)
-        move_claw_up()
-    end
+    claw:update(dt)
 
   -- TODO: limit resolution
     if angle ~= world_angle then

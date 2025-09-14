@@ -5,8 +5,9 @@ local gfxi <const> = playdate.graphics.image
 local geometry <const> = playdate.geometry
 
 local WORLD_CENTER_X <const> = 200
-local CEILING_HEIGHT <const> = -290
+local CEILING_HEIGHT <const> = -299
 CEILING_HEIGHT_MIN = -300
+CEILING_DETECTION_HEIGHT = -270
 local CEILING_HEIGHT_MAX <const> = -25
 local CABLE_LENGTH <const> = 226
 local CLAW_LENGTH <const> = 40
@@ -89,7 +90,8 @@ class('Claw').extends()
 function Claw:init(ZIndex)
     Claw.super.init(self)
 
-    self.speed = 15
+    self.timer = 0.0
+    self.speed = 15.0
 
     -- Ceiling
     self.ceiling = pb.body.new(2*WORLD_WIDTH, WALL_WIDTH, 0)
@@ -160,21 +162,43 @@ function claw_is_moving_down()
     return GAMEPLAY_STATE.claw_movement == 'down'
 end
 
-function move_claw_up()
-   GAMEPLAY_STATE.claw_movement = 'up'
+function Claw:moveBy(x, y)
+   self.ceiling:moveBy(x, y)
+   self.left:moveBy(x, y)
+   self.right:moveBy(x, y)
+   self.joint.center:moveBy(x, y)
 end
 
-function move_claw_down()
-   GAMEPLAY_STATE.claw_movement = 'down'
-end
 
-function stop_claw()
+function Claw:stop()
     GAMEPLAY_STATE.claw_movement = 'stopped'
 end
 
-function Claw:update(angle)
-    if claw_is_moving_down() then
-        claw:moveVertical(1)
+function Claw:move_up()
+   self:moveVertical(-4)
+   GAMEPLAY_STATE.claw_movement = 'up'
+end
+
+function Claw:move_down()
+   -- Reset timer
+   self.timer = 0.0
+
+   -- Start from a random location
+   local x, _ = self.ceiling:getCenter()
+   local target_x = (math.random() * 200) + 100
+   local dx = target_x - x
+   self:moveBy(dx, 0)
+
+   -- Set state
+   GAMEPLAY_STATE.claw_movement = 'down'
+end
+
+function Claw:update(dt)
+    if (self.timer * self.speed) > (CEILING_HEIGHT_MAX - CEILING_DETECTION_HEIGHT) then
+        self:move_up()
+    elseif claw_is_moving_down() then
+        self.timer += dt
+        self:moveVertical(1)
     end
 
     -- Clamp position

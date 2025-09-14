@@ -10,7 +10,7 @@ WORLD_PIXEL_SCALE = 80
 local WALL_FRICTION <const> = 0.2
 WALL_WIDTH = 50
 local PAD <const> = 10
-MAX_ANGLE = 0.5
+MAX_ANGLE = 0.3
 BOX_COUNT = 20
 
 world = nil
