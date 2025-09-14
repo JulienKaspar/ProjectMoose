@@ -24,6 +24,7 @@ local function add_system_menu_entries()
     end)
     local menuItem, error = menu:addMenuItem("main menu", function()
         Enter_menu_main()
+        Reset_gameplay()
     end)
 end
 
@@ -43,7 +44,6 @@ function Enter_menu_main()
     MENU_STATE.screen = MENU_SCREEN.main
 
     remove_system_menu_entries()
-    Reset_gameplay()
 
     SOUND.bg_loop_gameplay:stop()
 
