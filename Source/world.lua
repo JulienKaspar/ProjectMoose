@@ -137,14 +137,17 @@ function Reset_gameplay_entities()
 
   add_fg_boxes()
 
+  local wall_height <const> = WORLD_HEIGHT - CEILING_HEIGHT_MIN
+  print(wall_height)
+
   -- Create wall
-  left_wall = playbox.body.new(WALL_WIDTH, WORLD_HEIGHT, 0)
-  left_wall:setCenter(-WALL_WIDTH * 0.5 - 2 * PAD, WORLD_HEIGHT * 0.5)
+  left_wall = playbox.body.new(WALL_WIDTH, wall_height, 0)
+  left_wall:setCenter(-WALL_WIDTH * 0.5 - 2 * PAD, wall_height * 0.5)
   left_wall:setFriction(WALL_FRICTION)
   world:addBody(left_wall)
 
-  right_wall = playbox.body.new(WALL_WIDTH, WORLD_HEIGHT, 0)
-  right_wall:setCenter(WORLD_WIDTH + WALL_WIDTH * 0.5 + 2 * PAD, WORLD_HEIGHT * 0.5)
+  right_wall = playbox.body.new(WALL_WIDTH, wall_height, 0)
+  right_wall:setCenter(WORLD_WIDTH + WALL_WIDTH * 0.5 + 2 * PAD, wall_height * 0.5)
   right_wall:setFriction(WALL_FRICTION)
   world:addBody(right_wall)
 

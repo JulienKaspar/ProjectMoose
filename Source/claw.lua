@@ -6,7 +6,7 @@ local geometry <const> = playdate.geometry
 
 local WORLD_CENTER_X <const> = 200
 local CEILING_HEIGHT <const> = -290
-local CEILING_HEIGHT_MIN <const> = -300
+CEILING_HEIGHT_MIN = -300
 local CEILING_HEIGHT_MAX <const> = -25
 local CABLE_LENGTH <const> = 226
 local CLAW_LENGTH <const> = 40
