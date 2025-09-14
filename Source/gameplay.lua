@@ -32,6 +32,7 @@ function Init_gameplay()
     -- Done only once on start of the game, to load and setup const resources.
 
     playdate.startAccelerometer()
+    Reset_gameplay_entities()
 end
 
 
@@ -43,7 +44,7 @@ end
 
 function Reset_gameplay()
     -- Done on every (re)start of the play.
-
+    Reset_gameplay_entities()
     GAMEPLAY_STATE.example = false
     GAMEPLAY_STATE.current_strikes = 0
 end

@@ -23,8 +23,8 @@ local function initialize()
     math.randomseed(playdate.getSecondsSinceEpoch())
 
     -- Init all the things!
-    Init_gameplay()
     Init_world()
+    Init_gameplay()
     Init_visuals()
     Init_menus()
     Init_sounds()

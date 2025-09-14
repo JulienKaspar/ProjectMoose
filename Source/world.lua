@@ -31,12 +31,44 @@ function draw_polygon(object)
 end
 
 function Init_world()
-  -- Setup background color
-  gfx.setBackgroundColor(gfx.kColorBlack)
+  Reset_gameplay_entities()
+end
 
+
+function Reset_gameplay_entities()
+  -- Remove all entities if needed
+  if world then
+    world = nil
+    claw = nil
+    floor = nil
+    left_wall = nil
+    right_wall = nil
+    peedee_toy = nil
+    TOYS = {}
+  end
+  
   -- Create world
   world = playbox.world.new(0.0, 9.81, 10)
   world:setPixelScale(WORLD_PIXEL_SCALE)
+
+  -- Create floor
+  floor = playbox.body.new(WORLD_WIDTH, WALL_WIDTH, 0)
+  floor:setCenter(WORLD_WIDTH * 0.5, WORLD_HEIGHT + WALL_WIDTH * 0.5 + PAD)
+  floor:setFriction(WALL_FRICTION)
+  world:addBody(floor)
+
+  -- Create wall
+  left_wall = playbox.body.new(WALL_WIDTH, WORLD_HEIGHT, 0)
+  left_wall:setCenter(-WALL_WIDTH * 0.5 - 2 * PAD, WORLD_HEIGHT * 0.5)
+  left_wall:setFriction(WALL_FRICTION)
+  world:addBody(left_wall)
+
+  right_wall = playbox.body.new(WALL_WIDTH, WORLD_HEIGHT, 0)
+  right_wall:setCenter(WORLD_WIDTH + WALL_WIDTH * 0.5 + 2 * PAD, WORLD_HEIGHT * 0.5)
+  right_wall:setFriction(WALL_FRICTION)
+  world:addBody(right_wall)
+
+  -- Create all entities
 
   peedee_toy = Toy.new(TOYS_INSTRUCTIONS.peedee, world)
   peedee_toy:move(geometry.vector2D.new(80, 50))
@@ -65,23 +97,6 @@ function Init_world()
   local fish_toy = Toy.new(TOYS_INSTRUCTIONS.fish, world)
   fish_toy:move(geometry.vector2D.new(330, 140))
   TOYS[#TOYS + 1] = fish_toy
-
-  -- Create floor
-  floor = playbox.body.new(WORLD_WIDTH, WALL_WIDTH, 0)
-  floor:setCenter(WORLD_WIDTH * 0.5, WORLD_HEIGHT + WALL_WIDTH * 0.5 + PAD)
-  floor:setFriction(WALL_FRICTION)
-  world:addBody(floor)
-
-  -- Create wall
-  left_wall = playbox.body.new(WALL_WIDTH, WORLD_HEIGHT, 0)
-  left_wall:setCenter(-WALL_WIDTH * 0.5 - 2 * PAD, WORLD_HEIGHT * 0.5)
-  left_wall:setFriction(WALL_FRICTION)
-  world:addBody(left_wall)
-
-  right_wall = playbox.body.new(WALL_WIDTH, WORLD_HEIGHT, 0)
-  right_wall:setCenter(WORLD_WIDTH + WALL_WIDTH * 0.5 + 2 * PAD, WORLD_HEIGHT * 0.5)
-  right_wall:setFriction(WALL_FRICTION)
-  world:addBody(right_wall)
 
   -- Create claw
   claw = Claw.new()
