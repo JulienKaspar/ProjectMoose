@@ -72,7 +72,6 @@ function Enter_gameplay()
 
     SOUND.bg_loop_menu:stop()
     add_system_menu_entries()
-    Reset_gameplay()
 end
 
 
@@ -115,10 +114,12 @@ function Handle_menu_input()
         if playdate.buttonJustPressed( playdate.kButtonA ) then
             SOUND.menu_confirm:play()
             Enter_gameplay()
+            Reset_gameplay()
         end
         if playdate.buttonJustPressed( playdate.kButtonB ) then
             SOUND.menu_confirm:play()
             Enter_menu_start()
+            Reset_gameplay()
         end
 
     elseif MENU_STATE.screen == MENU_SCREEN.start then

@@ -52,7 +52,6 @@ end
 
 function try_ending_game()
     if GAMEPLAY_STATE.current_strikes >= maximum_strikes then
-        Reset_gameplay()
         Enter_game_over_screen()
     end
 end
