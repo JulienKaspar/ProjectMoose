@@ -136,13 +136,21 @@ TOYS_INSTRUCTIONS = {
   },
 }
 
-Toy = { bodies = {}, joints = {}, sprites = {}, initial_rotations = {}}
+class('Toy').extends()
 
 -- Base class method new
-function Toy:new(o, instr, world)
+function Toy.new(instr, world)
+  return Toy(instr, world)
+end
+
+function Toy:init(instr, world)
   o = o or {}
   setmetatable(o, self)
   self.__index = self
+  self.sprites = {}
+  self.bodies = {}
+  self.initial_rotations = {}
+  self.joints = {}
   for _, body_instr in ipairs(instr.bodies) do
     local mass <const> = (body_instr.dimensions.x * body_instr.dimensions.y) * 0.025
     local body = playbox.body.new(body_instr.dimensions.x, body_instr.dimensions.y, mass)

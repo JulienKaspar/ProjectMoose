@@ -125,7 +125,7 @@ end
 
 
 function draw_toys()
-    for _, toy in ipairs(TOYS) do
+  for _, toy in ipairs(TOYS) do
     for i, body in ipairs(toy.bodies) do
       --- DEBUG boxes
       local box_polygon = geometry.polygon.new(body:getPolygon())

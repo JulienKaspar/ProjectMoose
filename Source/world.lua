@@ -40,13 +40,17 @@ function Init_world()
   world = playbox.world.new(0.0, 9.81, 10)
   world:setPixelScale(WORLD_PIXEL_SCALE)
 
-  peedee_toy = Toy:new(nil, TOYS_INSTRUCTIONS.peedee, world)
+  peedee_toy = Toy.new(TOYS_INSTRUCTIONS.peedee, world)
   peedee_toy:move(geometry.vector2D.new(100, 50))
   TOYS[#TOYS + 1] = peedee_toy
 
-  local monkey_toy = Toy:new(nil, TOYS_INSTRUCTIONS.monkey, world)
-  monkey_toy:move(geometry.vector2D.new(50, 140))
+  local monkey_toy = Toy.new(TOYS_INSTRUCTIONS.monkey, world)
+  monkey_toy:move(geometry.vector2D.new(170, 140))
   TOYS[#TOYS + 1] = monkey_toy
+
+  local mouse_toy = Toy.new(TOYS_INSTRUCTIONS.mouse, world)
+  mouse_toy:move(geometry.vector2D.new(250, 140))
+  TOYS[#TOYS + 1] = mouse_toy
 
   -- Create floor
   floor = playbox.body.new(WORLD_WIDTH, WALL_WIDTH, 0)
