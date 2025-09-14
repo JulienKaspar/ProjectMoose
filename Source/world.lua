@@ -100,5 +100,5 @@ function Reset_gameplay_entities()
   TOYS[#TOYS + 1] = fish_toy
 
   -- Create claw
-  claw = Claw(21)
+  claw = Claw(-20)
 end
