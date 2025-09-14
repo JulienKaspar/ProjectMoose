@@ -78,28 +78,30 @@ end
 -- Draw & Update
 
 local function draw_ui()
-    if MENU_STATE.screen == MENU_SCREEN.gameplay then
-        return
-    end
-
     -- Hide all elements before showing only the ones that are required
     for k, anim in pairs(UI_ANIMATIONS) do
         anim:setVisible(false)
     end
-
-    -- Draw and show menu elements.
     
-    if MENU_STATE.screen == MENU_SCREEN.loading then
+    -- Draw and show menu elements.
+    if MENU_STATE.screen == MENU_SCREEN.gameplay then
+        return
+
+    elseif MENU_STATE.screen == MENU_SCREEN.loading then
         UI_ANIMATIONS.loading:setVisible(true)
+    
     elseif MENU_STATE.screen == MENU_SCREEN.start then
         UI_ANIMATIONS.logo:setVisible(true)
-        UI_TEXTURES.start:draw(0, 0)
+        -- UI_TEXTURES.start:draw(0, 0)
+    
     elseif MENU_STATE.screen == MENU_SCREEN.main then
         UI_ANIMATIONS.logo:setVisible(true)
-        UI_TEXTURES.main:draw(0, 0)
+        -- UI_TEXTURES.main:draw(0, 0)
         UI_TEXTURES.startgame_credits_indicator:draw(191, 9)
+    
     elseif MENU_STATE.screen == MENU_SCREEN.credits then
         UI_TEXTURES.credits:draw(0, 0)
+    
     elseif MENU_STATE.screen == MENU_SCREEN.gameover then
         UI_TEXTURES.gameover:draw(0, 0)
     end
@@ -191,6 +193,7 @@ function Init_menus()
     MENU_STATE.screen = MENU_SCREEN.start
 
     -- Set the multiple things in their Z order of what overlaps what.
+    
     Set_draw_pass(100, draw_ui) -- UI goes on top of everything.
     UI_ANIMATIONS.logo:setZIndex(110)
     UI_ANIMATIONS.loading:setZIndex(200)

@@ -24,10 +24,10 @@ local function initialize()
 
     -- Init all the things!
     Init_gameplay()
+    Init_world()
     Init_visuals()
     Init_menus()
     Init_sounds()
-    Init_world()
 end
 
 initialize()
@@ -51,6 +51,9 @@ function playdate.update()
         -- In gameplay.
         local dt <const> = 1.0 / playdate.display.getRefreshRate()
         update(dt)
-        draw_gameplay()
     end
+
+    -- TODO: Once these are sprites, they can be drawn in the visuals.lua with Z draw passes like everything else
+    draw_toys()
+    draw_claw()
 end
