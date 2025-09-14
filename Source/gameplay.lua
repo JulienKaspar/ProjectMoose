@@ -166,6 +166,9 @@ function update(dt)
 end
 
 function playdate.cranked(change, acceleratedChange)
+  if #TOYS <= 0 then
+    return
+  end
   local ang_vel = selected_toy.bodies[1]:getAngularVelocity()
   -- local alpha <const> = 10
   -- ang_vel += 0.5 * (acceleratedChange * alpha / (1 + math.abs(acceleratedChange * alpha))) + 0.5
