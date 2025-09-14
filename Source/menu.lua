@@ -44,6 +44,8 @@ function Enter_menu_main()
 
     remove_system_menu_entries()
 
+    SOUND.bg_loop_gameplay:stop()
+
     if not SOUND.bg_loop_menu:isPlaying() then
         SOUND.bg_loop_menu:play(0)
     end
@@ -74,6 +76,10 @@ function Enter_gameplay()
     MENU_STATE.screen = MENU_SCREEN.gameplay
 
     SOUND.bg_loop_menu:stop()
+    
+    if not SOUND.bg_loop_gameplay:isPlaying() then
+        SOUND.bg_loop_gameplay:play(0)
+    end
     add_system_menu_entries()
 end
 
@@ -115,7 +121,7 @@ function Handle_menu_input()
     if MENU_STATE.screen == MENU_SCREEN.gameover
     or MENU_STATE.screen == MENU_SCREEN.win then
         if playdate.buttonJustPressed( playdate.kButtonA ) then
-            SOUND.menu_confirm:play()
+            SOUND.button_accept:play()
             Enter_gameplay()
             Reset_gameplay()
         end
@@ -141,7 +147,7 @@ function Handle_menu_input()
         end
     elseif MENU_STATE.screen == MENU_SCREEN.how_to then
         if playdate.buttonJustPressed( playdate.kButtonA ) then
-            SOUND.menu_confirm:play()
+            SOUND.button_accept:play()
             Enter_gameplay()
         end
     end
