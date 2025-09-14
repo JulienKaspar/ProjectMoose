@@ -5,7 +5,7 @@ local gfxi <const> = playdate.graphics.image
 local gfxit <const> = playdate.graphics.imagetable
 
 MENU_STATE = {}
-MENU_SCREEN = { gameplay = 0, gameover = 1, start = 2, main = 3, credits = 4, loading = 5, }
+MENU_SCREEN = { gameplay = 0, gameover = 1, how_to = 2, main = 3, credits = 4, loading = 5, }
 local UI_TEXTURES = {}
 local UI_ANIMATIONS = {}
 
@@ -23,7 +23,7 @@ local function add_system_menu_entries()
         Reset_gameplay()
     end)
     local menuItem, error = menu:addMenuItem("main menu", function()
-        Enter_menu_start()
+        Enter_menu_main()
     end)
 end
 
@@ -39,20 +39,14 @@ function Enter_loading_screen()
 end
 
 
-function Enter_menu_start()
-    MENU_STATE.screen = MENU_SCREEN.start
+function Enter_menu_main()
+    MENU_STATE.screen = MENU_SCREEN.main
 
     remove_system_menu_entries()
-    Stop_gameplay()
 
     if not SOUND.bg_loop_menu:isPlaying() then
         SOUND.bg_loop_menu:play(0)
     end
-end
-
-
-local function enter_menu_main()
-    MENU_STATE.screen = MENU_SCREEN.main
 end
 
 
@@ -91,13 +85,8 @@ local function draw_ui()
     elseif MENU_STATE.screen == MENU_SCREEN.loading then
         UI_ANIMATIONS.loading:setVisible(true)
     
-    elseif MENU_STATE.screen == MENU_SCREEN.start then
-        UI_ANIMATIONS.logo:setVisible(true)
-        -- UI_TEXTURES.start:draw(0, 0)
-    
     elseif MENU_STATE.screen == MENU_SCREEN.main then
         UI_ANIMATIONS.logo:setVisible(true)
-        -- UI_TEXTURES.main:draw(0, 0)
         UI_TEXTURES.startgame_credits_indicator:draw(191, 9)
     
     elseif MENU_STATE.screen == MENU_SCREEN.credits then
@@ -118,30 +107,23 @@ function Handle_menu_input()
         end
         if playdate.buttonJustPressed( playdate.kButtonB ) then
             SOUND.menu_confirm:play()
-            Enter_menu_start()
+            Enter_menu_main()
             Reset_gameplay()
         end
 
-    elseif MENU_STATE.screen == MENU_SCREEN.start then
-        -- Select an Option.
-        if playdate.buttonJustReleased( playdate.kButtonA ) then
-            SOUND.menu_confirm:play()
-            enter_menu_main()
-        end
-
     elseif MENU_STATE.screen == MENU_SCREEN.main then
-        if playdate.buttonJustReleased( playdate.kButtonA ) then
+        if playdate.buttonJustPressed( playdate.kButtonA ) then
             SOUND.menu_confirm:play()
             Enter_gameplay()
-        elseif playdate.buttonJustReleased( playdate.kButtonB ) then
+        elseif playdate.buttonJustPressed( playdate.kButtonB ) then
             SOUND.menu_confirm:play()
             enter_menu_credits()
         end
 
     elseif MENU_STATE.screen == MENU_SCREEN.credits then
-        if playdate.buttonJustReleased( playdate.kButtonB ) then
+        if playdate.buttonJustPressed( playdate.kButtonB ) then
             SOUND.menu_confirm:play()
-            enter_menu_main()
+            Enter_menu_main()
         end
     end
 end
@@ -149,7 +131,7 @@ end
 
 function onLoadingScreenFinished()
     UI_ANIMATIONS.loading:setVisible(false)
-    Enter_menu_start()
+    Enter_menu_main()
 end
 
 
@@ -187,14 +169,12 @@ function Init_menus()
     UI_ANIMATIONS.logo:playAnimation()
     UI_ANIMATIONS.logo:moveTo(112,83)
 
-    UI_TEXTURES.game_over_indicator = gfxi.new("images/menus/menu_text/one_more_try_nah")
-    UI_TEXTURES.start = gfxi.new("images/start_screen_temp.png")
-    UI_TEXTURES.main = gfxi.new("images/environment/game_mockups.png")
-    UI_TEXTURES.credits = gfxi.new("images/credits_temp.png")
     UI_TEXTURES.startgame_credits_indicator = gfxi.new("images/menus/menu_text/startgame_credits_indicator")
+    UI_TEXTURES.credits = gfxi.new("images/menus/menu_text/credits_overlay")
+    UI_TEXTURES.game_over_indicator = gfxi.new("images/menus/menu_text/one_more_try_nah")
 
     
-    MENU_STATE.screen = MENU_SCREEN.start
+    MENU_STATE.screen = MENU_SCREEN.main
 
     -- Set the multiple things in their Z order of what overlaps what.
 
