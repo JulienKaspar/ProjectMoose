@@ -91,8 +91,8 @@ int playbox_body_setRotation(lua_State* L) {
 
 int playbox_body_setVelocity(lua_State* L) {
   PBBody* body = getBodyArg(1);
-  body->velocity.x = pd->lua->getArgFloat(2);
-  body->velocity.y = pd->lua->getArgFloat(3);
+  body->velocity.x = pd->lua->getArgFloat(2) * PIXEL_WORLD_SCALE;
+  body->velocity.y = pd->lua->getArgFloat(3) * PIXEL_WORLD_SCALE;
   return 0;
 }
 

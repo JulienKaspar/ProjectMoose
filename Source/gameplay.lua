@@ -60,16 +60,10 @@ function Handle_input()
     end
 end
 
-function move_down(claw)
-    local claw_x, claw_y = claw:getCenter()
-    local vel_x = math.sin(world_angle) * 0.3
-    local vel_y = math.cos(world_angle) * 0.3
-    claw:setVelocity(vel_x, vel_y)
-end
-
 function update(dt)
     world:update(dt)
 
+    -- TODO(weizhen): stop reading the accelerometer if moving?
     local gravityX, gravityY, _ = playdate.readAccelerometer()
     angle = Clamp(math.atan2(gravityX, gravityY), -MAX_ANGLE, MAX_ANGLE)
     claw:setRotation(angle)
@@ -83,11 +77,9 @@ function update(dt)
     end
 
     if moving then
-        move_down(claw)
+        claw:moveVertical(world_angle)
     else
-        local new_x = Clamp((target_x - claw_x), -dt*15, dt*15) + claw_x
-        new_x = Clamp(new_x, 0, WORLD_WIDTH)
-        claw:setCenter(new_x, claw_y)
+        claw:moveHorizontalTo(target_x, dt)
     end
 
   -- TODO: limit resolution
@@ -113,14 +105,9 @@ function draw()
     local bg = gfx.image.new("images/environment/bg.png")
     bg:draw(0, 0)
 
-  -- Draw claw
-  local claw_image = gfx.image.new("images/claw/temp_claw.png")
-  local x, y = claw:getCenter()
-  local angle = -claw:getRotation() * 180 / math.pi
-  claw_image:drawRotated(x, y, angle)
+    -- Draw claw
+    claw:draw("images/claw/temp_claw.png")
 
-  gfx.setColor(gfx.kColorWhite)
-  gfx.fillCircleAtPoint(x, y, 10)
 
   -- Draw environment
   draw_polygon(floor)

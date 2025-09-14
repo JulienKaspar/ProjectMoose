@@ -2,6 +2,7 @@ local gfx <const> = playdate.graphics
 local geometry <const> = playdate.geometry
 
 import "toys"
+import "claw"
 
 WORLD_WIDTH = 400
 WORLD_HEIGHT = 240
@@ -59,8 +60,5 @@ function Init_world()
   world:addBody(right_wall)
 
   -- Create claw
-  claw = playbox.body.new(0, 0, 0)
-  claw:setCenter(WORLD_WIDTH*0.5, 0)
-  claw:setFriction(CLAW_FRICTION)
-  world:addBody(claw)
+  claw = Claw.new()
 end
