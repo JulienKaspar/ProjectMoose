@@ -1,9 +1,13 @@
+import 'AnimatedSprite'
+
 local gfx <const> = playdate.graphics
 local gfxi <const> = playdate.graphics.image
+local gfxit <const> = playdate.graphics.imagetable
 
 MENU_STATE = {}
-MENU_SCREEN = { gameplay = 0, gameover = 1, start = 2, main = 3, credits = 4 }
+MENU_SCREEN = { gameplay = 0, gameover = 1, start = 2, main = 3, credits = 4, loading = 5, }
 local UI_TEXTURES = {}
+local UI_ANIMATIONS = {}
 
 
 -- System Menu
@@ -29,6 +33,12 @@ end
 
 
 -- Menu State Transitions
+
+function Enter_loading_screen()
+    MENU_STATE.screen = MENU_SCREEN.loading
+    UI_ANIMATIONS.loading:setVisible(true)
+end
+
 
 function Enter_menu_start()
     MENU_STATE.screen = MENU_SCREEN.start
@@ -131,7 +141,29 @@ function Handle_menu_input()
 end
 
 
+function onLoadingScreenFinished()
+    UI_ANIMATIONS.loading:setVisible(false)
+    Enter_menu_start()
+end
+
+
 function Init_menus()
+
+    -- Imagetables for animations
+    local image_table_loading = gfxit.new("images/menus/start_anim/start_anim")
+    UI_ANIMATIONS.loading = AnimatedSprite.new(image_table_loading)
+    UI_ANIMATIONS.loading:addState(
+            "main",
+            1,
+            image_table_loading:getLength(),
+            {
+                tickStep = 2.0,
+                loop = false,
+                onAnimationEndEvent = function (self) onLoadingScreenFinished() end
+            }
+        ).asDefault()
+    UI_ANIMATIONS.loading:playAnimation()
+    UI_ANIMATIONS.loading:moveTo(200,120)
 
     UI_TEXTURES.gameover = gfxi.new("images/gameover_temp.png")
     UI_TEXTURES.start = gfxi.new("images/start_screen_temp.png")
@@ -144,4 +176,5 @@ function Init_menus()
 
     -- Set the multiple things in their Z order of what overlaps what.
     Set_draw_pass(100, draw_ui) -- UI goes on top of everything.
+    UI_ANIMATIONS.loading:setZIndex(200)
 end

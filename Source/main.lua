@@ -31,7 +31,7 @@ local function initialize()
 end
 
 initialize()
-Enter_menu_start()
+Enter_loading_screen()
 -- Enter_gameplay()
 
 

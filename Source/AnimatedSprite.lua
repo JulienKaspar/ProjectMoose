@@ -13,7 +13,8 @@ import 'CoreLibs/sprites'
 local gfx <const> = playdate.graphics
 local function emptyFunc()end
 
-AnimatedSprite = NewSubClass("AnimatedSprite", gfx.sprite)
+class("AnimatedSprite").extends(gfx.sprite)
+-- AnimatedSprite = NewSubClass("AnimatedSprite", gfx.sprite)
 
 ---@param imagetable table|string actual imagetable or path
 ---@param states? table If provided, calls `setStates(states)` after initialisation
