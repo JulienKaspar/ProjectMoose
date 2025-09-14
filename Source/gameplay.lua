@@ -32,7 +32,6 @@ function Init_gameplay()
     -- Done only once on start of the game, to load and setup const resources.
 
     playdate.startAccelerometer()
-    Reset_gameplay_entities()
 end
 
 
