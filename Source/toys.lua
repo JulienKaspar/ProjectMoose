@@ -49,27 +49,38 @@ TOYS_INSTRUCTIONS = {
     }
   },
   mouse = {
-    collision_main = {
-      position = geo.vector2D.new(0, 3),
-      rotation = -2.48848,
-      dimensions = geo.vector2D.new(16.6, 18.4),
+    bodies = {
+      {
+        position = geo.vector2D.new(0, 3),
+        rotation = -2.48848,
+        dimensions = geo.vector2D.new(16.6, 18.4),
+        img = gfx.image.new("images/toys/mouse_body.png"),
+      },
+      {
+        position = geo.vector2D.new(1, -22),
+        rotation = -9.42672,
+        dimensions = geo.vector2D.new(50.7, 24.3),
+        img = gfx.image.new("images/toys/mouse_head.png"),
+      },
+      {
+        position = geo.vector2D.new(-1, 26),
+        rotation = -2.40257,
+        dimensions = geo.vector2D.new(55.7, 20.1),
+        img = gfx.image.new("images/toys/mouse_feet.png"),
+      }
     },
-    collision_head = {
-      position = geo.vector2D.new(1, -22),
-      rotation = -9.42672,
-      dimensions = geo.vector2D.new(50.7, 24.3),
-    },
-    collision_feet = {
-      position = geo.vector2D.new(-1, 26),
-      rotation = -2.40257,
-      dimensions = geo.vector2D.new(55.7, 20.1),
-    },
-    anchor_head = {
-      position = geo.vector2D.new(1, -6),
-    },
-    anchor_foot = {
-      position = geo.vector2D.new(0, 12),
-    },
+    joints = {
+      {
+        body1 = 1,
+        body2 = 2,
+        position = geo.vector2D.new(1, -6),
+      },
+      {
+        body1 = 1,
+        body2 = 3,
+        position = geo.vector2D.new(0, 12),
+      }
+    }
   },
   toast = {
     collision_main = {
