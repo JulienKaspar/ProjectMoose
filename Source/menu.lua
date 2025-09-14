@@ -190,7 +190,7 @@ function Init_menus()
 
     UI_TEXTURES.startgame_credits_indicator = gfxi.new("images/menus/menu_text/startgame_credits_indicator")
     UI_TEXTURES.credits = gfxi.new("images/menus/menu_text/credits_overlay")
-    UI_TEXTURES.game_over_indicator = gfxi.new("images/menus/menu_text/one_more_try_nah")
+    UI_TEXTURES.game_over_indicator = gfxi.new("images/menus/menu_text/one_more_time_nah")
     UI_TEXTURES.failed_header = gfxi.new("images/menus/menu_text/FAILED")
     UI_TEXTURES.success_header = gfxi.new("images/menus/menu_text/SUCCESS")
 
