@@ -215,6 +215,9 @@ local function draw_debug()
     draw_polygon(left_wall)
     draw_polygon(right_wall)
     draw_polygon(claw.ceiling)
+    -- for _, box in ipairs(fg_boxes) do
+    --     draw_polygon(box)
+    -- end
 end
 
 

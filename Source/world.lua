@@ -20,6 +20,7 @@ left_wall = nil
 right_wall = nil
 selected_toy = nil
 TOYS = {}
+fg_boxes = {}
 
 local MASS_MIN <const> = 50
 local MASS_MAX <const> = 120
@@ -33,6 +34,78 @@ end
 
 function Init_world()
   Reset_gameplay_entities()
+end
+
+function add_fg_boxes()
+  local box = playbox.body.new(70, 25, 0)
+  box:setCenter(360, 246)
+  box:setRotation(0.25)
+  box:setFriction(WALL_FRICTION)
+  world:addBody(box)
+  table.insert(fg_boxes, box)
+
+  box = playbox.body.new(30, 30, 0)
+  box:setCenter(308, 240)
+  box:setRotation(0.25)
+  box:setFriction(WALL_FRICTION)
+  world:addBody(box)
+  table.insert(fg_boxes, box)
+
+  box = playbox.body.new(42, 32, 0)
+  box:setCenter(269, 245)
+  box:setRotation(0.1)
+  box:setFriction(WALL_FRICTION)
+  world:addBody(box)
+  table.insert(fg_boxes, box)
+
+  box = playbox.body.new(40, 32, 0)
+  box:setCenter(210, 243)
+  box:setRotation(0.15)
+  box:setFriction(WALL_FRICTION)
+  world:addBody(box)
+  table.insert(fg_boxes, box)
+
+  box = playbox.body.new(20, 50, 0)
+  box:setCenter(236, 243)
+  box:setRotation(0.15)
+  box:setFriction(WALL_FRICTION)
+  world:addBody(box)
+  table.insert(fg_boxes, box)
+
+  box = playbox.body.new(50, 32, 0)
+  box:setCenter(160, 245)
+  box:setRotation(0.7)
+  box:setFriction(WALL_FRICTION)
+  world:addBody(box)
+  table.insert(fg_boxes, box)
+
+  box = playbox.body.new(70, 50, 0)
+  box:setCenter(130, 260)
+  box:setRotation(0.7)
+  box:setFriction(WALL_FRICTION)
+  world:addBody(box)
+  table.insert(fg_boxes, box)
+
+  box = playbox.body.new(30, 30, 0)
+  box:setCenter(82, 245)
+  box:setRotation(0.7)
+  box:setFriction(WALL_FRICTION)
+  world:addBody(box)
+  table.insert(fg_boxes, box)
+
+  box = playbox.body.new(30, 30, 0)
+  box:setCenter(52, 247)
+  box:setRotation(0.1)
+  box:setFriction(WALL_FRICTION)
+  world:addBody(box)
+  table.insert(fg_boxes, box)
+
+  box = playbox.body.new(30, 30, 0)
+  box:setCenter(22, 245)
+  box:setRotation(0.7)
+  box:setFriction(WALL_FRICTION)
+  world:addBody(box)
+  table.insert(fg_boxes, box)
 end
 
 
@@ -61,6 +134,8 @@ function Reset_gameplay_entities()
   floor:setCenter(WORLD_WIDTH * 0.5, WORLD_HEIGHT + WALL_WIDTH * 0.5 + PAD)
   floor:setFriction(WALL_FRICTION)
   world:addBody(floor)
+
+  add_fg_boxes()
 
   -- Create wall
   left_wall = playbox.body.new(WALL_WIDTH, WORLD_HEIGHT, 0)
