@@ -85,6 +85,7 @@ local function draw_game_foreground( x, y, width, height )
 
     -- Draw full screen background.
     gfx.pushContext()
+        TEXTURES.static_fg_toys:draw(0, 210)
         TEXTURES.fg:draw(0, 0)
     gfx.popContext()
 
@@ -241,10 +242,13 @@ function Init_visuals()
     -- Load image layers.
     TEXTURES.bg = gfxi.new("images/environment/bg")
     TEXTURES.fg = gfxi.new("images/environment/fg")
+    TEXTURES.static_fg_toys = gfxi.new("images/environment/static_fg_toys")
     TEXTURES.heart_full = gfxi.new("images/ui_elements/heart_full")
     TEXTURES.heart_broken = gfxi.new("images/ui_elements/heart_broken")
 
+    
     -- Set the multiple things in their Z order of what overlaps what.
+
     Set_draw_pass(-40, draw_game_background)
     ANIMATIONS.kiddo_idle:setZIndex(-39)
     ANIMATIONS.kiddo_angry:setZIndex(-39)
