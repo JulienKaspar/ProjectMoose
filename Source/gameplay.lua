@@ -136,7 +136,8 @@ function draw()
 
     local image = peedee_toy.sprites[i]
 
-    local pos = geometry.vector2D.new(body:getCenter()) --- + (TOYS_INSTRUCTIONS.peedee.bodies[i].position / 2)
+    local pos = geometry.vector2D.new(body:getCenter())
+    --- Undo the initial rotation of the sprite
     local angle = body:getRotation() + math.rad(TOYS_INSTRUCTIONS.peedee.bodies[i].rotation)
     image:drawRotated(pos.x, pos.y, math.deg(angle), 0.25)
   end
