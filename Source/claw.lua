@@ -1,6 +1,7 @@
 local pd = playdate
 local pb = playbox
 local gfx <const> = playdate.graphics
+local gfxi <const> = playdate.graphics.image
 local geometry <const> = playdate.geometry
 
 local WORLD_CENTER_X <const> = 200
@@ -8,6 +9,9 @@ local CEILING_HEIGHT <const> = -100
 local CABLE_LENGTH <const> = 200
 local CLAW_LENGTH <const> = 40
 local CLAW_MASS <const> = 500
+
+local SCALE <const> = 0.25
+local FRICTION <const> = 1000
 
 import "world"
 
@@ -32,42 +36,38 @@ function playbox.joint:draw_debug()
     gfx.drawLine(x1, y1, px2, py2)
 end
 
-Joint = {claw_left_joint = nil, claw_right_joint = nil, claw_joint = nil, cable_joint = nil, center = nil}
-Joint.__index = Joint
+class('Joint').extends()
 
-function Joint:new(claw)
-    local joint = {}
-    setmetatable(joint, Joint)
+function Joint:init(claw)
+    Joint.super.init(self)
 
     local CENTER_X <const> = WORLD_CENTER_X
     local CENTER_Y <const> = CEILING_HEIGHT + CABLE_LENGTH
 
-    joint.center = pb.body.new(2, 2, CLAW_MASS)
-    joint.center:setCenter(CENTER_X, CENTER_Y)
-    joint.center:setFriction(100)
-    world:addBody(joint.center)
+    self.center = pb.body.new(2, 2, CLAW_MASS)
+    self.center:setCenter(CENTER_X, CENTER_Y)
+    self.center:setFriction(100)
+    world:addBody(self.center)
 
-    joint.claw_left_joint = pb.joint.new(claw.left, joint.center, CENTER_X, CENTER_Y)
-    joint.claw_left_joint:setBiasFactor(0.3)
-    joint.claw_left_joint:setSoftness(0)
-    world:addJoint(joint.claw_left_joint)
+    self.claw_left_joint = pb.joint.new(claw.left, self.center, CENTER_X, CENTER_Y)
+    self.claw_left_joint:setBiasFactor(0.3)
+    self.claw_left_joint:setSoftness(0)
+    world:addJoint(self.claw_left_joint)
 
-    joint.claw_right_joint = pb.joint.new(claw.right, joint.center, CENTER_X, CENTER_Y)
-    joint.claw_right_joint:setBiasFactor(0.3)
-    joint.claw_right_joint:setSoftness(0)
-    world:addJoint(joint.claw_right_joint)
+    self.claw_right_joint = pb.joint.new(claw.right, self.center, CENTER_X, CENTER_Y)
+    self.claw_right_joint:setBiasFactor(0.3)
+    self.claw_right_joint:setSoftness(0)
+    world:addJoint(self.claw_right_joint)
 
-    joint.claw_joint = pb.joint.new(claw.right, claw.left, CENTER_X, CENTER_Y + CLAW_LENGTH)
-    joint.claw_joint:setBiasFactor(0.3)
-    joint.claw_joint:setSoftness(0)
-    world:addJoint(joint.claw_joint)
+    self.claw_joint = pb.joint.new(claw.right, claw.left, CENTER_X, CENTER_Y + CLAW_LENGTH)
+    self.claw_joint:setBiasFactor(0.3)
+    self.claw_joint:setSoftness(0)
+    world:addJoint(self.claw_joint)
 
-    joint.cable_joint = pb.joint.new(claw.ceiling, joint.center, 0.5*WORLD_WIDTH, CEILING_HEIGHT)
-    joint.cable_joint:setBiasFactor(0.1)
-    joint.cable_joint:setSoftness(0)
-    world:addJoint(joint.cable_joint)
-
-    return joint
+    self.cable_joint = pb.joint.new(claw.ceiling, self.center, 0.5*WORLD_WIDTH, CEILING_HEIGHT)
+    self.cable_joint:setBiasFactor(0.1)
+    self.cable_joint:setSoftness(0)
+    world:addJoint(self.cable_joint)
 end
 
 function Joint:draw_debug()
@@ -80,40 +80,68 @@ function Joint:draw_debug()
     gfx.fillCircleAtPoint(x, y, 3)
 end
 
--- TODO(weizhen): add or extend sprite
-Claw = {ref = nil, joint = nil, left = nil, right = nil, ceiling = nil, speed = 15}
-Claw.__index = Claw
+class('Claw').extends()
 
-function Claw:new()
-    local claw = {}
-    setmetatable(claw, Claw)
+function Claw:init(ZIndex)
+    Claw.super.init(self)
+
+    self.speed = 15
 
     -- Ceiling
-    claw.ceiling = pb.body.new(2*WORLD_WIDTH, WALL_WIDTH)
-    claw.ceiling:setCenter(0.5*WORLD_WIDTH, CEILING_HEIGHT)
-    claw.ceiling:setFriction(WALL_FRICTION)
-    world:addBody(claw.ceiling)
+    self.ceiling = pb.body.new(2*WORLD_WIDTH, WALL_WIDTH)
+    self.ceiling:setCenter(0.5*WORLD_WIDTH, CEILING_HEIGHT)
+    self.ceiling:setFriction(WALL_FRICTION)
+    world:addBody(self.ceiling)
 
     -- Claw body
     local CLAW_SIZE <const> = 10
 
-    claw.left = pb.body.new(CLAW_SIZE, CLAW_SIZE, CLAW_MASS)
-    claw.left:setCenter(WORLD_CENTER_X - CLAW_LENGTH, CEILING_HEIGHT + CABLE_LENGTH + CLAW_LENGTH)
-    claw.left:setFriction(100)
-    world:addBody(claw.left)
+    self.left = pb.body.new(CLAW_SIZE, CLAW_SIZE, CLAW_MASS)
+    self.left:setCenter(WORLD_CENTER_X - CLAW_LENGTH, CEILING_HEIGHT + CABLE_LENGTH + CLAW_LENGTH)
+    self.left:setFriction(100)
+    world:addBody(self.left)
 
-    claw.right = pb.body.new(CLAW_SIZE, CLAW_SIZE, CLAW_MASS)
-    claw.right:setCenter(WORLD_CENTER_X + CLAW_LENGTH, CEILING_HEIGHT + CABLE_LENGTH + CLAW_LENGTH)
-    claw.right:setFriction(100)
-    world:addBody(claw.right)
+    self.right = pb.body.new(CLAW_SIZE, CLAW_SIZE, CLAW_MASS)
+    self.right:setCenter(WORLD_CENTER_X + CLAW_LENGTH, CEILING_HEIGHT + CABLE_LENGTH + CLAW_LENGTH)
+    self.right:setFriction(100)
+    world:addBody(self.right)
 
-    claw.joint = Joint:new(claw)
+    self.joint = Joint(self)
 
-    claw.ref = pb.body.new(0, 0, 0)
-    claw.ref:setCenter(WORLD_WIDTH*0.5, 0)
-    claw.ref:setFriction(0)
-    world:addBody(claw.ref)
-    return claw
+    self.ref = pb.body.new(0, 0, 0)
+    self.ref:setCenter(WORLD_WIDTH*0.5, 0)
+    self.ref:setFriction(0)
+    world:addBody(self.ref)
+
+     -- Sprites
+    self.sprites = {}
+
+    local image = gfxi.new("images/claw/claw_cable.png")
+    local sprite = gfx.sprite.new(image)
+    local ceiling_x, ceiling_y = self.ceiling:getCenter()
+    local center_x, center_y = self.joint.center:getCenter()
+    sprite:setScale(SCALE)
+    sprite:moveTo(0.5 * (ceiling_x + center_x), 0.5 * (ceiling_y + center_y))
+    sprite:setZIndex(ZIndex)
+    sprite:add()
+    self.sprites[#self.sprites + 1] = sprite
+
+    image = gfxi.new("images/claw/claw_left.png")
+    sprite = gfx.sprite.new(image)
+    sprite:setScale(SCALE)
+    sprite:moveTo(center_x, center_y)
+    sprite:setZIndex(ZIndex - 1)
+    sprite:add()
+    self.sprites[#self.sprites + 1] = sprite
+
+    image = gfxi.new("images/claw/claw_right.png")
+    sprite = gfx.sprite.new(image)
+    local left_x, left_y = self.left:getCenter()
+    sprite:setScale(SCALE)
+    sprite:moveTo(center_x, center_y)
+    sprite:setZIndex(ZIndex - 1)
+    sprite:add()
+    self.sprites[#self.sprites + 1] = sprite
 end
 
 function Claw:update(angle, dt)
@@ -134,16 +162,26 @@ function Claw:update(angle, dt)
     end
 
     -- Apply air friction
-    local friction = 1000
     local vel_x, vel_y = self.left:getVelocity()
-    self.left:addForce(-vel_x * friction, -vel_y * friction)
+    self.left:addForce(-vel_x * FRICTION, -vel_y * FRICTION)
 
     vel_x, vel_y = self.right:getVelocity()
-    self.right:addForce(-vel_x * friction, -vel_y * friction)
+    self.right:addForce(-vel_x * FRICTION, -vel_y * FRICTION)
 
     vel_x, vel_y = self.joint.center:getVelocity()
-    self.joint.center:addForce(-vel_x * friction, -vel_y * friction)
+    self.joint.center:addForce(-vel_x * FRICTION, -vel_y * FRICTION)
 
+    local ceiling_x, ceiling_y = self.ceiling:getCenter()
+    local center_x, center_y = self.joint.center:getCenter()
+    local angle = math.atan2(-(center_x - ceiling_x), center_y - ceiling_y)
+    self.sprites[1]:moveTo(0.5 * (ceiling_x + center_x), 0.5 * (ceiling_y + center_y))
+    self.sprites[1]:setRotation(math.deg(angle))
+
+    self.sprites[2]:moveTo(center_x, center_y)
+    self.sprites[2]:setRotation(math.deg(angle))
+
+    self.sprites[3]:moveTo(center_x, center_y)
+    self.sprites[3]:setRotation(math.deg(angle))
 end
 
 function Claw:getRotation()
