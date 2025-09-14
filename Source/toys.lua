@@ -78,7 +78,7 @@ TOYS_INSTRUCTIONS = {
   },
   toast = {
     collision_main = {
-      position = geo.vector2D.new(-1, -1),
+      position = geo.vector2D.new(0, 0),
       rotation = -3.29623,
       dimensions = geo.vector2D.new(69.6, 54.5),
     },
