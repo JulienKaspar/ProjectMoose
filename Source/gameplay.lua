@@ -13,13 +13,14 @@ GAMEPLAY_STATE = {
 
 import "world"
 
+local pd <const> = playdate
 local gfx <const> = playdate.graphics
 local geometry <const> = playdate.geometry
 
 local selected_box = 1
 local world_angle = 0
 local angle = 1
-local moving = false
+
 
 -- Local methods
 
@@ -77,23 +78,10 @@ function update(dt)
     try_ending_game()
 
     -- TODO(weizhen): stop reading the accelerometer if moving?
-    local gravityX, gravityY, _ = playdate.readAccelerometer()
+    local gravityX, gravityY, _ = pd.readAccelerometer()
     angle = Clamp(math.atan2(gravityX, gravityY), -MAX_ANGLE, MAX_ANGLE)
-    claw:setRotation(angle)
 
-    local toy_x, toy_y = peedee_toy.bodies[1]:getCenter()
-    local claw_x, claw_y = claw:getCenter()
-    local target_x = toy_x - math.tan(angle) * toy_y
-
-    if math.floor(target_x + 0.5) == math.floor(claw_x + 0.5) then
-        moving = true
-    end
-
-    if moving then
-        claw:moveVertical(world_angle)
-    else
-        claw:moveHorizontalTo(target_x, dt)
-    end
+    claw:update(angle, dt)
 
   -- TODO: limit resolution
     if angle ~= world_angle then

@@ -45,7 +45,7 @@ function Init_world()
   TOYS[#TOYS + 1] = peedee_toy
 
   local monkey_toy = Toy:new(nil, TOYS_INSTRUCTIONS.monkey, world)
-  monkey_toy:move(geometry.vector2D.new(170, 140))
+  monkey_toy:move(geometry.vector2D.new(50, 140))
   TOYS[#TOYS + 1] = monkey_toy
 
   -- Create floor
