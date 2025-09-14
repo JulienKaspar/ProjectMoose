@@ -1,9 +1,11 @@
 local gfx <const> = playdate.graphics
 local gfxi <const> = playdate.graphics.image
+local gfxit <const> = playdate.graphics.imagetable
 local geometry <const> = playdate.geometry
 
 -- Image Passes
 TEXTURES = {}
+ANIMATIONS = {}
 
 
 -- Debug / Development
@@ -162,12 +164,30 @@ end
 
 function Init_visuals()
 
+    -- init animations
+
+    local imagetable_kiddo_idle = gfxit.new("images/kiddo_anims/kiddo_idle")
+
+    ANIMATIONS.kiddo = AnimatedSprite.new(imagetable_kiddo_idle)
+    ANIMATIONS.kiddo:addState(
+            "main",
+            1,
+            imagetable_kiddo_idle:getLength(),
+            {
+                tickStep = 30.0/1.0,
+                loop = true,
+            }
+        ).asDefault()
+    ANIMATIONS.kiddo:playAnimation()
+    ANIMATIONS.kiddo:moveTo(272,100)
+
     -- Load image layers.
     TEXTURES.bg = gfxi.new("images/environment/bg")
     TEXTURES.fg = gfxi.new("images/environment/fg")
 
     -- Set the multiple things in their Z order of what overlaps what.
     Set_draw_pass(-40, draw_game_background)
+    ANIMATIONS.kiddo:setZIndex(-39)
     -- Set_draw_pass(-30, draw_toys())
     -- Set_draw_pass(-20, draw_claw())
     Set_draw_pass(0, draw_game_foreground)
