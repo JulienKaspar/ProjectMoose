@@ -43,6 +43,7 @@ function Enter_menu_main()
     MENU_STATE.screen = MENU_SCREEN.main
 
     remove_system_menu_entries()
+    Reset_gameplay()
 
     SOUND.bg_loop_gameplay:stop()
 
