@@ -186,9 +186,6 @@ function Toy.new(instr, world)
 end
 
 function Toy:init(instr, world)
-  o = o or {}
-  setmetatable(o, self)
-  self.__index = self
   self.sprites = {}
   self.bodies = {}
   self.initial_rotations = {}
@@ -213,8 +210,6 @@ function Toy:init(instr, world)
     world:addJoint(joint)
     self.joints[#self.joints + 1] = joint
   end
-
-  return o
 end
 
 function Toy:move(offset)
