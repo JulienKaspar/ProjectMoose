@@ -14,6 +14,7 @@ local gfx <const> = playdate.graphics
 local geometry <const> = playdate.geometry
 
 local selected_box = 1
+local world_angle
 
 -- Local methods
 
@@ -60,15 +61,16 @@ end
 function update(dt)
     world:update(dt)
 
-
-    local target_x, _ = peedee_toy.bodies[1]:getCenter()
-    local claw_x, claw_y = claw:getCenter()
-    local new_x = Clamp((target_x - claw_x), -1, 1) + claw_x
-    claw:setCenter(new_x, claw_y)
-
     local gravityX, gravityY, _ = playdate.readAccelerometer()
     local angle = Clamp(math.atan2(gravityX, gravityY), -MAX_ANGLE, MAX_ANGLE)
     claw:setRotation(angle)
+
+    local toy_x, toy_y = peedee_toy.bodies[1]:getCenter()
+    local claw_x, claw_y = claw:getCenter()
+    local target_x = toy_x - math.tan(angle) * toy_y
+    local new_x = Clamp((target_x - claw_x), -dt*15, dt*15) + claw_x
+    new_x = Clamp(new_x, 0, WORLD_WIDTH)
+    claw:setCenter(new_x, claw_y)
 
   -- TODO: limit resolution
     if angle ~= world_angle then

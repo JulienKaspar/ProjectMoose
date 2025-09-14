@@ -135,7 +135,7 @@ function Init_menus()
 
     UI_TEXTURES.gameover = gfxi.new("images/gameover_temp.png")
     UI_TEXTURES.start = gfxi.new("images/start_screen_temp.png")
-    UI_TEXTURES.main = gfxi.new("images/main_temp.png")
+    UI_TEXTURES.main = gfxi.new("images/environment/game_mockups.png")
     UI_TEXTURES.credits = gfxi.new("images/credits_temp.png")
     
     MENU_STATE.screen = MENU_SCREEN.start
