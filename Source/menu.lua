@@ -97,6 +97,7 @@ local function draw_ui()
     elseif MENU_STATE.screen == MENU_SCREEN.main then
         UI_ANIMATIONS.logo:setVisible(true)
         UI_TEXTURES.main:draw(0, 0)
+        UI_TEXTURES.startgame_credits_indicator:draw(191, 9)
     elseif MENU_STATE.screen == MENU_SCREEN.credits then
         UI_TEXTURES.credits:draw(0, 0)
     elseif MENU_STATE.screen == MENU_SCREEN.gameover then
@@ -179,7 +180,7 @@ function Init_menus()
             }
         ).asDefault()
     UI_ANIMATIONS.logo:playAnimation()
-    UI_ANIMATIONS.logo:moveTo(121,67)
+    UI_ANIMATIONS.logo:moveTo(112,83)
 
     UI_TEXTURES.gameover = gfxi.new("images/gameover_temp.png")
     UI_TEXTURES.start = gfxi.new("images/start_screen_temp.png")
