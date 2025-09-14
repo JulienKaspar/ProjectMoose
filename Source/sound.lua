@@ -33,7 +33,6 @@ function Init_sounds()
 end
 
 function Play_random_toy_sound()
-  print("TOY SOUNDS MOTHERFUCKERS!")
   if current_toy_sound == nil then
     current_toy_sound = SOUND["TOYS"][math.random(1, #SOUND["TOYS"])]
     current_toy_sound:play()
