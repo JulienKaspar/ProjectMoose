@@ -151,7 +151,7 @@ function update(dt)
     end
 
     if playdate.buttonJustPressed(playdate.kButtonA) then
-        selected_toy.bodies[1]:addForce(0, -9000)
+        selected_toy.bodies[1]:addForce(0, -5000)
     end
 
     if playdate.buttonIsPressed(playdate.kButtonLeft) then
