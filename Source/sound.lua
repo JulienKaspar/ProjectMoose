@@ -1,4 +1,5 @@
 local sp <const> = playdate.sound.sampleplayer
+local current_toy_sound = nil
 
 SOUND = {
   cat_meow = sp.new("sound/sound_sample"),
@@ -13,20 +14,30 @@ SOUND = {
   machine_kick_1 = sp.new("sound/machine_kick_1"),
   machine_kick_2 = sp.new("sound/machine_kick_2"),
   machine_kick_3 = sp.new("sound/machine_kick_3"),
-  toy_grunt_1 = sp.new("sound/toy_grunt_1"),
-  toy_grunt_2 = sp.new("sound/toy_grunt_2"),
-  toy_grunt_3 = sp.new("sound/toy_grunt_3"),
-  toy_grunt_4 = sp.new("sound/toy_grunt_4"),
   toy_grabbed = sp.new("sound/toy_grabbed"),
   child_disappointed = sp.new("sound/child_disappointed"),
   child_sigh = sp.new("sound/child_sigh"),
   child_laugh = sp.new("sound/child_laugh"),
   game_over = sp.new("sound/game_over"),
   toy_ascend = sp.new("sound/toy_ascend"),
+  TOYS = {
+    sp.new("sound/toy_grunt_1"),
+    sp.new("sound/toy_grunt_2"),
+    sp.new("sound/toy_grunt_3"),
+    sp.new("sound/toy_grunt_4"),
+  }
 }
 
 function Init_sounds()
+  -- initialize sounds
+end
 
-  -- Create any sounds needed for the game
-  
+function Play_random_toy_sound()
+  print("TOY SOUNDS MOTHERFUCKERS!")
+  if current_toy_sound == nil then
+    current_toy_sound = SOUND["TOYS"][math.random(1, #SOUND["TOYS"])]
+    current_toy_sound:play()
+  elseif not current_toy_sound:isPlaying() then
+    current_toy_sound = nil
+  end
 end

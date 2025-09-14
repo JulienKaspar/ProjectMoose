@@ -175,4 +175,9 @@ function playdate.cranked(change, acceleratedChange)
   ang_vel += acceleratedChange * 0.05
   ang_vel = Clamp(ang_vel, -4, 4)
   selected_toy.bodies[1]:setAngularVelocity(ang_vel)
+  
+  -- if crank is yanked, play toy sound
+  if acceleratedChange > 10 then
+    Play_random_toy_sound()
+  end
 end
