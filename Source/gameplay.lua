@@ -101,6 +101,15 @@ function update(dt)
     end
 end
 
+function playdate.cranked(change, acceleratedChange)
+  local ang_vel = peedee_toy.bodies[1]:getAngularVelocity()
+  -- local alpha <const> = 10
+  -- ang_vel += 0.5 * (acceleratedChange * alpha / (1 + math.abs(acceleratedChange * alpha))) + 0.5
+  ang_vel += acceleratedChange * 0.05
+  ang_vel = Clamp(ang_vel, -4, 4)
+  peedee_toy.bodies[1]:setAngularVelocity(ang_vel)
+end
+
 function draw()
     local bg = gfx.image.new("images/environment/bg.png")
     bg:draw(0, 0)
