@@ -50,6 +50,7 @@ function playdate.update()
     if MENU_STATE.screen == MENU_SCREEN.gameplay then
         -- In gameplay.
         Handle_input()
+        -- TODO: fix framerate
         local dt <const> = 1.0 / playdate.display.getRefreshRate()
         update(dt)
     end

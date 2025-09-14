@@ -8,7 +8,7 @@ WORLD_WIDTH = 400
 WORLD_HEIGHT = 240
 WORLD_PIXEL_SCALE = 80
 local WALL_FRICTION <const> = 0.2
-local WALL_WIDTH <const> = 50
+WALL_WIDTH = 50
 local PAD <const> = 10
 MAX_ANGLE = 0.5
 BOX_COUNT = 20
@@ -27,6 +27,7 @@ local MASS_MAX <const> = 120
 function draw_polygon(object)
   local polygon = geometry.polygon.new(object:getPolygon())
   polygon:close()
+  gfx.setColor(gfx.kColorWhite)
   gfx.fillPolygon(polygon)
 end
 

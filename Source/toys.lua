@@ -198,7 +198,7 @@ function Toy:init(instr, world)
     local body = playbox.body.new(body_instr.dimensions.x, body_instr.dimensions.y, mass)
     body:setCenter(body_instr.position.x, body_instr.position.y)
     body:setRotation(math.rad(body_instr.rotation))
-    body:setFriction(0.8)
+    body:setFriction(100)
     world:addBody(body)
     self.sprites[#self.sprites + 1] = body_instr.img
     self.bodies[#self.bodies + 1] = body

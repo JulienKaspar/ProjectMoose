@@ -164,6 +164,7 @@ local function draw_debug()
     draw_polygon(floor)
     draw_polygon(left_wall)
     draw_polygon(right_wall)
+    draw_polygon(claw.ceiling)
 end
 
 function draw_toys()

@@ -5,7 +5,9 @@ local gfxi <const> = playdate.graphics.image
 local geometry <const> = playdate.geometry
 
 local WORLD_CENTER_X <const> = 200
-local CEILING_HEIGHT <const> = -100
+local CEILING_HEIGHT <const> = -250
+local CEILING_HEIGHT_MIN <const> = -300
+local CEILING_HEIGHT_MAX <const> = -25
 local CABLE_LENGTH <const> = 200
 local CLAW_LENGTH <const> = 40
 local CLAW_MASS <const> = 500
@@ -59,7 +61,7 @@ function Joint:init(claw_)
     self.claw_right_joint:setSoftness(0)
     world:addJoint(self.claw_right_joint)
 
-    self.claw_joint = pb.joint.new(claw_.right, claw_.left, CENTER_X, CENTER_Y + CLAW_LENGTH)
+    self.claw_joint = pb.joint.new(claw_.right, claw_.left, CENTER_X, CENTER_Y + 20 )
     self.claw_joint:setBiasFactor(0.3)
     self.claw_joint:setSoftness(0)
     world:addJoint(self.claw_joint)
@@ -74,6 +76,7 @@ function Joint:draw_debug()
     self.cable_joint:draw_debug()
     self.claw_left_joint:draw_debug()
     self.claw_right_joint:draw_debug()
+    self.claw_joint:draw_debug()
 
     local x, y = self.center:getCenter()
     gfx.setColor(gfx.kColorBlack)
@@ -88,7 +91,7 @@ function Claw:init(ZIndex)
     self.speed = 15
 
     -- Ceiling
-    self.ceiling = pb.body.new(2*WORLD_WIDTH, WALL_WIDTH)
+    self.ceiling = pb.body.new(2*WORLD_WIDTH, WALL_WIDTH, 0)
     self.ceiling:setCenter(0.5*WORLD_WIDTH, CEILING_HEIGHT)
     self.ceiling:setFriction(WALL_FRICTION)
     world:addBody(self.ceiling)
@@ -112,6 +115,10 @@ function Claw:init(ZIndex)
     self.ref:setCenter(WORLD_WIDTH*0.5, 0)
     self.ref:setFriction(0)
     world:addBody(self.ref)
+
+    local left_x, left_y = self.left:getCenter()
+    local right_x, right_y = self.right:getCenter()
+    self.claw_dir = geometry.vector2D.new(right_x - left_x, right_y - left_y)
 
      -- Sprites
     self.sprites = {}
@@ -144,22 +151,29 @@ function Claw:init(ZIndex)
     self.sprites[#self.sprites + 1] = sprite
 end
 
-function Claw:update(angle, dt)
-    self:setRotation(angle)
-
-    local toy_x, toy_y = peedee_toy.bodies[1]:getCenter()
-    local claw_x, claw_y = self:getCenter()
-    local target_x = toy_x - math.tan(angle) * toy_y
-
-    if math.floor(target_x + 0.5) == math.floor(claw_x + 0.5) then
-        moving = true
+function Claw:update()
+    -- Clamp position
+    local ceiling_x, ceiling_y = self.ceiling:getCenter()
+    self.ceiling:setCenter(ceiling_x, Clamp(ceiling_y, CEILING_HEIGHT_MIN, CEILING_HEIGHT_MAX))
+    if ceiling_y <= CEILING_HEIGHT_MIN or ceiling_y >= CEILING_HEIGHT_MAX then
+         self.ceiling:setVelocity(0, 0)
     end
 
-    if moving then
-        self:moveVertical(angle)
-    else
-        self:moveHorizontalTo(target_x, dt)
-    end
+    -- self:setRotation(angle)
+
+    -- local toy_x, toy_y = peedee_toy.bodies[1]:getCenter()
+    -- local claw_x, claw_y = self:getCenter()
+    -- local target_x = toy_x - math.tan(angle) * toy_y
+
+    -- if math.floor(target_x + 0.5) == math.floor(claw_x + 0.5) then
+    --     moving = true
+    -- end
+
+    -- if moving then
+    --     self:moveVertical(angle)
+    -- else
+    --     self:moveHorizontalTo(target_x, dt)
+    -- end
 
     -- Apply air friction
     local vel_x, vel_y = self.left:getVelocity()
@@ -173,15 +187,19 @@ function Claw:update(angle, dt)
 
     local ceiling_x, ceiling_y = self.ceiling:getCenter()
     local center_x, center_y = self.joint.center:getCenter()
-    local angle = math.atan2(-(center_x - ceiling_x), center_y - ceiling_y)
+    local angle = math.atan2((ceiling_x - center_x), center_y - ceiling_y)
     self.sprites[1]:moveTo(0.5 * (ceiling_x + center_x), 0.5 * (ceiling_y + center_y))
     self.sprites[1]:setRotation(math.deg(angle))
 
+    local left_x, left_y = self.left:getCenter()
+    angle = math.atan2((center_x - left_x), left_y - center_y)
     self.sprites[2]:moveTo(center_x, center_y)
-    self.sprites[2]:setRotation(math.deg(angle))
+    self.sprites[2]:setRotation(math.deg(angle) - 45)
 
+    local right_x, right_y = self.right:getCenter()
+    angle = math.atan2((center_x - right_x), right_y - center_y)
     self.sprites[3]:moveTo(center_x, center_y)
-    self.sprites[3]:setRotation(math.deg(angle))
+    self.sprites[3]:setRotation(math.deg(angle) + 45)
 end
 
 function Claw:getRotation()
@@ -223,8 +241,8 @@ function Claw:moveHorizontalTo(target_x, dt)
   self:setCenter(new_x, claw_y)
 end
 
-function Claw:moveVertical(angle)
-    local vel_x = math.sin(angle) * self.speed
-    local vel_y = math.cos(angle) * self.speed
-    self.ref:setVelocity(vel_x, vel_y)
+function Claw:moveVertical(angle, scale)
+    local vel_x = math.sin(angle) * self.speed * scale
+    local vel_y = math.cos(angle) * self.speed * scale
+    self.ceiling:setVelocity(vel_x, vel_y)
 end

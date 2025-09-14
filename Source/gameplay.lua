@@ -98,7 +98,15 @@ function update(dt)
     local gravityX, gravityY, _ = pd.readAccelerometer()
     angle = Clamp(math.atan2(gravityX, gravityY), -MAX_ANGLE, MAX_ANGLE)
 
-    claw:update(angle, dt)
+    claw:update()
+
+    if playdate.buttonIsPressed(playdate.kButtonDown) then
+        claw:moveVertical(angle, 1)
+    end
+
+    if playdate.buttonIsPressed(playdate.kButtonUp) then
+        claw:moveVertical(angle + math.pi, 4)
+    end
 
   -- TODO: limit resolution
     if angle ~= world_angle then
@@ -117,6 +125,7 @@ function update(dt)
     if playdate.buttonIsPressed(playdate.kButtonRight) then
         peedee_toy.bodies[1]:addForce(300, 0)
     end
+
 end
 
 function playdate.cranked(change, acceleratedChange)
