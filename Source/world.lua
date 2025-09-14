@@ -39,6 +39,7 @@ function Reset_gameplay_entities()
   -- Remove all entities if needed
   if world then
     world = nil
+    claw:destructor()
     claw = nil
     floor = nil
     left_wall = nil

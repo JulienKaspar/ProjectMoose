@@ -130,17 +130,11 @@ local function draw_debug()
     end
 
     -- Visual representation of out of bounds colliders
+    claw:draw_debug()
     draw_polygon(floor)
     draw_polygon(left_wall)
     draw_polygon(right_wall)
 end
-
-
-function draw_claw()
-    claw:draw("images/claw/temp_claw.png")
-    
-end
-
 
 function draw_toys()
   for _, toy in ipairs(TOYS) do

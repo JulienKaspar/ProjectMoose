@@ -38,7 +38,7 @@ end
 
 class('Joint').extends()
 
-function Joint:init(claw)
+function Joint:init(claw_)
     Joint.super.init(self)
 
     local CENTER_X <const> = WORLD_CENTER_X
@@ -49,22 +49,22 @@ function Joint:init(claw)
     self.center:setFriction(100)
     world:addBody(self.center)
 
-    self.claw_left_joint = pb.joint.new(claw.left, self.center, CENTER_X, CENTER_Y)
+    self.claw_left_joint = pb.joint.new(claw_.left, self.center, CENTER_X, CENTER_Y)
     self.claw_left_joint:setBiasFactor(0.3)
     self.claw_left_joint:setSoftness(0)
     world:addJoint(self.claw_left_joint)
 
-    self.claw_right_joint = pb.joint.new(claw.right, self.center, CENTER_X, CENTER_Y)
+    self.claw_right_joint = pb.joint.new(claw_.right, self.center, CENTER_X, CENTER_Y)
     self.claw_right_joint:setBiasFactor(0.3)
     self.claw_right_joint:setSoftness(0)
     world:addJoint(self.claw_right_joint)
 
-    self.claw_joint = pb.joint.new(claw.right, claw.left, CENTER_X, CENTER_Y + CLAW_LENGTH)
+    self.claw_joint = pb.joint.new(claw_.right, claw_.left, CENTER_X, CENTER_Y + CLAW_LENGTH)
     self.claw_joint:setBiasFactor(0.3)
     self.claw_joint:setSoftness(0)
     world:addJoint(self.claw_joint)
 
-    self.cable_joint = pb.joint.new(claw.ceiling, self.center, 0.5*WORLD_WIDTH, CEILING_HEIGHT)
+    self.cable_joint = pb.joint.new(claw_.ceiling, self.center, 0.5*WORLD_WIDTH, CEILING_HEIGHT)
     self.cable_joint:setBiasFactor(0.1)
     self.cable_joint:setSoftness(0)
     world:addJoint(self.cable_joint)
@@ -204,29 +204,27 @@ function Claw:setVelocity(x, y)
     self.ref:setVelocity(x, y)
 end
 
-function Claw:draw(image)
-    local claw_image = gfx.image.new(image)
-    local x, y = self:getCenter()
-    claw_image:drawRotated(x, y, -math.deg(self:getRotation()))
-
-    -- Debug position
-    gfx.setColor(gfx.kColorWhite)
-    gfx.fillCircleAtPoint(x, y, 10)
-
+function Claw:draw_debug()
     self.left:draw_debug()
     self.right:draw_debug()
     self.ceiling:draw_debug()
     self.joint:draw_debug()
 end
 
+function Claw:destructor()
+    for _, sprite in ipairs(self.sprites) do
+        sprite:remove()
+    end
+end
+
 function Claw:moveHorizontalTo(target_x, dt)
-  local claw_x, claw_y = claw:getCenter()
+  local claw_x, claw_y = self:getCenter()
   local new_x = Clamp((target_x - claw_x), -dt*self.speed, dt*self.speed) + claw_x
-  claw:setCenter(new_x, claw_y)
+  self:setCenter(new_x, claw_y)
 end
 
 function Claw:moveVertical(angle)
     local vel_x = math.sin(angle) * self.speed
     local vel_y = math.cos(angle) * self.speed
-    claw.ref:setVelocity(vel_x, vel_y)
+    self.ref:setVelocity(vel_x, vel_y)
 end
