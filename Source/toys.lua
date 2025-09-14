@@ -149,7 +149,7 @@ function Toy:new(o, instr, world)
   setmetatable(o, self)
   self.__index = self
   for _, body_instr in ipairs(instr.bodies) do
-    local mass <const> = (body_instr.dimensions.x * body_instr.dimensions.y) * 0.0
+    local mass <const> = (body_instr.dimensions.x * body_instr.dimensions.y) * 0.025
     local body = playbox.body.new(body_instr.dimensions.x, body_instr.dimensions.y, mass)
     body:setCenter(body_instr.position.x, body_instr.position.y)
     body:setRotation(math.rad(body_instr.rotation))
