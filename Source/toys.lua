@@ -176,6 +176,40 @@ TOYS_INSTRUCTIONS = {
       }
     }
   },
+  cat = {
+    bodies = {
+      {
+        position = geo.vector2D.new(-7, 11),
+        rotation = 17.2364,
+        dimensions = geo.vector2D.new(38.2, 28.7),
+        img = gfx.image.new("images/toys/cat_body.png"),
+      },
+      {
+        position = geo.vector2D.new(30, -7),
+        rotation = 27.0197,
+        dimensions = geo.vector2D.new(28.7, 34.3),
+        img = gfx.image.new("images/toys/cat_head.png"),
+      },
+      {
+        position = geo.vector2D.new(-44, -11),
+        rotation = 39.9932,
+        dimensions = geo.vector2D.new(13.4, 31),
+        img = gfx.image.new("images/toys/cat_tail.png"),
+      }
+    },
+    joints = {
+      {
+        body1 = 1,
+        body2 = 2,
+        position = geo.vector2D.new(12, 5),
+      }
+    },
+      {
+        body1 = 1,
+        body2 = 3,
+        position = geo.vector2D.new(-30, 3),
+      }
+    }
 }
 
 class('Toy').extends()
