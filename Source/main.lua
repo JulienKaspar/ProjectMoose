@@ -51,6 +51,6 @@ function playdate.update()
         -- In gameplay.
         local dt <const> = 1.0 / playdate.display.getRefreshRate()
         update(dt)
-        draw()
+        draw_gameplay()
     end
 end

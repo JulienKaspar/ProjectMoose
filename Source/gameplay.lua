@@ -110,7 +110,7 @@ function playdate.cranked(change, acceleratedChange)
   peedee_toy.bodies[1]:setAngularVelocity(ang_vel)
 end
 
-function draw()
+function draw_gameplay()
     local bg = gfx.image.new("images/environment/bg.png")
     bg:draw(0, 0)
 
