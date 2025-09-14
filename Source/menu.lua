@@ -5,7 +5,7 @@ local gfxi <const> = playdate.graphics.image
 local gfxit <const> = playdate.graphics.imagetable
 
 MENU_STATE = {}
-MENU_SCREEN = { gameplay = 0, gameover = 1, how_to = 2, main = 3, credits = 4, loading = 5, }
+MENU_SCREEN = { gameplay = 0, gameover = 1, how_to = 2, main = 3, credits = 4, loading = 5, win = 6,}
 local UI_TEXTURES = {}
 local UI_ANIMATIONS = {}
 
@@ -65,6 +65,11 @@ function Enter_game_over_screen()
 end
 
 
+function Enter_win_screen()
+    MENU_STATE.screen = MENU_SCREEN.win
+end
+
+
 function Enter_gameplay()
     MENU_STATE.screen = MENU_SCREEN.gameplay
 
@@ -97,13 +102,18 @@ local function draw_ui()
         UI_TEXTURES.credits:draw(0, 0)
     
     elseif MENU_STATE.screen == MENU_SCREEN.gameover then
-        UI_TEXTURES.game_over_indicator:draw(124, 52)
+        UI_TEXTURES.game_over_indicator:draw(124, 80)
+        UI_TEXTURES.failed_header:draw(94, 8)
+    elseif MENU_STATE.screen == MENU_SCREEN.win then
+        UI_TEXTURES.game_over_indicator:draw(124, 80)
+        UI_TEXTURES.success_header:draw(90, 6)
     end
 end
 
 
 function Handle_menu_input()
-    if MENU_STATE.screen == MENU_SCREEN.gameover then
+    if MENU_STATE.screen == MENU_SCREEN.gameover
+    or MENU_STATE.screen == MENU_SCREEN.win then
         if playdate.buttonJustPressed( playdate.kButtonA ) then
             SOUND.menu_confirm:play()
             Enter_gameplay()
@@ -181,6 +191,8 @@ function Init_menus()
     UI_TEXTURES.startgame_credits_indicator = gfxi.new("images/menus/menu_text/startgame_credits_indicator")
     UI_TEXTURES.credits = gfxi.new("images/menus/menu_text/credits_overlay")
     UI_TEXTURES.game_over_indicator = gfxi.new("images/menus/menu_text/one_more_try_nah")
+    UI_TEXTURES.failed_header = gfxi.new("images/menus/menu_text/FAILED")
+    UI_TEXTURES.success_header = gfxi.new("images/menus/menu_text/SUCCESS")
 
     
     MENU_STATE.screen = MENU_SCREEN.main
