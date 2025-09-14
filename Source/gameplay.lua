@@ -111,8 +111,7 @@ function playdate.cranked(change, acceleratedChange)
 end
 
 function draw_gameplay()
-    local bg = gfx.image.new("images/environment/bg.png")
-    bg:draw(0, 0)
+    TEXTURES.bg:draw(0, 0)
 
     -- Draw claw
     claw:draw("images/claw/temp_claw.png")
@@ -140,8 +139,7 @@ function draw_gameplay()
     end
   end
 
-  local fg = gfx.image.new("images/environment/fg.png")
-  fg:draw(0, 0)
+  TEXTURES.fg:draw(0, 0)
 
   gfx.setLineWidth(1)
   gfx.setDitherPattern(0.5)
