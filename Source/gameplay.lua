@@ -129,16 +129,16 @@ function draw()
 
   -- Draw toy
   for i, body in ipairs(peedee_toy.bodies) do
-    local box_polygon = geometry.polygon.new(body:getPolygon())
-    box_polygon:close()
-    gfx.setColor(gfx.kColorWhite)
-    gfx.fillPolygon(box_polygon)
+    --- DEBUG boxes
+    -- local box_polygon = geometry.polygon.new(body:getPolygon())
+    -- box_polygon:close()
+    -- gfx.setColor(gfx.kColorWhite)
+    -- gfx.fillPolygon(box_polygon)
 
     local image = peedee_toy.sprites[i]
-
-    local pos = geometry.vector2D.new(body:getCenter())
+    local pos <const> = geometry.vector2D.new(body:getCenter())
     --- Undo the initial rotation of the sprite
-    local angle = body:getRotation() + math.rad(TOYS_INSTRUCTIONS.peedee.bodies[i].rotation)
+    local angle <const> = body:getRotation() + math.rad(TOYS_INSTRUCTIONS.peedee.bodies[i].rotation)
     image:drawRotated(pos.x, pos.y, math.deg(angle), 0.25)
   end
 
