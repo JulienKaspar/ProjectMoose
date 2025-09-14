@@ -176,7 +176,7 @@ function playdate.cranked(change, acceleratedChange)
   selected_toy.bodies[1]:setAngularVelocity(ang_vel)
   
   -- if crank is yanked, play toy sound
-  if acceleratedChange > 10 then
+  if acceleratedChange > 10 and MENU_STATE.screen == MENU_SCREEN.gameplay then
     Play_random_toy_sound()
   end
 end
