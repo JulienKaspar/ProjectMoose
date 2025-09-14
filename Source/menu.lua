@@ -114,6 +114,8 @@ local function draw_ui()
     elseif MENU_STATE.screen == MENU_SCREEN.win then
         UI_TEXTURES.game_over_indicator:draw(124, 80)
         UI_TEXTURES.success_header:draw(90, 6)
+    elseif MENU_STATE.screen == MENU_SCREEN.how_to then
+        UI_TEXTURES.instructions:draw(58, 3)
     end
 end
 
@@ -200,6 +202,7 @@ function Init_menus()
     UI_TEXTURES.game_over_indicator = gfxi.new("images/menus/menu_text/one_more_time_nah")
     UI_TEXTURES.failed_header = gfxi.new("images/menus/menu_text/FAILED")
     UI_TEXTURES.success_header = gfxi.new("images/menus/menu_text/SUCCESS")
+    UI_TEXTURES.instructions = gfxi.new("images/menus/menu_text/instructions")
 
     
     MENU_STATE.screen = MENU_SCREEN.main
