@@ -10,6 +10,13 @@ ANIMATIONS = {}
 IMAGE_ROTATION_INCREMENT = 36
 IMAGE_SCALING = 0.25
 
+local heart1_pos = geometry.vector2D.new(31, 1)
+local heart2_pos = geometry.vector2D.new(71, 1)
+local heart3_pos = geometry.vector2D.new(111, 1)
+local heart1_anim_pos = geometry.vector2D.new(53, 21)
+local heart2_anim_pos = geometry.vector2D.new(93, 21)
+local heart3_anim_pos = geometry.vector2D.new(133, 21)
+
 
 -- Debug / Development
 
@@ -98,10 +105,6 @@ local function draw_hud()
     then
         return
     end
-
-    local heart1_pos = geometry.vector2D.new(31, 1)
-    local heart2_pos = geometry.vector2D.new(71, 1)
-    local heart3_pos = geometry.vector2D.new(111, 1)
     
     if GAMEPLAY_STATE.current_strikes == 0 then
         TEXTURES.heart_full:draw(heart1_pos.dx, heart1_pos.dy)
@@ -134,22 +137,43 @@ end
 
 
 function kiddo_is_pleased()
+    -- Kiddo animation
     ANIMATIONS.kiddo_happy:setVisible(true)
     ANIMATIONS.kiddo_happy:playAnimation()
 
     ANIMATIONS.kiddo_idle:setVisible(false)
     ANIMATIONS.kiddo_angry:setVisible(false)
     
+    -- Heart animation
+    ANIMATIONS.heart_broken_fixed:setVisible(true)
+    ANIMATIONS.heart_broken_fixed:playAnimation()
+    -- Which heart is getting mended
+    if GAMEPLAY_STATE.current_strikes == 0 and GAMEPLAY_STATE.previous_strikes == 1 then
+        ANIMATIONS.heart_broken_fixed:moveTo(heart3_anim_pos.dx, heart3_anim_pos.dy)
+    elseif GAMEPLAY_STATE.current_strikes == 1 then
+        ANIMATIONS.heart_broken_fixed:moveTo(heart2_anim_pos.dx, heart2_anim_pos.dy)
+    else
+        ANIMATIONS.heart_broken_fixed:setVisible(false)
+    end
 end
 
 
 function kiddo_gets_mad()
+    -- Kiddo animation
     ANIMATIONS.kiddo_angry:setVisible(true)
     ANIMATIONS.kiddo_angry:playAnimation()
 
     ANIMATIONS.kiddo_idle:setVisible(false)
     ANIMATIONS.kiddo_happy:setVisible(false)
+
+    -- Heart animation
+    -- TODO
     
+end
+
+
+function on_heart_mending_finished()
+    ANIMATIONS.heart_broken_fixed:setVisible(false)
 end
 
 
@@ -239,6 +263,24 @@ function Init_visuals()
         ).asDefault()
     ANIMATIONS.kiddo_happy:moveTo(kiddo_pos.dx,kiddo_pos.dy)
 
+    -- local imagetable_broken_heart = gfxit.new("images/ui_elements/heart_anims/broken_heart_fixed")
+    local imagetable_broken_heart_fixed = gfxit.new("images/ui_elements/heart_anims/broken_heart_fixed")
+
+    ANIMATIONS.heart_broken_fixed = AnimatedSprite.new(imagetable_broken_heart_fixed)
+    ANIMATIONS.heart_broken_fixed:addState(
+            "main",
+            1,
+            imagetable_broken_heart_fixed:getLength(),
+            {
+                tickStep = 30.0/8.0,
+                loop = false,
+                onAnimationEndEvent = function (self) on_heart_mending_finished() end
+            }
+        ).asDefault()
+    ANIMATIONS.heart_broken_fixed:moveTo(heart3_pos.dx, heart3_pos.dy)
+    ANIMATIONS.heart_broken_fixed:setVisible(false)
+
+
     -- Load image layers.
     TEXTURES.bg = gfxi.new("images/environment/bg")
     TEXTURES.fg = gfxi.new("images/environment/fg")
@@ -257,6 +299,7 @@ function Init_visuals()
     -- Set_draw_pass(-20, draw_claw())
     Set_draw_pass(0, draw_game_foreground)
     Set_draw_pass(20, draw_hud)
+    ANIMATIONS.heart_broken_fixed:setZIndex(21)
     Set_draw_pass(30, draw_debug)
     --Set_draw_pass(20, draw_test_dither_patterns)
 end
