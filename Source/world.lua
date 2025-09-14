@@ -182,6 +182,14 @@ function Reset_gameplay_entities()
   fish_toy:move(geometry.vector2D.new(math.random(25,375), spawn_height))
   TOYS[#TOYS + 1] = fish_toy
 
+  local cat_toy = Toy.new(TOYS_INSTRUCTIONS.cat, world)
+  cat_toy:move(geometry.vector2D.new(math.random(25,375), spawn_height))
+  TOYS[#TOYS + 1] = cat_toy
+
+  local chicken_toy = Toy.new(TOYS_INSTRUCTIONS.chicken, world)
+  chicken_toy:move(geometry.vector2D.new(math.random(25,375), spawn_height))
+  TOYS[#TOYS + 1] = chicken_toy
+
   -- Select a random toy
   local random_i = math.random(#TOYS)
   selected_toy = TOYS[random_i]
