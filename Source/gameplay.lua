@@ -14,7 +14,9 @@ local gfx <const> = playdate.graphics
 local geometry <const> = playdate.geometry
 
 local selected_box = 1
-local world_angle
+local world_angle = 0
+local angle = 1
+local moving = false
 
 -- Local methods
 
@@ -58,19 +60,35 @@ function Handle_input()
     end
 end
 
+function move_down(claw)
+    local claw_x, claw_y = claw:getCenter()
+    local vel_x = math.sin(world_angle) * 0.3
+    local vel_y = math.cos(world_angle) * 0.3
+    claw:setVelocity(vel_x, vel_y)
+end
+
 function update(dt)
     world:update(dt)
 
     local gravityX, gravityY, _ = playdate.readAccelerometer()
-    local angle = Clamp(math.atan2(gravityX, gravityY), -MAX_ANGLE, MAX_ANGLE)
+    angle = Clamp(math.atan2(gravityX, gravityY), -MAX_ANGLE, MAX_ANGLE)
     claw:setRotation(angle)
 
     local toy_x, toy_y = peedee_toy.bodies[1]:getCenter()
     local claw_x, claw_y = claw:getCenter()
     local target_x = toy_x - math.tan(angle) * toy_y
-    local new_x = Clamp((target_x - claw_x), -dt*15, dt*15) + claw_x
-    new_x = Clamp(new_x, 0, WORLD_WIDTH)
-    claw:setCenter(new_x, claw_y)
+
+    if math.floor(target_x + 0.5) == math.floor(claw_x + 0.5) then
+        moving = true
+    end
+
+    if moving then
+        move_down(claw)
+    else
+        local new_x = Clamp((target_x - claw_x), -dt*15, dt*15) + claw_x
+        new_x = Clamp(new_x, 0, WORLD_WIDTH)
+        claw:setCenter(new_x, claw_y)
+    end
 
   -- TODO: limit resolution
     if angle ~= world_angle then
@@ -100,6 +118,9 @@ function draw()
   local x, y = claw:getCenter()
   local angle = -claw:getRotation() * 180 / math.pi
   claw_image:drawRotated(x, y, angle)
+
+  gfx.setColor(gfx.kColorWhite)
+  gfx.fillCircleAtPoint(x, y, 10)
 
   -- Draw environment
   draw_polygon(floor)

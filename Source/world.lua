@@ -60,7 +60,7 @@ function Init_world()
 
   -- Create claw
   claw = playbox.body.new(0, 0, 0)
-  claw:setCenter(WORLD_WIDTH*0.5, 20)
+  claw:setCenter(WORLD_WIDTH*0.5, 0)
   claw:setFriction(CLAW_FRICTION)
   world:addBody(claw)
 end
