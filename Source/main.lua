@@ -36,14 +36,6 @@ Enter_loading_screen()
 
 
 function playdate.update()
-    -- Always redraw and update entities (sprites) and timers.
-    gfx.clear()
-    for _, toy in ipairs(TOYS) do
-      toy:updateSprites()
-    end
-    gfx.sprite.update()
-    playdate.timer.updateTimers()
-
     -- Called before every frame is drawn.
     if MENU_STATE.screen ~= MENU_SCREEN.gameplay then
         -- In Menu system.
@@ -56,4 +48,12 @@ function playdate.update()
         local dt <const> = 1.0 / playdate.getFPS()
         update(dt)
     end
+
+    -- Always redraw and update entities (sprites) and timers.
+    gfx.clear()
+    for _, toy in ipairs(TOYS) do
+      toy:updateSprites()
+    end
+    gfx.sprite.update()
+    playdate.timer.updateTimers()
 end

@@ -18,7 +18,7 @@ claw = nil
 floor = nil
 left_wall = nil
 right_wall = nil
-peedee_toy = nil
+selected_toy = nil
 TOYS = {}
 
 local MASS_MIN <const> = 50
@@ -45,7 +45,7 @@ function Reset_gameplay_entities()
     floor = nil
     left_wall = nil
     right_wall = nil
-    peedee_toy = nil
+    selected_toy = nil
     for _, toy in ipairs(TOYS) do
       toy:destructor()
     end
@@ -75,7 +75,7 @@ function Reset_gameplay_entities()
 
   -- Create all entities
 
-  peedee_toy = Toy.new(TOYS_INSTRUCTIONS.peedee, world)
+  local peedee_toy = Toy.new(TOYS_INSTRUCTIONS.peedee, world)
   peedee_toy:move(geometry.vector2D.new(80, 50))
   TOYS[#TOYS + 1] = peedee_toy
 
@@ -102,6 +102,10 @@ function Reset_gameplay_entities()
   local fish_toy = Toy.new(TOYS_INSTRUCTIONS.fish, world)
   fish_toy:move(geometry.vector2D.new(330, 140))
   TOYS[#TOYS + 1] = fish_toy
+
+  -- Select a random toy
+  local random_i = math.random(#TOYS)
+  selected_toy = TOYS[random_i]
 
   -- Create claw
   claw = Claw(-20)
