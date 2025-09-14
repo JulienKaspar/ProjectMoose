@@ -36,7 +36,6 @@ end
 
 function Enter_loading_screen()
     MENU_STATE.screen = MENU_SCREEN.loading
-    UI_ANIMATIONS.loading:setVisible(true)
 end
 
 
@@ -46,7 +45,6 @@ function Enter_menu_start()
     remove_system_menu_entries()
     Stop_gameplay()
 
-    MENU_STATE.active_screen_texture = UI_TEXTURES.start
     if not SOUND.bg_loop_menu:isPlaying() then
         SOUND.bg_loop_menu:play(0)
     end
@@ -54,17 +52,14 @@ end
 
 local function enter_menu_main()
     MENU_STATE.screen = MENU_SCREEN.main
-    MENU_STATE.active_screen_texture = UI_TEXTURES.main
 end
 
 local function enter_menu_credits()
     MENU_STATE.screen = MENU_SCREEN.credits
-    MENU_STATE.active_screen_texture = UI_TEXTURES.credits
 end
 
 local function enter_menu_gameover()
     MENU_STATE.screen = MENU_SCREEN.gameover
-    MENU_STATE.active_screen_texture = UI_TEXTURES.gameover
 
     Stop_gameplay()
     -- Play gameover effects & transitions.
@@ -87,20 +82,25 @@ local function draw_ui()
         return
     end
 
-    -- In menus. The gameplay is inactive.
+    -- Hide all elements before showing only the ones that are required
+    for k, anim in pairs(UI_ANIMATIONS) do
+        anim:setVisible(false)
+    end
 
-    -- Draw baground screen image.
-    MENU_STATE.active_screen_texture:draw(0, 0)
-
-    -- Start menu draws a selected option indicator.
-    if MENU_STATE.screen == MENU_SCREEN.start then
-        gfx.pushContext()
-            gfx.setColor(gfx.kColorBlack)
-            gfx.fillCircleAtPoint(73, 110 + 27*MENU_STATE.focused_option, 7)
-        gfx.popContext()
-
-    -- Draw gameover screen dynamic elements.
+    -- Draw and show menu elements.
+    
+    if MENU_STATE.screen == MENU_SCREEN.loading then
+        UI_ANIMATIONS.loading:setVisible(true)
+    elseif MENU_STATE.screen == MENU_SCREEN.start then
+        UI_ANIMATIONS.logo:setVisible(true)
+        UI_TEXTURES.start:draw(0, 0)
+    elseif MENU_STATE.screen == MENU_SCREEN.main then
+        UI_ANIMATIONS.logo:setVisible(true)
+        UI_TEXTURES.main:draw(0, 0)
+    elseif MENU_STATE.screen == MENU_SCREEN.credits then
+        UI_TEXTURES.credits:draw(0, 0)
     elseif MENU_STATE.screen == MENU_SCREEN.gameover then
+        UI_TEXTURES.gameover:draw(0, 0)
     end
 end
 
@@ -150,12 +150,15 @@ end
 function Init_menus()
 
     -- Imagetables for animations
-    local image_table_loading = gfxit.new("images/menus/start_anim/start_anim")
-    UI_ANIMATIONS.loading = AnimatedSprite.new(image_table_loading)
+
+    local imagetable_loading = gfxit.new("images/menus/start_anim/start_anim")
+    local imagetable_logo = gfxit.new("images/menus/logo_anim/logo")
+
+    UI_ANIMATIONS.loading = AnimatedSprite.new(imagetable_loading)
     UI_ANIMATIONS.loading:addState(
             "main",
             1,
-            image_table_loading:getLength(),
+            imagetable_loading:getLength(),
             {
                 tickStep = 2.0,
                 loop = false,
@@ -165,16 +168,29 @@ function Init_menus()
     UI_ANIMATIONS.loading:playAnimation()
     UI_ANIMATIONS.loading:moveTo(200,120)
 
+    UI_ANIMATIONS.logo = AnimatedSprite.new(imagetable_logo)
+    UI_ANIMATIONS.logo:addState(
+            "main",
+            1,
+            imagetable_logo:getLength(),
+            {
+                tickStep = 30.0/4.0,
+                loop = true,
+            }
+        ).asDefault()
+    UI_ANIMATIONS.logo:playAnimation()
+    UI_ANIMATIONS.logo:moveTo(121,67)
+
     UI_TEXTURES.gameover = gfxi.new("images/gameover_temp.png")
     UI_TEXTURES.start = gfxi.new("images/start_screen_temp.png")
     UI_TEXTURES.main = gfxi.new("images/environment/game_mockups.png")
     UI_TEXTURES.credits = gfxi.new("images/credits_temp.png")
+    UI_TEXTURES.startgame_credits_indicator = gfxi.new("images/menus/menu_text/startgame_credits_indicator")
     
     MENU_STATE.screen = MENU_SCREEN.start
-    MENU_STATE.active_screen_texture = UI_TEXTURES.start
-    MENU_STATE.focused_option = 0
 
     -- Set the multiple things in their Z order of what overlaps what.
     Set_draw_pass(100, draw_ui) -- UI goes on top of everything.
+    UI_ANIMATIONS.logo:setZIndex(110)
     UI_ANIMATIONS.loading:setZIndex(200)
 end
