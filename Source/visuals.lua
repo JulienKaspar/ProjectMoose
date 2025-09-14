@@ -211,7 +211,7 @@ function Init_visuals()
     local imagetable_kiddo_idle = gfxit.new("images/kiddo_anims/kiddo_idle")
     local imagetable_kiddo_anger = gfxit.new("images/kiddo_anims/kiddo_anger")
     local imagetable_kiddo_happy = gfxit.new("images/kiddo_anims/kiddo_happy")
-    local kiddo_pos = geometry.vector2D.new(272, 100)
+    local kiddo_pos = geometry.vector2D.new(272, 99)
 
     ANIMATIONS.kiddo_idle = AnimatedSprite.new(imagetable_kiddo_idle)
     ANIMATIONS.kiddo_idle:addState(
