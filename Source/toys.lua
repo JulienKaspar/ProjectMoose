@@ -28,7 +28,7 @@ TOYS_INSTRUCTIONS = {
   monkey = {
     bodies = {
       {
-        position = geo.vector2D.new(10, 2),
+        position = geo.vector2D.new(-10, 2),
         rotation = 2.10368,
         dimensions = geo.vector2D.new(37.4, 72.8),
         img = gfx.image.new("images/toys/monkey_main.png"),
@@ -298,7 +298,7 @@ function Toy:init(instr, world)
     mass = Clamp(mass, 30, 100)
     local body = playbox.body.new(body_instr.dimensions.x, body_instr.dimensions.y, mass)
     body:setCenter(body_instr.position.x, body_instr.position.y)
-    body:setRotation(math.rad(body_instr.rotation))
+    body:setRotation(-math.rad(body_instr.rotation))
     body:setFriction(0.8)
     world:addBody(body)
     local image_table = makeRotationImageTable(body_instr.img)
