@@ -166,26 +166,36 @@ function update(dt)
         jump_timeout_value = jump_timeout_max
     end
 
-    if playdate.buttonIsPressed(playdate.kButtonLeft) then
-        selected_toy.bodies[1]:addForce(-300, 0)
-    end
+    -- if playdate.buttonIsPressed(playdate.kButtonLeft) then
+    --     selected_toy.bodies[1]:addForce(-300, 0)
+    -- end
 
-    if playdate.buttonIsPressed(playdate.kButtonRight) then
-        selected_toy.bodies[1]:addForce(300, 0)
-    end
+    -- if playdate.buttonIsPressed(playdate.kButtonRight) then
+    --     selected_toy.bodies[1]:addForce(300, 0)
+    -- end
 
     check_toys_got_out()
 end
 
 function playdate.cranked(change, acceleratedChange)
+
+  local rotation_velocity_acceleration <const> = 0.25
+  local min_rotation_velocity <const> = 4.0
+  local max_rotation_velocity <const> = 20.0
+  
   if #TOYS <= 0 then
     return
   end
   local ang_vel = selected_toy.bodies[1]:getAngularVelocity()
   -- local alpha <const> = 10
-  -- ang_vel += 0.5 * (acceleratedChange * alpha / (1 + math.abs(acceleratedChange * alpha))) + 0.5
-  ang_vel += acceleratedChange * 0.05
-  ang_vel = Clamp(ang_vel, -4, 4)
+  -- ang_vel += 0.5 * (acceleratedChange * alpha / (1 + math.abs(acceleratedChange * alpha))) + 0.5\
+  ang_vel += acceleratedChange * rotation_velocity_acceleration
+
+  local ang_vel_sign = Sign(ang_vel)
+  local ang_vel_abs = math.abs(ang_vel)
+
+  ang_vel_abs = Clamp(ang_vel_abs, min_rotation_velocity, max_rotation_velocity)
+  ang_vel = ang_vel_abs * ang_vel_sign
   selected_toy.bodies[1]:setAngularVelocity(ang_vel)
   
   -- if crank is yanked, play toy sound
