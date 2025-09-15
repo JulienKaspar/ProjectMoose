@@ -72,6 +72,7 @@ function receive_strike()
     GAMEPLAY_STATE.current_strikes = Clamp(GAMEPLAY_STATE.current_strikes, 0, 3)
     kiddo_gets_mad()
     SOUND.child_disappointed:play()
+    SOUND.kiddo_bang_glass:play()
 end
 
 
