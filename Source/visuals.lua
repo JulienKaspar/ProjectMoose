@@ -368,7 +368,7 @@ function Init_visuals()
     Set_draw_pass(20, draw_hud)
     ANIMATIONS.heart_mending:setZIndex(21)
     ANIMATIONS.heart_breaking:setZIndex(21)
-    Set_draw_pass(30, draw_debug)
+    -- Set_draw_pass(30, draw_debug)
     ANIMATIONS.highlight_fx:setZIndex(25)
     --Set_draw_pass(20, draw_test_dither_patterns)
 end
