@@ -35,7 +35,6 @@ Enter_loading_screen()
 
 
 function playdate.update()
-    local dt <const> = 1.0 / playdate.getFPS()
     -- Called before every frame is drawn.
     if MENU_STATE.screen ~= MENU_SCREEN.gameplay then
         -- In Menu system.
@@ -45,10 +44,9 @@ function playdate.update()
     if MENU_STATE.screen == MENU_SCREEN.gameplay then
         -- In gameplay.
         Handle_input()
+        local dt <const> = 1.0 / playdate.getFPS()
         update(dt)
     end
-
-    world:update(dt)
 
     -- Always redraw and update entities (sprites) and timers.
     gfx.clear()
