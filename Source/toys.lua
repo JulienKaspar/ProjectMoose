@@ -2,7 +2,8 @@ local geo = playdate.geometry
 local gfx = playdate.graphics
 
 TOYS_INSTRUCTIONS = {
-  peedee = {
+  -- peedee
+  {
     bodies = {
       {
         position = geo.vector2D.new(-12, 1),
@@ -25,7 +26,8 @@ TOYS_INSTRUCTIONS = {
       }
     }
   },
-  monkey = {
+  -- monkey
+  {
     bodies = {
       {
         position = geo.vector2D.new(-10, 2),
@@ -48,7 +50,8 @@ TOYS_INSTRUCTIONS = {
       }
     }
   },
-  mouse = {
+  -- mouse
+  {
     bodies = {
       {
         position = geo.vector2D.new(1, -22),
@@ -82,7 +85,8 @@ TOYS_INSTRUCTIONS = {
       }
     }
   },
-  toast = {
+  -- toast
+  {
     bodies = {
       {
         position = geo.vector2D.new(0, 0),
@@ -93,10 +97,8 @@ TOYS_INSTRUCTIONS = {
     },
     joints = {}
   },
-  crab = {
-    -- sprite_claw_right = {
-    --   position = geo.vector2D.new(4, 0),
-    -- },
+  -- crab
+  {
     bodies = {
       {
         position = geo.vector2D.new(1, 10),
@@ -130,7 +132,8 @@ TOYS_INSTRUCTIONS = {
       },
     }
   },
-  cactus = {
+  -- cactus
+  {
     bodies = {
       {
         position = geo.vector2D.new(3, 1),
@@ -153,7 +156,8 @@ TOYS_INSTRUCTIONS = {
       }
     }
   },
-  fish = {
+  -- fish
+  {
     bodies = {
       {
         position = geo.vector2D.new(-9, 4),
@@ -176,7 +180,8 @@ TOYS_INSTRUCTIONS = {
       }
     }
   },
-  cat = {
+  -- cat
+  {
     bodies = {
       {
         position = geo.vector2D.new(-7, 11),
@@ -210,7 +215,8 @@ TOYS_INSTRUCTIONS = {
       }
     }
   },
-  chicken = {
+  -- chicken
+  {
     bodies = {
       {
         position = geo.vector2D.new(1, -4),
@@ -244,7 +250,8 @@ TOYS_INSTRUCTIONS = {
       }
     }
   },
-  bear = {
+  -- bear
+  {
     bodies = {
       {
         position = geo.vector2D.new(-2, 4),
@@ -278,7 +285,8 @@ TOYS_INSTRUCTIONS = {
       }
     }
   },
-  frog = {
+  -- frog
+  {
     bodies = {
       {
         position = geo.vector2D.new(-1, 20),
@@ -290,7 +298,8 @@ TOYS_INSTRUCTIONS = {
         position = geo.vector2D.new(-2, -18),
         rotation = -3.80082,
         dimensions = geo.vector2D.new(39.6, 26.3),
-      }
+        img = gfx.image.new(64, 64),
+      },
     },
     joints = {
       {
@@ -300,7 +309,8 @@ TOYS_INSTRUCTIONS = {
       }
     }
   },
-  knight = {
+  -- knight
+  {
     bodies = {
       {
         position = geo.vector2D.new(-4, 18),
@@ -329,30 +339,31 @@ TOYS_INSTRUCTIONS = {
       },
       {
         body1 = 1,
-        body2 = 2,
+        body2 = 3,
         position = geo.vector2D.new(8, 8),
       }
     }
   },
-  terror_bird = {
+  -- terror_bird
+  {
     bodies = {
       {
         position = geo.vector2D.new(10, 10),
         rotation = -23.4308,
         dimensions = geo.vector2D.new(16.9, 16.2),
-        img = gfx.image.new("images/toys/terror_bird_body.png"),
+        img = gfx.image.new("images/toys/terrorbird_body.png"),
       },
       {
         position = geo.vector2D.new(-5, -23),
         rotation = 26.0954,
         dimensions = geo.vector2D.new(39.5, 42.8),
-        img = gfx.image.new("images/toys/terror_bird_head.png"),
+        img = gfx.image.new("images/toys/terrorbird_head.png"),
       },
       {
         position = geo.vector2D.new(11, 36),
         rotation = -2.34043,
         dimensions = geo.vector2D.new(45.1, 16.8),
-        img = gfx.image.new("images/toys/terror_bird_feet.png"),
+        img = gfx.image.new("images/toys/terrorbird_feet.png"),
       }
     },
     joints = {
@@ -363,12 +374,13 @@ TOYS_INSTRUCTIONS = {
       },
       {
         body1 = 1,
-        body2 = 2,
+        body2 = 3,
         position = geo.vector2D.new(12, 17),
       }
     }
   },
-  pirate = {
+  -- pirate
+  {
     bodies = {
       {
         position = geo.vector2D.new(0, 0),
@@ -376,9 +388,11 @@ TOYS_INSTRUCTIONS = {
         dimensions = geo.vector2D.new(47.2, 32.5),
         img = gfx.image.new("images/toys/pirate.png"),
       }
-    }
+    },
+    joints = {}
   },
-  rogalik = {
+  -- rogalik
+  {
     bodies = {
       {
         position = geo.vector2D.new(1, -1),
@@ -401,7 +415,8 @@ TOYS_INSTRUCTIONS = {
       }
     }
   },
-  yellow = {
+  -- yellow
+  {
     bodies = {
       {
         position = geo.vector2D.new(5, 14),

@@ -155,50 +155,22 @@ function Reset_gameplay_entities()
   -- Create all entities
 
   local spawn_height = 200
-  local peedee_toy = Toy.new(TOYS_INSTRUCTIONS.peedee, world)
-  peedee_toy:move(geometry.vector2D.new(math.random(25,375), spawn_height))
-  TOYS[#TOYS + 1] = peedee_toy
 
-  local monkey_toy = Toy.new(TOYS_INSTRUCTIONS.monkey, world)
-  monkey_toy:move(geometry.vector2D.new(math.random(25,375), spawn_height))
-  TOYS[#TOYS + 1] = monkey_toy
-
-  local mouse_toy = Toy.new(TOYS_INSTRUCTIONS.mouse, world)
-  mouse_toy:move(geometry.vector2D.new(math.random(25,375), spawn_height))
-  TOYS[#TOYS + 1] = mouse_toy
-
-  local toast_toy = Toy.new(TOYS_INSTRUCTIONS.toast, world)
-  toast_toy:move(geometry.vector2D.new(math.random(25,375), spawn_height))
-  TOYS[#TOYS + 1] = toast_toy
-
-  local crab_toy = Toy.new(TOYS_INSTRUCTIONS.crab, world)
-  crab_toy:move(geometry.vector2D.new(math.random(25,375), spawn_height))
-  TOYS[#TOYS + 1] = crab_toy
-
-  local cactus_toy = Toy.new(TOYS_INSTRUCTIONS.cactus, world)
-  cactus_toy:move(geometry.vector2D.new(math.random(25,375), spawn_height))
-  TOYS[#TOYS + 1] = cactus_toy
-
-  local fish_toy = Toy.new(TOYS_INSTRUCTIONS.fish, world)
-  fish_toy:move(geometry.vector2D.new(math.random(25,375), spawn_height))
-  TOYS[#TOYS + 1] = fish_toy
-
-  local cat_toy = Toy.new(TOYS_INSTRUCTIONS.cat, world)
-  cat_toy:move(geometry.vector2D.new(math.random(25,375), spawn_height))
-  TOYS[#TOYS + 1] = cat_toy
-
-  local chicken_toy = Toy.new(TOYS_INSTRUCTIONS.chicken, world)
-  chicken_toy:move(geometry.vector2D.new(math.random(25,375), spawn_height))
-  TOYS[#TOYS + 1] = chicken_toy
-
-  local bear_toy = Toy.new(TOYS_INSTRUCTIONS.bear, world)
-  bear_toy:move(geometry.vector2D.new(math.random(25,375), spawn_height))
-  TOYS[#TOYS + 1] = bear_toy
+  for i, toy_instr in ipairs(TOYS_INSTRUCTIONS) do
+      local toy = Toy.new(toy_instr, world)
+      TOYS[#TOYS + 1] = toy
+      print(toy)
+  end
 
   shuffle(TOYS)
+  assert(#TOYS > TOYS_COUNT)
   for i = #TOYS, TOYS_COUNT + 1, -1 do
       TOYS[i]:destructor(world)
       table.remove(TOYS, i)
+  end
+
+  for _, toy in ipairs(TOYS) do
+      toy:move(geometry.vector2D.new(math.random(25,375), spawn_height))
   end
 
   -- Create claw
