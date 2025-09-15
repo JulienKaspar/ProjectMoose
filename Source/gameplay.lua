@@ -208,8 +208,8 @@ function playdate.cranked(change, acceleratedChange)
   local mass = selected_toy.bodies[1]:getMass()
   selected_toy.bodies[1]:addForce(ang_vel * mass, 0)
   
-  -- if crank is yanked, play toy sound
-  if acceleratedChange > 10 and MENU_STATE.screen == MENU_SCREEN.gameplay then
+  -- if crank is yanked enough, play toy sound
+  if acceleratedChange > 20 and MENU_STATE.screen == MENU_SCREEN.gameplay then
     Play_random_toy_sound()
   end
 end

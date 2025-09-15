@@ -1,7 +1,7 @@
 local sp <const> = playdate.sound.sampleplayer
 local current_toy_sound = nil
 local current_kick_sound = nil
-local klaw_descend_rate = 1
+local skip_toy_sound_chance = 0.5
 
 SOUND = {
   loading_screen = sp.new("sound/loading_screen"),
@@ -40,6 +40,10 @@ function Play_random_toy_sound()
   if current_toy_sound == nil then
     current_toy_sound = SOUND["TOYS"][math.random(1, #SOUND["TOYS"])]
     current_toy_sound:play()
+    skip_toy_sound = true
+  elseif (Math.random() > skip_toy_sound_chance) then 
+    -- add random skips to lower frequency
+    return
   elseif not current_toy_sound:isPlaying() then
     current_toy_sound = nil
   end

@@ -37,7 +37,7 @@ end
 
 function Enter_loading_screen()
     MENU_STATE.screen = MENU_SCREEN.loading
-    -- SOUND.loading_screen:play()
+    SOUND.loading_screen:play()
 end
 
 
