@@ -243,6 +243,40 @@ TOYS_INSTRUCTIONS = {
         body2 = 3,
         position = geo.vector2D.new(10, 18),
       }
+    },
+    bear = {
+    bodies = {
+      {
+        position = geo.vector2D.new(-2, 4),
+        rotation = -6.15081,
+        dimensions = geo.vector2D.new(39.6, 70.8),
+        img = gfx.image.new("images/toys/bear_main.png"),
+      },
+      {
+        position = geo.vector2D.new(-29, 13),
+        rotation = -6.66993,
+        dimensions = geo.vector2D.new(10.3, 23.0),
+        img = gfx.image.new("images/toys/bear_arm_front.png"),
+      },
+      {
+        position = geo.vector2D.new(27, 15),
+        rotation = 8.00634,
+        dimensions = geo.vector2D.new(13.0, 26.4),
+        img = gfx.image.new("images/toys/bear_arm_back.png"),
+      }
+    },
+    joints = {
+      {
+        body1 = 1,
+        body2 = 2,
+        position = geo.vector2D.new(19, 3),
+      }
+    },
+      {
+        body1 = 1,
+        body2 = 3,
+        position = geo.vector2D.new(-23, 2),
+      }
     }
 }
 
