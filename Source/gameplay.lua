@@ -118,14 +118,10 @@ function check_toys_got_out()
         table.remove(TOYS, i)
         toy = nil
         if reset_selected then
+          selected_toy:removeHighlight()
           selected_toy = nil
         end 
       end
-    end
-
-    if selected_toy == nil then
-      local random_i = math.random(#TOYS)
-      selected_toy = TOYS[random_i]
     end
 
     if not got_right_toy then

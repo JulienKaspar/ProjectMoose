@@ -190,10 +190,6 @@ function Reset_gameplay_entities()
   chicken_toy:move(geometry.vector2D.new(math.random(25,375), spawn_height))
   TOYS[#TOYS + 1] = chicken_toy
 
-  -- Select a random toy
-  local random_i = math.random(#TOYS)
-  selected_toy = TOYS[random_i]
-
   -- Create claw
-  claw = Claw(-20)
+  claw = Claw(2)
 end

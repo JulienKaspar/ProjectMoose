@@ -293,6 +293,7 @@ function Toy:init(instr, world)
   self.initial_rotations = {}
   self.joints = {}
   self.sprites = {}
+  self.highlight = nil
   for _, body_instr in ipairs(instr.bodies) do
     local mass = (body_instr.dimensions.x * body_instr.dimensions.y) * 0.025
     mass = Clamp(mass, 30, 100)
@@ -341,6 +342,9 @@ function Toy:updateSprites()
     local image = image_table:getImage(n)
     self.sprites[i]:setImage(image)
     self.sprites[i]:moveTo(pos.x, pos.y)
+    if i == 1 and self.highlight then
+      self.highlight:moveTo(pos.x, pos.y)
+    end
   end
 end
 
@@ -348,10 +352,34 @@ function Toy:destructor(world)
     for _, sprite in ipairs(self.sprites) do
         sprite:remove()
     end
+    if self.highlight then
+      self.highlight:remove()
+    end
     for _, body in ipairs(self.bodies) do
         world:removeBody(body)
     end
     for _, joint in ipairs(self.joints) do
         world:removeJoint(joint)
     end
+end
+
+function Toy:setHighlight()
+  if self.highlight == nil then
+    self.highlight = ANIMATIONS.highlight_fx
+    self.highlight:setZIndex(1)
+    self.highlight:add()
+
+    for _, sprite in ipairs(self.sprites) do
+      sprite:setZIndex(3)
+    end
+  end
+end
+
+function Toy:removeHighlight()
+  if self.highlight then
+    self.highlight:remove()
+    for _, sprite in ipairs(self.sprites) do
+      sprite:setZIndex(0)
+    end
+  end
 end

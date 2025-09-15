@@ -55,4 +55,11 @@ function playdate.update()
     end
     gfx.sprite.update()
     playdate.timer.updateTimers()
+
+    -- Select a random 
+    if selected_toy == nil then
+      local random_i = math.random(#TOYS)
+      selected_toy = TOYS[random_i]
+      selected_toy:setHighlight()
+    end
 end
