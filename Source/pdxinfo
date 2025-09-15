@@ -5,3 +5,4 @@ bundleID=com.playjam.projectgodklaw
 version=0.0.1
 buildNumber=1
 imagePath=images/launcher
+launchSoundPath=sound/launch_screen
