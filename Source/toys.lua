@@ -202,14 +202,14 @@ TOYS_INSTRUCTIONS = {
         body1 = 1,
         body2 = 2,
         position = geo.vector2D.new(12, 5),
-      }
-    },
+      },
       {
         body1 = 1,
         body2 = 3,
         position = geo.vector2D.new(-30, 3),
       }
-    },
+    }
+  },
   chicken = {
     bodies = {
       {
@@ -236,15 +236,15 @@ TOYS_INSTRUCTIONS = {
         body1 = 1,
         body2 = 2,
         position = geo.vector2D.new(-3, 20),
-      }
-    },
+      },
       {
         body1 = 1,
         body2 = 3,
         position = geo.vector2D.new(10, 18),
       }
-    },
-    bear = {
+    }
+  },
+  bear = {
     bodies = {
       {
         position = geo.vector2D.new(-2, 4),
@@ -270,14 +270,14 @@ TOYS_INSTRUCTIONS = {
         body1 = 1,
         body2 = 2,
         position = geo.vector2D.new(19, 3),
-      }
-    },
+      },
       {
         body1 = 1,
         body2 = 3,
         position = geo.vector2D.new(-23, 2),
       }
     }
+  }
 }
 
 class('Toy').extends()
