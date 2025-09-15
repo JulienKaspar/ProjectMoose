@@ -111,13 +111,11 @@ int PBArrayIndexOfItem(PBArray* array, void* item) {
     
     // Quickly compare first bytes.
     if((*(char*)found_item) == first_byte) {
-      pb_log("FIRST CHECK PASSED");
       if(memcmp(found_item, item, array->item_size) == 0) {
         return i;
       }
     }
     else {
-      pb_log("FAILED FIRST CHECK");
     }
   }
   return -1;

@@ -21,7 +21,6 @@ PBBody* PBBodyCreate(void) {
 }
 
 void PBBodyFree(PBBody* body) {
-  pb_log("playbox: freeing body %p", body);
   pb_free(body);
 }
 
