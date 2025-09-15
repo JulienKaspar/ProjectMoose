@@ -129,7 +129,7 @@ function Claw:resetPosition(x)
 
     -- Claw body
     local CLAW_WIDTH <const> = 8
-    local CLAW_HEIGHT <const> = 30
+    local CLAW_HEIGHT <const> = 16
     self.left = pb.body.new(CLAW_WIDTH, CLAW_HEIGHT, CLAW_MASS)
     self.left:setCenter(x - CLAW_LENGTH, CEILING_HEIGHT + CABLE_LENGTH + CLAW_LENGTH)
     self.left:setFriction(100)
