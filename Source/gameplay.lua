@@ -6,7 +6,7 @@ local maximum_strikes <const> = 3
 
 
 local jump_timeout_value = 0.0
-local jump_timeout_max <const> = 0.5
+local jump_timeout_max <const> = 0.8
 
 
 -- Gameplay state variables that should be reset
@@ -162,18 +162,15 @@ function update(dt)
     end
 
     if playdate.buttonJustPressed(playdate.kButtonA) and jump_timeout_value <= 0.0 then
-        -- TODO: Use the size of the body as a factor for the added force.
-        selected_toy.bodies[1]:addForce(0, -6000)
         jump_timeout_value = jump_timeout_max
+        -- Use the size of the body as a factor for the added force.
+        local jump_force = -180.0 / (#selected_toy.bodies)
+        for k, body in ipairs(selected_toy.bodies) do
+          local mass = selected_toy.bodies[1]:getMass()
+          body:addForce(0, mass * jump_force)
+          
+        end
     end
-
-    -- if playdate.buttonIsPressed(playdate.kButtonLeft) then
-    --     selected_toy.bodies[1]:addForce(-300, 0)
-    -- end
-
-    -- if playdate.buttonIsPressed(playdate.kButtonRight) then
-    --     selected_toy.bodies[1]:addForce(300, 0)
-    -- end
 
     check_toys_got_out()
 end
@@ -181,8 +178,8 @@ end
 function playdate.cranked(change, acceleratedChange)
 
   local rotation_velocity_acceleration <const> = 0.25
-  local min_rotation_velocity <const> = 4.0
-  local max_rotation_velocity <const> = 20.0
+  local min_rotation_velocity <const> = 3.0
+  local max_rotation_velocity <const> = 16.0
   
   if #TOYS <= 0 then
     return
@@ -198,6 +195,10 @@ function playdate.cranked(change, acceleratedChange)
   ang_vel_abs = Clamp(ang_vel_abs, min_rotation_velocity, max_rotation_velocity)
   ang_vel = ang_vel_abs * ang_vel_sign
   selected_toy.bodies[1]:setAngularVelocity(ang_vel)
+
+  -- Push the toy a bit as well
+  local mass = selected_toy.bodies[1]:getMass()
+  selected_toy.bodies[1]:addForce(ang_vel * mass, 0)
   
   -- if crank is yanked, play toy sound
   if acceleratedChange > 10 and MENU_STATE.screen == MENU_SCREEN.gameplay then
