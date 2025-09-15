@@ -5,6 +5,10 @@ GYRO_X, GYRO_Y = 200, 120
 local maximum_strikes <const> = 3
 
 
+local jump_timeout_value = 0.0
+local jump_timeout_max <const> = 0.5
+
+
 -- Gameplay state variables that should be reset
 
 GAMEPLAY_STATE = {
@@ -136,6 +140,11 @@ end
 function update(dt)
     world:update(dt)
 
+    -- Update timers
+    jump_timeout_value -= dt
+    jump_timeout_value = Clamp(jump_timeout_value, 0, jump_timeout_max)
+
+
     -- See if the game is lost or won
     try_ending_game()
 
@@ -151,8 +160,10 @@ function update(dt)
         world:setGravity(math.sin(angle) * 9.81, math.cos(angle) * 9.81)
     end
 
-    if playdate.buttonJustPressed(playdate.kButtonA) then
-        selected_toy.bodies[1]:addForce(0, -5000)
+    if playdate.buttonJustPressed(playdate.kButtonA) and jump_timeout_value <= 0.0 then
+        -- TODO: Use the size of the body as a factor for the added force.
+        selected_toy.bodies[1]:addForce(0, -6000)
+        jump_timeout_value = jump_timeout_max
     end
 
     if playdate.buttonIsPressed(playdate.kButtonLeft) then
