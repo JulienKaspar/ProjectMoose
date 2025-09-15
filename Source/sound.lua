@@ -17,6 +17,7 @@ SOUND = {
   child_disappointed = sp.new("sound/child_disappointed"),
   child_sigh = sp.new("sound/child_sigh"),
   child_laugh = sp.new("sound/child_laugh"),
+  child_wow = sp.new("sound/kiddo_wow_1"),
   game_over = sp.new("sound/game_over"),
   toy_ascend = sp.new("sound/toy_ascend"),
   TOYS = {
