@@ -7,7 +7,7 @@ local geometry <const> = playdate.geometry
 TEXTURES = {}
 ANIMATIONS = {}
 
-IMAGE_ROTATION_INCREMENT = 36
+IMAGE_ROTATION_INCREMENT = 48
 IMAGE_SCALING = 0.25
 
 local heart1_pos = geometry.vector2D.new(31, 1)
