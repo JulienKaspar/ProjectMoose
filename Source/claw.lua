@@ -73,29 +73,24 @@ function Claw:init(ZIndex)
      -- Sprites
     self.sprites = {}
 
-    local image = gfxi.new("images/claw/claw_cable.png")
-    local sprite = gfx.sprite.new(image)
+    self.imagetables = {}
+    self.imagetables[#self.imagetables + 1] = makeRotationImageTable(gfxi.new("images/claw/claw_cable.png"))
+    self.imagetables[#self.imagetables + 1] = makeRotationImageTable(gfxi.new("images/claw/claw_left.png"))
+    self.imagetables[#self.imagetables + 1] = makeRotationImageTable(gfxi.new("images/claw/claw_right.png"))
+
+    local sprite = gfx.sprite.new()
     local ceiling_x, ceiling_y = self.ceiling:getCenter()
     local center_x, center_y = self.joint.center:getCenter()
-    sprite:setScale(SCALE)
-    sprite:moveTo(0.5 * (ceiling_x + center_x), 0.5 * (ceiling_y + center_y))
     sprite:setZIndex(ZIndex)
     sprite:add()
     self.sprites[#self.sprites + 1] = sprite
 
-    image = gfxi.new("images/claw/claw_left.png")
-    sprite = gfx.sprite.new(image)
-    sprite:setScale(SCALE)
-    sprite:moveTo(center_x, center_y)
+    sprite = gfx.sprite.new()
     sprite:setZIndex(ZIndex - 1)
     sprite:add()
     self.sprites[#self.sprites + 1] = sprite
 
-    image = gfxi.new("images/claw/claw_right.png")
-    sprite = gfx.sprite.new(image)
-    local left_x, left_y = self.left:getCenter()
-    sprite:setScale(SCALE)
-    sprite:moveTo(center_x, center_y)
+    sprite = gfx.sprite.new()
     sprite:setZIndex(ZIndex - 1)
     sprite:add()
     self.sprites[#self.sprites + 1] = sprite
@@ -223,21 +218,32 @@ function Claw:update(dt)
     vel_x, vel_y = self.joint.center:getVelocity()
     self.joint.center:addForce(-vel_x * FRICTION, -vel_y * FRICTION)
 
+    local angle_incr <const> = 360 / IMAGE_ROTATION_INCREMENT
+
+    local image_table = self.imagetables[1]
     local ceiling_x, ceiling_y = self.ceiling:getCenter()
     local center_x, center_y = self.joint.center:getCenter()
     local angle = math.atan2((ceiling_x - center_x), center_y - ceiling_y)
+    local n = (math.floor(math.deg(angle) / angle_incr) % image_table:getLength()) + 1
+    local image = image_table:getImage(n)
+    self.sprites[1]:setImage(image)
     self.sprites[1]:moveTo(0.5 * (ceiling_x + center_x), 0.5 * (ceiling_y + center_y))
-    self.sprites[1]:setRotation(math.deg(angle))
 
+    image_table = self.imagetables[2]
     local left_x, left_y = self.left:getCenter()
     angle = math.atan2((center_x - left_x), left_y - center_y)
+    n = (math.floor(math.deg(angle - math.pi/4) / angle_incr) % image_table:getLength()) + 1
+    image = image_table:getImage(n)
+    self.sprites[2]:setImage(image)
     self.sprites[2]:moveTo(center_x, center_y)
-    self.sprites[2]:setRotation(math.deg(angle) - 45)
 
+    image_table = self.imagetables[3]
     local right_x, right_y = self.right:getCenter()
     angle = math.atan2((center_x - right_x), right_y - center_y)
+    n = (math.floor(math.deg(angle + math.pi/4) / angle_incr) % image_table:getLength()) + 1
+    image = image_table:getImage(n)
+    self.sprites[3]:setImage(image)
     self.sprites[3]:moveTo(center_x, center_y)
-    self.sprites[3]:setRotation(math.deg(angle) + 45)
 end
 
 function Claw:draw_debug()
