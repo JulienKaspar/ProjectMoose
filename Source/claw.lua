@@ -121,7 +121,7 @@ end
 
 function Claw:resetPosition(x)
     -- Ceiling
-    self.ceiling = pb.body.new(2*WORLD_WIDTH, WALL_WIDTH, 0)
+    self.ceiling = pb.body.new(2*WORLD_WIDTH, 50, 0)
     self.ceiling:setCenter(x, CEILING_HEIGHT)
     self.ceiling:setFriction(WALL_FRICTION)
     world:addBody(self.ceiling)
