@@ -12,6 +12,7 @@ WALL_WIDTH = 150
 local PAD <const> = 10
 MAX_ANGLE = 0.3
 BOX_COUNT = 20
+local TOYS_COUNT <const> = 8
 
 world = nil
 claw = nil
@@ -189,6 +190,16 @@ function Reset_gameplay_entities()
   local chicken_toy = Toy.new(TOYS_INSTRUCTIONS.chicken, world)
   chicken_toy:move(geometry.vector2D.new(math.random(25,375), spawn_height))
   TOYS[#TOYS + 1] = chicken_toy
+
+  local bear_toy = Toy.new(TOYS_INSTRUCTIONS.bear, world)
+  bear_toy:move(geometry.vector2D.new(math.random(25,375), spawn_height))
+  TOYS[#TOYS + 1] = bear_toy
+
+  shuffle(TOYS)
+  for i = #TOYS, TOYS_COUNT + 1, -1 do
+      TOYS[i]:destructor(world)
+      table.remove(TOYS, i)
+  end
 
   -- Create claw
   claw = Claw(2)
