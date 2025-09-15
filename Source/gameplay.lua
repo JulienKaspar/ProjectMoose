@@ -67,7 +67,7 @@ function try_ending_game()
 end
 
 function select_random_toy()
-  if selected_toy == nil then
+  if selected_toy == nil and #TOYS > 0 then
     local random_i = math.random(#TOYS)
     selected_toy = TOYS[random_i]
     selected_toy:setHighlight()
@@ -189,7 +189,7 @@ function playdate.cranked(change, acceleratedChange)
   local min_rotation_velocity <const> = 3.0
   local max_rotation_velocity <const> = 16.0
   
-  if #TOYS <= 0 then
+  if #TOYS <= 0 or selected_toy == nil then
     return
   end
   local ang_vel = selected_toy.bodies[1]:getAngularVelocity()
