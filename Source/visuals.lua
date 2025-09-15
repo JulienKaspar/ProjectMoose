@@ -320,6 +320,18 @@ function Init_visuals()
     ANIMATIONS.heart_breaking:moveTo(heart3_pos.dx, heart3_pos.dy)
     ANIMATIONS.heart_breaking:setVisible(false)
 
+    local imagetable_highlight_fx = gfxit.new("images/fx/highlight_fx")
+    ANIMATIONS.highlight_fx = AnimatedSprite.new(imagetable_highlight_fx)
+    ANIMATIONS.highlight_fx:addState(
+            "main",
+            1,
+            imagetable_highlight_fx:getLength(),
+            {
+                tickStep = 30.0/2.0,
+                loop = true,
+            }
+        ).asDefault()
+    ANIMATIONS.highlight_fx:playAnimation()
 
     -- Load image layers.
     TEXTURES.bg = gfxi.new("images/environment/bg")
@@ -342,6 +354,7 @@ function Init_visuals()
     ANIMATIONS.heart_mending:setZIndex(21)
     ANIMATIONS.heart_breaking:setZIndex(21)
     Set_draw_pass(30, draw_debug)
+    ANIMATIONS.highlight_fx:setZIndex(25)
     --Set_draw_pass(20, draw_test_dither_patterns)
 end
 
