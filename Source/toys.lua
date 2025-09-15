@@ -133,15 +133,15 @@ TOYS_INSTRUCTIONS = {
   cactus = {
     bodies = {
       {
-        position = geo.vector2D.new(2, 1),
+        position = geo.vector2D.new(3, 1),
         rotation = -15.7791,
-        dimensions = geo.vector2D.new(14.9, 41.7),
+        dimensions = geo.vector2D.new(20.6, 57.5),
         img = gfx.image.new("images/toys/cactus_main.png"),
       },
       {
-        position = geo.vector2D.new(-11, -13),
+        position = geo.vector2D.new(-18, -21),
         rotation = 30.7259,
-        dimensions = geo.vector2D.new(11.9, 12.1),
+        dimensions = geo.vector2D.new(19.2, 19.5),
         img = gfx.image.new("images/toys/cactus_arm.png"),
       }
     },
@@ -149,7 +149,7 @@ TOYS_INSTRUCTIONS = {
       {
         body1 = 1,
         body2 = 2,
-        position = geo.vector2D.new(-6, -11),
+        position = geo.vector2D.new(-8, -14),
       }
     }
   },
