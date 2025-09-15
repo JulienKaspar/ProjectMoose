@@ -132,6 +132,9 @@ function kiddo_goes_idle()
 
     ANIMATIONS.kiddo_angry:setVisible(false)
     ANIMATIONS.kiddo_happy:setVisible(false)
+    ANIMATIONS.kiddo_disappointed:setVisible(false)
+    ANIMATIONS.kiddo_heavy_breathing:setVisible(false)
+    ANIMATIONS.kiddo_heavy_breathing:stopAnimation()
     
 end
 
@@ -143,6 +146,9 @@ function kiddo_is_pleased()
 
     ANIMATIONS.kiddo_idle:setVisible(false)
     ANIMATIONS.kiddo_angry:setVisible(false)
+    ANIMATIONS.kiddo_disappointed:setVisible(false)
+    ANIMATIONS.kiddo_heavy_breathing:setVisible(false)
+    ANIMATIONS.kiddo_heavy_breathing:stopAnimation()
     
     -- Heart animation
     ANIMATIONS.heart_mending:setVisible(true)
@@ -159,13 +165,16 @@ function kiddo_is_pleased()
 end
 
 
-function kiddo_gets_mad()
+function Kiddo_gets_mad()
     -- Kiddo animation
     ANIMATIONS.kiddo_angry:setVisible(true)
     ANIMATIONS.kiddo_angry:playAnimation()
 
     ANIMATIONS.kiddo_idle:setVisible(false)
     ANIMATIONS.kiddo_happy:setVisible(false)
+    ANIMATIONS.kiddo_disappointed:setVisible(false)
+    ANIMATIONS.kiddo_heavy_breathing:setVisible(false)
+    ANIMATIONS.kiddo_heavy_breathing:stopAnimation()
 
     -- Heart animation
     -- Heart animation
@@ -186,6 +195,34 @@ function kiddo_gets_mad()
         ANIMATIONS.heart_breaking:setVisible(false)
     end
     
+end
+
+
+function Kiddo_gets_anticipation()
+    if not ANIMATIONS.kiddo_heavy_breathing:isVisible() then
+        -- Kiddo animation
+        ANIMATIONS.kiddo_heavy_breathing:setVisible(true)
+        ANIMATIONS.kiddo_heavy_breathing:playAnimation()
+    
+        ANIMATIONS.kiddo_idle:setVisible(false)
+        ANIMATIONS.kiddo_happy:setVisible(false)
+        ANIMATIONS.kiddo_angry:setVisible(false)
+        ANIMATIONS.kiddo_disappointed:setVisible(false)
+    end
+    
+end
+
+
+function Kiddo_gets_disappointed()
+    -- Kiddo animation
+    ANIMATIONS.kiddo_disappointed:setVisible(true)
+    ANIMATIONS.kiddo_disappointed:playAnimation()
+
+    ANIMATIONS.kiddo_idle:setVisible(false)
+    ANIMATIONS.kiddo_happy:setVisible(false)
+    ANIMATIONS.kiddo_angry:setVisible(false)
+    ANIMATIONS.kiddo_heavy_breathing:setVisible(false)
+    ANIMATIONS.kiddo_heavy_breathing:stopAnimation()
 end
 
 
@@ -247,6 +284,8 @@ function Init_visuals()
     local imagetable_kiddo_idle = gfxit.new("images/kiddo_anims/kiddo_idle")
     local imagetable_kiddo_anger = gfxit.new("images/kiddo_anims/kiddo_anger")
     local imagetable_kiddo_happy = gfxit.new("images/kiddo_anims/kiddo_happy")
+    local imagetable_kiddo_heavy_breathing = gfxit.new("images/kiddo_anims/kiddo_heavy_breathing")
+    local imagetable_kiddo_disappointed = gfxit.new("images/kiddo_anims/kiddo_disappointed")
     local kiddo_pos = geometry.vector2D.new(272, 99)
 
     ANIMATIONS.kiddo_idle = AnimatedSprite.new(imagetable_kiddo_idle)
@@ -287,6 +326,32 @@ function Init_visuals()
             }
         ).asDefault()
     ANIMATIONS.kiddo_happy:moveTo(kiddo_pos.dx,kiddo_pos.dy)
+
+    ANIMATIONS.kiddo_disappointed = AnimatedSprite.new(imagetable_kiddo_disappointed)
+    ANIMATIONS.kiddo_disappointed:addState(
+            "main",
+            1,
+            imagetable_kiddo_disappointed:getLength(),
+            {
+                tickStep = 30.0/4.0,
+                loop = false,
+                onAnimationEndEvent = function (self) kiddo_goes_idle() end
+            }
+        ).asDefault()
+    ANIMATIONS.kiddo_disappointed:moveTo(kiddo_pos.dx,kiddo_pos.dy)
+
+    ANIMATIONS.kiddo_heavy_breathing = AnimatedSprite.new(imagetable_kiddo_heavy_breathing)
+    ANIMATIONS.kiddo_heavy_breathing:addState(
+            "main",
+            1,
+            imagetable_kiddo_heavy_breathing:getLength(),
+            {
+                tickStep = 30.0/3.0,
+                loop = true,
+            }
+        ).asDefault()
+    ANIMATIONS.kiddo_heavy_breathing:moveTo(kiddo_pos.dx,kiddo_pos.dy)
+    ANIMATIONS.kiddo_heavy_breathing:setVisible(false)
 
     -- local imagetable_broken_heart = gfxit.new("images/ui_elements/heart_anims/broken_heart_fixed")
     local imagetable_mending_fixed = gfxit.new("images/ui_elements/heart_anims/broken_heart_fixed")
@@ -362,6 +427,8 @@ function Init_visuals()
     ANIMATIONS.kiddo_idle:setZIndex(-39)
     ANIMATIONS.kiddo_angry:setZIndex(-39)
     ANIMATIONS.kiddo_happy:setZIndex(-39)
+    ANIMATIONS.kiddo_disappointed:setZIndex(-39)
+    ANIMATIONS.kiddo_heavy_breathing:setZIndex(-39)
     -- Set_draw_pass(-30, draw_toys())
     -- Set_draw_pass(-20, draw_claw())
     Set_draw_pass(0, draw_game_foreground)

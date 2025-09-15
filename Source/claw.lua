@@ -193,6 +193,7 @@ function Claw:update(dt)
         self:move_up()
         -- sound
         Play_klaw_ascend_loop()
+        Kiddo_gets_anticipation()
 
     elseif claw_is_moving_down() then
         self.timer += dt
