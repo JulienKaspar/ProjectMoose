@@ -296,7 +296,8 @@ function Toy:init(instr, world)
   self.highlight = nil
   for _, body_instr in ipairs(instr.bodies) do
     local mass = (body_instr.dimensions.x * body_instr.dimensions.y) * 0.025
-    mass = Clamp(mass, 30, 100)
+    -- TODO(weizhen): tweak
+    mass = Clamp(mass, 50, 80)
     local body = playbox.body.new(body_instr.dimensions.x, body_instr.dimensions.y, mass)
     body:setCenter(body_instr.position.x, body_instr.position.y)
     body:setRotation(-math.rad(body_instr.rotation))
