@@ -153,13 +153,9 @@ function Reset_gameplay_entities()
   world:addBody(right_wall)
 
   -- Create all entities
-
-  local spawn_height = 200
-
   for i, toy_instr in ipairs(TOYS_INSTRUCTIONS) do
       local toy = Toy.new(toy_instr, world)
       TOYS[#TOYS + 1] = toy
-      print(toy)
   end
 
   shuffle(TOYS)
@@ -169,8 +165,10 @@ function Reset_gameplay_entities()
       table.remove(TOYS, i)
   end
 
-  for _, toy in ipairs(TOYS) do
-      toy:move(geometry.vector2D.new(math.random(25,375), spawn_height))
+  for i, toy in ipairs(TOYS) do
+      local x = 45 * i
+      local y = 80 + (i % 2) * 80
+      toy:move(geometry.vector2D.new(x, y))
   end
 
   -- Create claw
