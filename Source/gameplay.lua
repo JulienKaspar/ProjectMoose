@@ -77,6 +77,7 @@ function receive_correct_toy()
     GAMEPLAY_STATE.current_strikes = Clamp(GAMEPLAY_STATE.current_strikes, 0, 3)
     kiddo_is_pleased()
     SOUND.child_laugh:play()
+    SOUND.toy_ascend:play()
 end
 
 

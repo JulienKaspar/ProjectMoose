@@ -176,6 +176,7 @@ end
 function Claw:move_up()
    self:moveVertical(-4)
    GAMEPLAY_STATE.claw_movement = 'up'
+
 end
 
 function Claw:move_down()
@@ -193,9 +194,14 @@ end
 function Claw:update(dt)
     if (self.timer * self.speed) > (CEILING_HEIGHT_MAX - CEILING_DETECTION_HEIGHT) then
         self:move_up()
+        -- sound
+        Play_klaw_ascend_loop()
+
     elseif claw_is_moving_down() then
         self.timer += dt
         self:moveVertical(1)
+        
+        Play_klaw_descend_loop()
     end
 
     -- Clamp position

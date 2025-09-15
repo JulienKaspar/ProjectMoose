@@ -1,6 +1,7 @@
 local sp <const> = playdate.sound.sampleplayer
 local current_toy_sound = nil
 local current_kick_sound = nil
+local klaw_descend_rate = 1
 
 SOUND = {
   cat_meow = sp.new("sound/sound_sample"),
@@ -32,7 +33,7 @@ SOUND = {
 }
 
 function Init_sounds()
-  -- initialize sounds
+  -- nothing TODO here
 end
 
 function Play_random_toy_sound()
@@ -50,5 +51,21 @@ function Play_machine_kick_sound()
     current_kick_sound:play()
   elseif not current_kick_sound:isPlaying() then
     current_kick_sound = nil
+  end
+end
+
+function Play_klaw_descend_loop()
+  -- Toggle klaw sfx
+  if not SOUND.bg_loop_gameplay:isPlaying() then
+      SOUND.klaw_ascend_loop:stop()
+      SOUND.bg_loop_gameplay:play(0)
+  end
+end
+
+function Play_klaw_ascend_loop()
+  -- Toggle klaw sfx
+  if not SOUND.klaw_ascend_loop:isPlaying() then
+      SOUND.bg_loop_gameplay:stop()
+      SOUND.klaw_ascend_loop:play()
   end
 end
