@@ -41,7 +41,7 @@ function Play_random_toy_sound()
     current_toy_sound = SOUND["TOYS"][math.random(1, #SOUND["TOYS"])]
     current_toy_sound:play()
     skip_toy_sound = true
-  elseif (Math.random() > skip_toy_sound_chance) then 
+  elseif (math.random() > skip_toy_sound_chance) then 
     -- add random skips to lower frequency
     return
   elseif not current_toy_sound:isPlaying() then
