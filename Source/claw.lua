@@ -14,7 +14,6 @@ local CLAW_LENGTH <const> = 38
 -- TODO(weizhen): fine tuning based on the fps
 local CLAW_MASS <const> = 100
 
-local SCALE <const> = 0.25
 local FRICTION <const> = 1000
 
 import "world"
@@ -154,7 +153,7 @@ function Claw:resetPosition(x)
     world:addJoint(self.joint.claw_right_joint)
 
     -- TODO(weizhen): fine tuning based on the fps
-    self.joint.claw_joint = pb.joint.new(self.right, self.left, x, CENTER_Y + 14)
+    self.joint.claw_joint = pb.joint.new(self.right, self.left, x, CENTER_Y + 24)
     self.joint.claw_joint:setBiasFactor(0.3)
     self.joint.claw_joint:setSoftness(0)
     world:addJoint(self.joint.claw_joint)
@@ -173,7 +172,6 @@ end
 function Claw:move_up()
    self:moveVertical(-4)
    GAMEPLAY_STATE.claw_movement = 'up'
-
 end
 
 function Claw:move_down()
@@ -200,6 +198,12 @@ function Claw:update(dt)
         self:moveVertical(1)
         
         Play_klaw_descend_loop()
+    end
+
+    -- Pintch the claw
+    if claw_is_moving_up() then
+      self.left:addForce(500, 0)
+      self.right:addForce(-500, 0)
     end
 
     -- Clamp position
