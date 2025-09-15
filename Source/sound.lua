@@ -19,10 +19,10 @@ SOUND = {
   game_over = sp.new("sound/game_over"),
   toy_ascend = sp.new("sound/toy_ascend"),
   TOYS = {
-    sp.new("sound/toy_sound_1"),
-    sp.new("sound/toy_sound_2"),
-    sp.new("sound/toy_sound_3"),
-    sp.new("sound/toy_sound_4"),
+    sp.new("sound/toy_sounds_1"),
+    sp.new("sound/toy_sounds_2"),
+    sp.new("sound/toy_sounds_3"),
+    sp.new("sound/toy_sounds_4"),
   },
   KICKS = {
     machine_kick_1 = sp.new("sound/machine_kick_1"),
