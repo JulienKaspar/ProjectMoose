@@ -4,7 +4,7 @@ local current_kick_sound = nil
 local klaw_descend_rate = 1
 
 SOUND = {
-  cat_meow = sp.new("sound/sound_sample"),
+  loading_screen = sp.new("sound/loading_screen"),
   bg_loop_menu = sp.new("sound/menu_bg_loop"),
   bg_loop_gameplay = sp.new("sound/gameplay_bg_loop"),
   menu_confirm = sp.new("sound/menu_item_confirm"),
@@ -33,10 +33,6 @@ SOUND = {
     machine_kick_3 = sp.new("sound/machine_kick_3"),
   },
 }
-
-function Init_sounds()
-  -- nothing TODO here
-end
 
 function Play_random_toy_sound()
   if current_toy_sound == nil then
