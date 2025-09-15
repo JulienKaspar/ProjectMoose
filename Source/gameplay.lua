@@ -138,6 +138,9 @@ function check_toys_got_out()
     else
       receive_correct_toy()
     end
+
+    select_random_toy()
+
     claw:move_down()
   end
 end
