@@ -202,8 +202,8 @@ function Claw:update(dt)
 
     -- Pintch the claw
     if claw_is_moving_up() then
-      self.left:addForce(500, 0)
-      self.right:addForce(-500, 0)
+      self.left:addForce(800, 0)
+      self.right:addForce(-800, 0)
     end
 
     -- Clamp position
