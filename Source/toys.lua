@@ -277,7 +277,153 @@ TOYS_INSTRUCTIONS = {
         position = geo.vector2D.new(-23, 2),
       }
     }
-  }
+  },
+  frog = {
+    bodies = {
+      {
+        position = geo.vector2D.new(-1, 20),
+        rotation = -3.80082,
+        dimensions = geo.vector2D.new(85.8, 33.3),
+        img = gfx.image.new("images/toys/frog.png"),
+      },
+      {
+        position = geo.vector2D.new(-2, -18),
+        rotation = -3.80082,
+        dimensions = geo.vector2D.new(39.6, 26.3),
+      }
+    },
+    joints = {
+      {
+        body1 = 1,
+        body2 = 2,
+        position = geo.vector2D.new(-4, 0),
+      }
+    }
+  },
+  knight = {
+    bodies = {
+      {
+        position = geo.vector2D.new(-4, 18),
+        rotation = 0.0,
+        dimensions = geo.vector2D.new(15.7, 18.7),
+        img = gfx.image.new("images/toys/knight_body.png"),
+      },
+      {
+        position = geo.vector2D.new(-5, -11),
+        rotation = 0.0,
+        dimensions = geo.vector2D.new(29.6, 34),
+        img = gfx.image.new("images/toys/knight_head.png"),
+      },
+      {
+        position = geo.vector2D.new(17, 18),
+        rotation = 39.8936,
+        dimensions = geo.vector2D.new(6.3, 21.9),
+        img = gfx.image.new("images/toys/knight_nail.png"),
+      }
+    },
+    joints = {
+      {
+        body1 = 1,
+        body2 = 2,
+        position = geo.vector2D.new(-4, 8),
+      },
+      {
+        body1 = 1,
+        body2 = 2,
+        position = geo.vector2D.new(8, 8),
+      }
+    }
+  },
+  terror_bird = {
+    bodies = {
+      {
+        position = geo.vector2D.new(10, 10),
+        rotation = -23.4308,
+        dimensions = geo.vector2D.new(16.9, 16.2),
+        img = gfx.image.new("images/toys/terror_bird_body.png"),
+      },
+      {
+        position = geo.vector2D.new(-5, -23),
+        rotation = 26.0954,
+        dimensions = geo.vector2D.new(39.5, 42.8),
+        img = gfx.image.new("images/toys/terror_bird_head.png"),
+      },
+      {
+        position = geo.vector2D.new(11, 36),
+        rotation = -2.34043,
+        dimensions = geo.vector2D.new(45.1, 16.8),
+        img = gfx.image.new("images/toys/terror_bird_feet.png"),
+      }
+    },
+    joints = {
+      {
+        body1 = 1,
+        body2 = 2,
+        position = geo.vector2D.new(4, 0),
+      },
+      {
+        body1 = 1,
+        body2 = 2,
+        position = geo.vector2D.new(12, 17),
+      }
+    }
+  },
+  pirate = {
+    bodies = {
+      {
+        position = geo.vector2D.new(0, 0),
+        rotation = 10.9862,
+        dimensions = geo.vector2D.new(47.2, 32.5),
+        img = gfx.image.new("images/toys/pirate.png"),
+      }
+    }
+  },
+  rogalik = {
+    bodies = {
+      {
+        position = geo.vector2D.new(1, -1),
+        rotation = -3.43544,
+        dimensions = geo.vector2D.new(49.8, 24.4),
+        img = gfx.image.new("images/toys/rogalik_main.png"),
+      },
+      {
+        position = geo.vector2D.new(0, 19),
+        rotation = -3.43544,
+        dimensions = geo.vector2D.new(17.0, 8.2),
+        img = gfx.image.new("images/toys/rogalik_legs.png"),
+      }
+    },
+    joints = {
+      {
+        body1 = 1,
+        body2 = 2,
+        position = geo.vector2D.new(1, 7),
+      }
+    }
+  },
+  yellow = {
+    bodies = {
+      {
+        position = geo.vector2D.new(5, 14),
+        rotation = 11.787,
+        dimensions = geo.vector2D.new(33.0, 38.5),
+        img = gfx.image.new("images/toys/yellow_main.png"),
+      },
+      {
+        position = geo.vector2D.new(-21, -20),
+        rotation = 19.1902,
+        dimensions = geo.vector2D.new(18.6, 24.4),
+        img = gfx.image.new("images/toys/yellow_tail.png"),
+      }
+    },
+    joints = {
+      {
+        body1 = 1,
+        body2 = 2,
+        position = geo.vector2D.new(-1, -5),
+      }
+    }
+  },
 }
 
 class('Toy').extends()
