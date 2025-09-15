@@ -1,7 +1,7 @@
 {
     "playdate-debug.sourcePath": "Source",
     "playdate-debug.outputPath": "",
-    "playdate-debug.productName": "moose",
+    "playdate-debug.productName": "god_klaw",
     "Lua.workspace.library": ["$PLAYDATE_SDK_PATH/CoreLibs"],
     "Lua.diagnostics.globals": ["playdate", "import"],
     "Lua.diagnostics.disable": ["undefined-global", "undefined-field", "inject-field", "lowercase-global"],

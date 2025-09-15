@@ -7,7 +7,7 @@
             "name": "Playdate: Build & Run",
             "preLaunchTask": "${defaultBuildTask}",
             "source": "${workspaceFolder}/Source",
-            "output": "${workspaceFolder}/moose.pdx"
+            "output": "${workspaceFolder}/god_klaw.pdx"
         }
   ]
 }
