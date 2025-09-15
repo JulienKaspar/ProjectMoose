@@ -354,7 +354,7 @@ function Toy:destructor(world)
         sprite:remove()
     end
     if self.highlight then
-      self.highlight:remove()
+      self.highlight = nil
     end
     for _, body in ipairs(self.bodies) do
         world:removeBody(body)
