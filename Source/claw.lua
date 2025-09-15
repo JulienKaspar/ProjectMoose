@@ -11,6 +11,7 @@ CEILING_DETECTION_HEIGHT = -270
 local CEILING_HEIGHT_MAX <const> = -25
 local CABLE_LENGTH <const> = 226
 local CLAW_LENGTH <const> = 38
+-- TODO(weizhen): fine tuning based on the fps
 local CLAW_MASS <const> = 100
 
 local SCALE <const> = 0.25
@@ -157,6 +158,7 @@ function Claw:resetPosition(x)
     self.joint.claw_right_joint:setSoftness(0)
     world:addJoint(self.joint.claw_right_joint)
 
+    -- TODO(weizhen): fine tuning based on the fps
     self.joint.claw_joint = pb.joint.new(self.right, self.left, x, CENTER_Y + 14)
     self.joint.claw_joint:setBiasFactor(0.3)
     self.joint.claw_joint:setSoftness(0)
