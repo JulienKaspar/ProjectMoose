@@ -11,7 +11,7 @@ CEILING_DETECTION_HEIGHT = -270
 local CEILING_HEIGHT_MAX <const> = -25
 local CABLE_LENGTH <const> = 226
 local CLAW_LENGTH <const> = 38
-local CLAW_MASS <const> = 500
+local CLAW_MASS <const> = 100
 
 local SCALE <const> = 0.25
 local FRICTION <const> = 1000
