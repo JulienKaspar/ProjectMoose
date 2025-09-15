@@ -83,6 +83,8 @@ function Enter_gameplay()
         SOUND.bg_loop_gameplay:play(0)
     end
     add_system_menu_entries()
+
+    select_random_toy()
 end
 
 

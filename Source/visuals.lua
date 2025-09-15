@@ -331,7 +331,7 @@ function Init_visuals()
                 loop = true,
             }
         ).asDefault()
-    ANIMATIONS.highlight_fx:setVisible(true)
+    ANIMATIONS.highlight_fx:setVisible(false)
     ANIMATIONS.highlight_fx:playAnimation()
 
     -- Load image layers.

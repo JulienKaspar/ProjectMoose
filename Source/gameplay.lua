@@ -54,6 +54,7 @@ function Reset_gameplay()
     GAMEPLAY_STATE.current_strikes = 0
     GAMEPLAY_STATE.previous_strikes = 0
     claw:move_down()
+    select_random_toy()
 end
 
 
@@ -63,6 +64,14 @@ function try_ending_game()
     elseif #TOYS == 0 then
         Enter_win_screen()
     end
+end
+
+function select_random_toy()
+  if selected_toy == nil then
+    local random_i = math.random(#TOYS)
+    selected_toy = TOYS[random_i]
+    selected_toy:setHighlight()
+  end
 end
 
 

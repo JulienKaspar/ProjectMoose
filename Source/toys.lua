@@ -367,8 +367,8 @@ end
 function Toy:setHighlight()
   if self.highlight == nil then
     self.highlight = ANIMATIONS.highlight_fx
+    self.highlight:setVisible(true)
     self.highlight:setZIndex(1)
-    self.highlight:add()
 
     for _, sprite in ipairs(self.sprites) do
       sprite:setZIndex(3)
@@ -378,7 +378,8 @@ end
 
 function Toy:removeHighlight()
   if self.highlight then
-    self.highlight:remove()
+    self.highlight:setVisible(false)
+    self.highlight = nil
     for _, sprite in ipairs(self.sprites) do
       sprite:setZIndex(0)
     end
