@@ -1,7 +1,7 @@
-name=Game WIP
-author=Team Goose
-description=WIP for PlayJam8
-bundleID=com.playjam.projectgoose
+name=GOD KLAW
+author=Team Moose
+description= The GOD outside the machine has chosen you! ASCEND by way of the KLAW!
+bundleID=com.playjam.projectgodklaw
 version=0.0.1
 buildNumber=1
 imagePath=images/launcher
