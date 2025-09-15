@@ -147,8 +147,6 @@ end
 
 
 function update(dt)
-    world:update(dt)
-
     -- Update timers
     jump_timeout_value -= dt
     jump_timeout_value = Clamp(jump_timeout_value, 0, jump_timeout_max)
