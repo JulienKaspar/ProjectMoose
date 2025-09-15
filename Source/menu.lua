@@ -103,6 +103,7 @@ local function draw_ui()
 
     elseif MENU_STATE.screen == MENU_SCREEN.loading then
         UI_ANIMATIONS.loading:setVisible(true)
+        UI_ANIMATIONS.logo:setVisible(true)
     
     elseif MENU_STATE.screen == MENU_SCREEN.main then
         UI_ANIMATIONS.logo:setVisible(true)
