@@ -334,6 +334,20 @@ function Init_visuals()
     ANIMATIONS.highlight_fx:setVisible(false)
     ANIMATIONS.highlight_fx:playAnimation()
 
+    local imagetable_highlight_fx_small = gfxit.new("images/fx/highlight_small_fx")
+    ANIMATIONS.highlight_fx_small = AnimatedSprite.new(imagetable_highlight_fx_small)
+    ANIMATIONS.highlight_fx_small:addState(
+            "main",
+            1,
+            imagetable_highlight_fx_small:getLength(),
+            {
+                tickStep = 30.0/2.0,
+                loop = true,
+            }
+        ).asDefault()
+    ANIMATIONS.highlight_fx_small:setVisible(false)
+    ANIMATIONS.highlight_fx_small:playAnimation()
+
     -- Load image layers.
     TEXTURES.bg = gfxi.new("images/environment/bg")
     TEXTURES.fg = gfxi.new("images/environment/fg")
