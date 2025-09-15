@@ -10,7 +10,7 @@ CEILING_HEIGHT_MIN = -300
 CEILING_DETECTION_HEIGHT = -270
 local CEILING_HEIGHT_MAX <const> = -25
 local CABLE_LENGTH <const> = 226
-local CLAW_LENGTH <const> = 40
+local CLAW_LENGTH <const> = 38
 local CLAW_MASS <const> = 500
 
 local SCALE <const> = 0.25
@@ -127,13 +127,14 @@ function Claw:resetPosition(x)
     world:addBody(self.ceiling)
 
     -- Claw body
-    local CLAW_SIZE <const> = 10
-    self.left = pb.body.new(CLAW_SIZE, CLAW_SIZE, CLAW_MASS)
+    local CLAW_WIDTH <const> = 8
+    local CLAW_HEIGHT <const> = 30
+    self.left = pb.body.new(CLAW_WIDTH, CLAW_HEIGHT, CLAW_MASS)
     self.left:setCenter(x - CLAW_LENGTH, CEILING_HEIGHT + CABLE_LENGTH + CLAW_LENGTH)
     self.left:setFriction(100)
     world:addBody(self.left)
 
-    self.right = pb.body.new(CLAW_SIZE, CLAW_SIZE, CLAW_MASS)
+    self.right = pb.body.new(CLAW_WIDTH, CLAW_HEIGHT, CLAW_MASS)
     self.right:setCenter(x + CLAW_LENGTH, CEILING_HEIGHT + CABLE_LENGTH + CLAW_LENGTH)
     self.right:setFriction(100)
     world:addBody(self.right)
@@ -156,7 +157,7 @@ function Claw:resetPosition(x)
     self.joint.claw_right_joint:setSoftness(0)
     world:addJoint(self.joint.claw_right_joint)
 
-    self.joint.claw_joint = pb.joint.new(self.right, self.left, x, CENTER_Y + 20 )
+    self.joint.claw_joint = pb.joint.new(self.right, self.left, x, CENTER_Y + 14)
     self.joint.claw_joint:setBiasFactor(0.3)
     self.joint.claw_joint:setSoftness(0)
     world:addJoint(self.joint.claw_joint)
