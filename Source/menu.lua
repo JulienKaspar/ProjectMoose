@@ -176,7 +176,7 @@ function Init_menus()
             1,
             imagetable_loading:getLength(),
             {
-                tickStep = 2.0,
+                tickStep = 30.0/24.0,
                 loop = false,
                 onAnimationEndEvent = function (self) onLoadingScreenFinished() end
             }
