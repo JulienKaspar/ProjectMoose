@@ -1,5 +1,6 @@
 local sp <const> = playdate.sound.sampleplayer
 local current_toy_sound = nil
+local current_kick_sound = nil
 
 SOUND = {
   cat_meow = sp.new("sound/sound_sample"),
@@ -11,9 +12,6 @@ SOUND = {
   klaw_ascend_loop = sp.new("sound/klaw_ascend_loop"),
   klaw_descend_loop = sp.new("sound/klaw_descend_loop"),
   klaw_snap = sp.new("sound/klaw_snap"),
-  machine_kick_1 = sp.new("sound/machine_kick_1"),
-  machine_kick_2 = sp.new("sound/machine_kick_2"),
-  machine_kick_3 = sp.new("sound/machine_kick_3"),
   toy_grabbed = sp.new("sound/toy_grabbed"),
   child_disappointed = sp.new("sound/child_disappointed"),
   child_sigh = sp.new("sound/child_sigh"),
@@ -25,7 +23,12 @@ SOUND = {
     sp.new("sound/toy_grunt_2"),
     sp.new("sound/toy_grunt_3"),
     sp.new("sound/toy_grunt_4"),
-  }
+  },
+  KICKS = {
+    machine_kick_1 = sp.new("sound/machine_kick_1"),
+    machine_kick_2 = sp.new("sound/machine_kick_2"),
+    machine_kick_3 = sp.new("sound/machine_kick_3"),
+  },
 }
 
 function Init_sounds()
@@ -38,5 +41,14 @@ function Play_random_toy_sound()
     current_toy_sound:play()
   elseif not current_toy_sound:isPlaying() then
     current_toy_sound = nil
+  end
+end
+
+function Play_machine_kick_sound()
+  if current_kick_sound == nil then
+    current_kick_sound = SOUND["KICKS"][math.random(1, #SOUND["KICKS"])]
+    current_kick_sound:play()
+  elseif not current_kick_sound:isPlaying() then
+    current_kick_sound = nil
   end
 end
