@@ -216,6 +216,12 @@ int playbox_body_getPolygon(lua_State* L) {
   return 8;
 }
 
+int playbox_body_getMass(lua_State* L) {
+  PBBody* body = getBodyArg(1);
+  pd->lua->pushFloat(body->mass);
+  return 1;
+}
+
 static const lua_reg bodyClass[] = {
 { "new", playbox_body_new },
 { "__gc", playbox_body_delete },
@@ -234,6 +240,7 @@ static const lua_reg bodyClass[] = {
 { "getSize", playbox_body_getSize },
 { "setFriction", playbox_body_setFriction },
 { "setMass", playbox_body_setMass },
+{ "getMass", playbox_body_getMass },
 { "setI", playbox_body_setI },
 { "getPolygon", playbox_body_getPolygon },
 { NULL, NULL }
