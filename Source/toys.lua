@@ -299,7 +299,7 @@ function Toy:init(instr, world)
     local body = playbox.body.new(body_instr.dimensions.x, body_instr.dimensions.y, mass)
     body:setCenter(body_instr.position.x, body_instr.position.y)
     body:setRotation(math.rad(body_instr.rotation))
-    body:setFriction(100)
+    body:setFriction(0.8)
     world:addBody(body)
     local image_table = makeRotationImageTable(body_instr.img)
     self.imagetables[#self.imagetables + 1] = image_table

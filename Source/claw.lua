@@ -143,7 +143,7 @@ function Claw:resetPosition(x)
 
     self.joint.center = pb.body.new(2, 2, CLAW_MASS)
     self.joint.center:setCenter(x, CENTER_Y)
-    self.joint.center:setFriction(100)
+    self.joint.center:setFriction(0)
     world:addBody(self.joint.center)
 
     self.joint.claw_left_joint = pb.joint.new(self.left, self.joint.center, x, CENTER_Y)
