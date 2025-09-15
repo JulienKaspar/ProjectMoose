@@ -51,16 +51,16 @@ TOYS_INSTRUCTIONS = {
   mouse = {
     bodies = {
       {
-        position = geo.vector2D.new(0, 3),
-        rotation = -2.48848,
-        dimensions = geo.vector2D.new(16.6, 18.4),
-        img = gfx.image.new("images/toys/mouse_body.png"),
-      },
-      {
         position = geo.vector2D.new(1, -22),
         rotation = -9.42672,
         dimensions = geo.vector2D.new(50.7, 24.3),
         img = gfx.image.new("images/toys/mouse_head.png"),
+      },
+      {
+        position = geo.vector2D.new(0, 3),
+        rotation = -2.48848,
+        dimensions = geo.vector2D.new(16.6, 18.4),
+        img = gfx.image.new("images/toys/mouse_body.png"),
       },
       {
         position = geo.vector2D.new(-1, 26),
@@ -71,12 +71,12 @@ TOYS_INSTRUCTIONS = {
     },
     joints = {
       {
-        body1 = 1,
-        body2 = 2,
+        body1 = 2,
+        body2 = 1,
         position = geo.vector2D.new(1, -6),
       },
       {
-        body1 = 1,
+        body1 = 2,
         body2 = 3,
         position = geo.vector2D.new(0, 12),
       }
