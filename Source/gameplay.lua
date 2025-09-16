@@ -124,11 +124,11 @@ function Handle_input()
     GYRO_Y = Clamp(GYRO_Y + gravityY * 10, 0, 240)
 
     -- Placeholder debug for accumilating strikes
-    if playdate.buttonJustPressed( playdate.kButtonB ) then
-        receive_strike()
-    end
-    if playdate.buttonJustPressed( playdate.kButtonA ) then
-        receive_correct_toy()
+    -- if playdate.buttonJustPressed( playdate.kButtonB ) then
+    --     receive_strike()
+    -- end
+    -- if playdate.buttonJustPressed( playdate.kButtonA ) then
+    --     receive_correct_toy()
     end
 end
 
