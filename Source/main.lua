@@ -4,6 +4,7 @@ import "CoreLibs/object"
 import "CoreLibs/graphics"
 import "CoreLibs/sprites"
 import "CoreLibs/timer"
+import "CoreLibs/frameTimer"
 
 -- Game scripts
 import "sound"
@@ -57,4 +58,5 @@ function playdate.update()
     end
     gfx.sprite.update()
     playdate.timer.updateTimers()
+    playdate.frameTimer.updateTimers()
 end

@@ -6,8 +6,8 @@ local gfxit <const> = playdate.graphics.imagetable
 
 MENU_STATE = {}
 MENU_SCREEN = { gameplay = 0, gameover = 1, how_to = 2, main = 3, credits = 4, loading = 5, win = 6,}
-local UI_TEXTURES = {}
-local UI_ANIMATIONS = {}
+UI_TEXTURES = {}
+UI_ANIMATIONS = {}
 
 
 -- System Menu
@@ -207,6 +207,7 @@ function Init_menus()
     UI_TEXTURES.failed_header = gfxi.new("images/menus/menu_text/FAILED")
     UI_TEXTURES.success_header = gfxi.new("images/menus/menu_text/SUCCESS")
     UI_TEXTURES.instructions = gfxi.new("images/menus/menu_text/instructions")
+    UI_TEXTURES.resetting = gfxi.new("images/menus/menu_text/onesecondpls")
 
     
     MENU_STATE.screen = MENU_SCREEN.main
