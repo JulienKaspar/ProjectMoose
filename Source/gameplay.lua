@@ -63,7 +63,7 @@ local one_frame_delay
 function Reset_gameplay()
 
     -- While the game freezes, show a loading screen
-    UI_TEXTURES.resetting:draw(0, 22)
+    UI_TEXTURES.resetting:draw(0, 0)
 
     -- Delay the rest of the calculations by one frame so the UI texture can draw
     one_frame_delay = playdate.frameTimer.new(1)
