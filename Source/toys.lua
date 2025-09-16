@@ -54,6 +54,12 @@ TOYS_INSTRUCTIONS = {
   {
     bodies = {
       {
+        position = geo.vector2D.new(-1, 26),
+        rotation = -2.40257,
+        dimensions = geo.vector2D.new(55.7, 20.1),
+        img = gfx.image.new("images/toys/mouse_feet.png"),
+      },
+      {
         position = geo.vector2D.new(1, -22),
         rotation = -9.42672,
         dimensions = geo.vector2D.new(50.7, 24.3),
@@ -65,21 +71,15 @@ TOYS_INSTRUCTIONS = {
         dimensions = geo.vector2D.new(16.6, 18.4),
         img = gfx.image.new("images/toys/mouse_body.png"),
       },
-      {
-        position = geo.vector2D.new(-1, 26),
-        rotation = -2.40257,
-        dimensions = geo.vector2D.new(55.7, 20.1),
-        img = gfx.image.new("images/toys/mouse_feet.png"),
-      }
     },
     joints = {
       {
         body1 = 2,
-        body2 = 1,
+        body2 = 3,
         position = geo.vector2D.new(1, -6),
       },
       {
-        body1 = 2,
+        body1 = 1,
         body2 = 3,
         position = geo.vector2D.new(0, 12),
       }
@@ -160,17 +160,17 @@ TOYS_INSTRUCTIONS = {
   {
     bodies = {
       {
+        position = geo.vector2D.new(13, -9),
+        rotation = -46.1007,
+        dimensions = geo.vector2D.new(21.9, 11.5),
+        img = gfx.image.new("images/toys/fish_tail.png"),
+      },
+      {
         position = geo.vector2D.new(-9, 4),
         rotation = -6.10786,
         dimensions = geo.vector2D.new(25.5, 21.5),
         img = gfx.image.new("images/toys/fish_main.png"),
       },
-      {
-        position = geo.vector2D.new(13, -9),
-        rotation = -46.1007,
-        dimensions = geo.vector2D.new(21.9, 11.5),
-        img = gfx.image.new("images/toys/fish_tail.png"),
-      }
     },
     joints = {
       {
@@ -219,6 +219,12 @@ TOYS_INSTRUCTIONS = {
   {
     bodies = {
       {
+        position = geo.vector2D.new(21, 25),
+        rotation = 14.0097,
+        dimensions = geo.vector2D.new(14.1, 15.0),
+        img = gfx.image.new("images/toys/chicken_leg_back.png"),
+      },
+      {
         position = geo.vector2D.new(1, -4),
         rotation = -36.2071,
         dimensions = geo.vector2D.new(38.1, 40.5),
@@ -230,22 +236,16 @@ TOYS_INSTRUCTIONS = {
         dimensions = geo.vector2D.new(14.1, 15.0),
         img = gfx.image.new("images/toys/chicken_leg_front.png"),
       },
-      {
-        position = geo.vector2D.new(21, 25),
-        rotation = 14.0097,
-        dimensions = geo.vector2D.new(14.1, 15.0),
-        img = gfx.image.new("images/toys/chicken_leg_back.png"),
-      }
     },
     joints = {
       {
-        body1 = 1,
-        body2 = 2,
+        body1 = 2,
+        body2 = 3,
         position = geo.vector2D.new(-3, 20),
       },
       {
         body1 = 1,
-        body2 = 3,
+        body2 = 2,
         position = geo.vector2D.new(10, 18),
       }
     }
@@ -313,6 +313,12 @@ TOYS_INSTRUCTIONS = {
   {
     bodies = {
       {
+        position = geo.vector2D.new(17, 18),
+        rotation = 39.8936,
+        dimensions = geo.vector2D.new(6.3, 21.9),
+        img = gfx.image.new("images/toys/knight_nail.png"),
+      },
+      {
         position = geo.vector2D.new(-4, 18),
         rotation = 0.0,
         dimensions = geo.vector2D.new(15.7, 18.7),
@@ -323,23 +329,17 @@ TOYS_INSTRUCTIONS = {
         rotation = 0.0,
         dimensions = geo.vector2D.new(29.6, 34),
         img = gfx.image.new("images/toys/knight_head.png"),
-      },
-      {
-        position = geo.vector2D.new(17, 18),
-        rotation = 39.8936,
-        dimensions = geo.vector2D.new(6.3, 21.9),
-        img = gfx.image.new("images/toys/knight_nail.png"),
       }
     },
     joints = {
       {
-        body1 = 1,
-        body2 = 2,
+        body1 = 2,
+        body2 = 3,
         position = geo.vector2D.new(-4, 8),
       },
       {
         body1 = 1,
-        body2 = 3,
+        body2 = 2,
         position = geo.vector2D.new(8, 8),
       }
     }
@@ -395,17 +395,17 @@ TOYS_INSTRUCTIONS = {
   {
     bodies = {
       {
+        position = geo.vector2D.new(0, 19),
+        rotation = -3.43544,
+        dimensions = geo.vector2D.new(17.0, 8.2),
+        img = gfx.image.new("images/toys/rogalik_legs.png"),
+      },
+      {
         position = geo.vector2D.new(1, -1),
         rotation = -3.43544,
         dimensions = geo.vector2D.new(49.8, 24.4),
         img = gfx.image.new("images/toys/rogalik_main.png"),
       },
-      {
-        position = geo.vector2D.new(0, 19),
-        rotation = -3.43544,
-        dimensions = geo.vector2D.new(17.0, 8.2),
-        img = gfx.image.new("images/toys/rogalik_legs.png"),
-      }
     },
     joints = {
       {
