@@ -1,21 +1,18 @@
+import "heart"
+
 local gfx <const> = playdate.graphics
 local gfxi <const> = playdate.graphics.image
 local gfxit <const> = playdate.graphics.imagetable
 local geometry <const> = playdate.geometry
+local point <const> = playdate.geometry.point
 
 -- Image Passes
 TEXTURES = {}
 ANIMATIONS = {}
+HEARTS = {}
 
 IMAGE_ROTATION_INCREMENT = 48
 IMAGE_SCALING = 0.25
-
-local heart1_pos = geometry.vector2D.new(31, 1)
-local heart2_pos = geometry.vector2D.new(71, 1)
-local heart3_pos = geometry.vector2D.new(111, 1)
-local heart1_anim_pos = geometry.vector2D.new(53, 21)
-local heart2_anim_pos = geometry.vector2D.new(93, 21)
-local heart3_anim_pos = geometry.vector2D.new(133, 21)
 
 
 -- Debug / Development
@@ -107,21 +104,19 @@ local function draw_hud()
     end
     
     if GAMEPLAY_STATE.current_strikes == 0 then
-        TEXTURES.heart_full:draw(heart1_pos.dx, heart1_pos.dy)
-        TEXTURES.heart_full:draw(heart2_pos.dx, heart2_pos.dy)
-        TEXTURES.heart_full:draw(heart3_pos.dx, heart3_pos.dy)
+        -- print("Heart 1 position = " .. tostring(HEARTS.heart_1.current_animation:getPosition()))
+        for k, heart in ipairs(HEARTS) do
+            if not heart:isVisible() then
+                heart:setVisible(true)
+            end
+        end
+        --- all full
     elseif GAMEPLAY_STATE.current_strikes == 1 then
-        TEXTURES.heart_full:draw(heart1_pos.dx, heart1_pos.dy)
-        TEXTURES.heart_full:draw(heart2_pos.dx, heart2_pos.dy)
-        TEXTURES.heart_broken:draw(heart3_pos.dx, heart3_pos.dy)
+        --- heart 3 broken
     elseif GAMEPLAY_STATE.current_strikes == 2 then
-        TEXTURES.heart_full:draw(heart1_pos.dx, heart1_pos.dy)
-        TEXTURES.heart_broken:draw(heart2_pos.dx, heart2_pos.dy)
-        TEXTURES.heart_broken:draw(heart3_pos.dx, heart3_pos.dy)
+        --- heart 2 & 3 broken
     elseif GAMEPLAY_STATE.current_strikes == 3 then
-        TEXTURES.heart_broken:draw(heart1_pos.dx, heart1_pos.dy)
-        TEXTURES.heart_broken:draw(heart2_pos.dx, heart2_pos.dy)
-        TEXTURES.heart_broken:draw(heart3_pos.dx, heart3_pos.dy)
+        --- All broken
     end
 end
 
@@ -154,10 +149,10 @@ function kiddo_is_pleased()
     ANIMATIONS.heart_mending:setVisible(true)
     -- Which heart is getting mended
     if GAMEPLAY_STATE.current_strikes == 0 and GAMEPLAY_STATE.previous_strikes == 1 then
-        ANIMATIONS.heart_mending:moveTo(heart3_anim_pos.dx, heart3_anim_pos.dy)
+        ANIMATIONS.heart_mending:moveTo(heart3_anim_pos.x, heart3_anim_pos.y)
         ANIMATIONS.heart_mending:playAnimation()
     elseif GAMEPLAY_STATE.current_strikes == 1 then
-        ANIMATIONS.heart_mending:moveTo(heart2_anim_pos.dx, heart2_anim_pos.dy)
+        ANIMATIONS.heart_mending:moveTo(heart2_anim_pos.x, heart2_anim_pos.y)
         ANIMATIONS.heart_mending:playAnimation()
     else
         ANIMATIONS.heart_mending:setVisible(false)
@@ -177,22 +172,14 @@ function Kiddo_gets_mad()
     ANIMATIONS.kiddo_heavy_breathing:stopAnimation()
 
     -- Heart animation
-    -- Heart animation
-    ANIMATIONS.heart_breaking:setVisible(true)
-    ANIMATIONS.heart_breaking:playAnimation()
 
     -- Which heart is getting mended
     if GAMEPLAY_STATE.current_strikes == 1 then
-        ANIMATIONS.heart_breaking:moveTo(heart3_anim_pos.dx, heart3_anim_pos.dy)
-        ANIMATIONS.heart_breaking:playAnimation()
+        -- heal heart 3
     elseif GAMEPLAY_STATE.current_strikes == 2 then
-        ANIMATIONS.heart_breaking:moveTo(heart2_anim_pos.dx, heart2_anim_pos.dy)
-        ANIMATIONS.heart_breaking:playAnimation()
+        -- heal heart 2
     elseif GAMEPLAY_STATE.current_strikes == 3 then
-        ANIMATIONS.heart_breaking:moveTo(heart1_anim_pos.dx, heart1_anim_pos.dy)
-        ANIMATIONS.heart_breaking:playAnimation()
-    else
-        ANIMATIONS.heart_breaking:setVisible(false)
+        -- heal heart 1
     end
     
 end
@@ -227,12 +214,12 @@ end
 
 
 function on_heart_mending_finished()
-    ANIMATIONS.heart_mending:setVisible(false)
+    -- ANIMATIONS.heart_mending:setVisible(false)
 end
 
 
 function on_heart_breaking_finished()
-    ANIMATIONS.heart_breaking:setVisible(false)
+    -- ANIMATIONS.heart_breaking:setVisible(false)
 end
 
 
@@ -279,7 +266,7 @@ end
 
 function Init_visuals()
 
-    -- init animations
+    -- Kiddo animations
 
     local imagetable_kiddo_idle = gfxit.new("images/kiddo_anims/kiddo_idle")
     local imagetable_kiddo_anger = gfxit.new("images/kiddo_anims/kiddo_anger")
@@ -353,37 +340,7 @@ function Init_visuals()
     ANIMATIONS.kiddo_heavy_breathing:moveTo(kiddo_pos.dx,kiddo_pos.dy)
     ANIMATIONS.kiddo_heavy_breathing:setVisible(false)
 
-    -- local imagetable_broken_heart = gfxit.new("images/ui_elements/heart_anims/broken_heart_fixed")
-    local imagetable_mending_fixed = gfxit.new("images/ui_elements/heart_anims/broken_heart_fixed")
-    local imagetable_breaking_heart = gfxit.new("images/ui_elements/heart_anims/heart_breaking")
-    
-    ANIMATIONS.heart_mending = AnimatedSprite.new(imagetable_mending_fixed)
-    ANIMATIONS.heart_mending:addState(
-            "main",
-            1,
-            imagetable_mending_fixed:getLength(),
-            {
-                tickStep = 30.0/8.0,
-                loop = false,
-                onAnimationEndEvent = function (self) on_heart_mending_finished() end
-            }
-        ).asDefault()
-    ANIMATIONS.heart_mending:moveTo(heart3_pos.dx, heart3_pos.dy)
-    ANIMATIONS.heart_mending:setVisible(false)
-
-    ANIMATIONS.heart_breaking = AnimatedSprite.new(imagetable_breaking_heart)
-    ANIMATIONS.heart_breaking:addState(
-            "main",
-            1,
-            imagetable_breaking_heart:getLength(),
-            {
-                tickStep = 30.0/8.0,
-                loop = false,
-                onAnimationEndEvent = function (self) on_heart_breaking_finished() end
-            }
-        ).asDefault()
-    ANIMATIONS.heart_breaking:moveTo(heart3_pos.dx, heart3_pos.dy)
-    ANIMATIONS.heart_breaking:setVisible(false)
+    -- Highlight animations
 
     local imagetable_highlight_fx = gfxit.new("images/fx/highlight_fx")
     ANIMATIONS.highlight_fx = AnimatedSprite.new(imagetable_highlight_fx)
@@ -417,10 +374,16 @@ function Init_visuals()
     TEXTURES.bg = gfxi.new("images/environment/bg")
     TEXTURES.fg = gfxi.new("images/environment/fg")
     TEXTURES.static_fg_toys = gfxi.new("images/environment/static_fg_toys")
-    TEXTURES.heart_full = gfxi.new("images/ui_elements/heart_full")
-    TEXTURES.heart_broken = gfxi.new("images/ui_elements/heart_broken")
 
+    --- Animated heart objects
     
+    -- HEARTS.heart_1 = Heart.new(point.new(53, 21))
+    -- HEARTS.heart_2 = Heart.new(point.new(93, 21))
+    -- HEARTS.heart_3 = Heart.new(point.new(133, 21))
+    HEARTS.heart_1 = Heart.new(52.0, 21.0)
+    HEARTS.heart_2 = Heart.new(93.0, 21.0)
+    HEARTS.heart_3 = Heart.new(133.0, 21.0)
+
     -- Set the multiple things in their Z order of what overlaps what.
 
     Set_draw_pass(-40, draw_game_background)
@@ -433,10 +396,11 @@ function Init_visuals()
     -- Set_draw_pass(-20, draw_claw())
     Set_draw_pass(0, draw_game_foreground)
     Set_draw_pass(20, draw_hud)
-    ANIMATIONS.heart_mending:setZIndex(21)
-    ANIMATIONS.heart_breaking:setZIndex(21)
     -- Set_draw_pass(30, draw_debug)
     ANIMATIONS.highlight_fx:setZIndex(25)
+    HEARTS.heart_1:setZIndex(28)
+    HEARTS.heart_2:setZIndex(28)
+    HEARTS.heart_3:setZIndex(28)
     --Set_draw_pass(20, draw_test_dither_patterns)
 end
 
