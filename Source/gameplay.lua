@@ -55,6 +55,8 @@ local function reset_gameplay_deferred()
     GAMEPLAY_STATE.previous_strikes = 0
     claw:move_down()
     select_random_toy()
+
+    Overlay_loading = false
   
 end
 
@@ -63,11 +65,11 @@ local one_frame_delay
 function Reset_gameplay()
 
     -- While the game freezes, show a loading screen
-    UI_TEXTURES.resetting:draw(0, 0)
+    Overlay_loading = true
 
     -- Delay the rest of the calculations by one frame so the UI texture can draw
-    one_frame_delay = playdate.frameTimer.new(1)
-    one_frame_delay.performAfterDelay(0, reset_gameplay_deferred)
+    one_frame_delay = playdate.frameTimer.new(0)
+    one_frame_delay.performAfterDelay(10, reset_gameplay_deferred)
 end
 
 

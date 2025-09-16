@@ -10,6 +10,9 @@ UI_TEXTURES = {}
 UI_ANIMATIONS = {}
 
 
+Overlay_loading = false
+
+
 -- System Menu
 
 local function add_system_menu_entries()
@@ -23,8 +26,8 @@ local function add_system_menu_entries()
         Reset_gameplay()
     end)
     local menuItem, error = menu:addMenuItem("main menu", function()
-        Enter_menu_main()
         Reset_gameplay()
+        Enter_menu_main()
     end)
 end
 
@@ -124,18 +127,31 @@ local function draw_ui()
 end
 
 
+function draw_loading_popup()
+    if Overlay_loading then
+        UI_TEXTURES.resetting:draw(0, 0)
+    end
+end
+
+local one_frame_delay
+
 function Handle_menu_input()
     if MENU_STATE.screen == MENU_SCREEN.gameover
     or MENU_STATE.screen == MENU_SCREEN.win then
         if playdate.buttonJustPressed( playdate.kButtonA ) then
             SOUND.button_accept:play()
-            Enter_gameplay()
             Reset_gameplay()
+            -- Delay the rest of the calculations by one frame so the UI texture can draw
+            one_frame_delay = playdate.frameTimer.new(0)
+            one_frame_delay.performAfterDelay(10, Enter_gameplay)
+
         end
         if playdate.buttonJustPressed( playdate.kButtonB ) then
             SOUND.menu_confirm:play()
-            Enter_menu_main()
             Reset_gameplay()
+            -- Delay the rest of the calculations by one frame so the UI texture can draw
+            one_frame_delay = playdate.frameTimer.new(0)
+            one_frame_delay.performAfterDelay(10, Enter_menu_main)
         end
 
     elseif MENU_STATE.screen == MENU_SCREEN.main then
@@ -216,5 +232,6 @@ function Init_menus()
 
     Set_draw_pass(100, draw_ui) -- UI goes on top of everything.
     UI_ANIMATIONS.logo:setZIndex(110)
+    Set_draw_pass(120, draw_loading_popup)
     UI_ANIMATIONS.loading:setZIndex(200)
 end
