@@ -426,8 +426,11 @@ function Init_visuals()
     -- Set_draw_pass(30, draw_debug)
     ANIMATIONS.highlight_fx:setZIndex(25)
     HEARTS.heart_1:setZIndex(28)
+    HEARTS.heart_1.current_animation:setVisible(false)
     HEARTS.heart_2:setZIndex(28)
+    HEARTS.heart_2.current_animation:setVisible(false)
     HEARTS.heart_3:setZIndex(28)
+    HEARTS.heart_3.current_animation:setVisible(false)
     --Set_draw_pass(20, draw_test_dither_patterns)
 end
 
