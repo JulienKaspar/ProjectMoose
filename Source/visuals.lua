@@ -206,16 +206,25 @@ function Kiddo_gets_disappointed()
 end
 
 
-function Reset_hearts()
+function Hide_all_hearts()
     for k, heart in pairs(HEARTS) do
         for k, animation in pairs(heart.animations) do
             animation:setVisible(false)
         end
+    end
+end
+
+
+function Reset_hearts()
+    Hide_all_hearts()
+    for k, heart in pairs(HEARTS) do
         heart.animations.heart_idle_full:setVisible(true)
         heart.animations.heart_idle_full:playAnimation()
         heart.current_animation = heart.animations.heart_idle_full
     end
 end
+
+
 
 
 function Check_if_heart_animations_finished()

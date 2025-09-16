@@ -47,6 +47,8 @@ end
 function Enter_menu_main()
     MENU_STATE.screen = MENU_SCREEN.main
 
+    Hide_all_hearts()
+
     remove_system_menu_entries()
 
     SOUND.bg_loop_gameplay:stop()
@@ -88,6 +90,8 @@ function Enter_gameplay()
     add_system_menu_entries()
 
     select_random_toy()
+
+    Reset_hearts()
 end
 
 
