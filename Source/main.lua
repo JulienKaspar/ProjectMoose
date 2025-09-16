@@ -45,7 +45,9 @@ function playdate.update()
         -- In gameplay.
         Handle_input()
         local dt <const> = 1.0 / playdate.getFPS()
-        update(dt)
+        if dt > 0 then
+            update(dt)
+        end
     end
 
     -- Always redraw and update entities (sprites) and timers.
