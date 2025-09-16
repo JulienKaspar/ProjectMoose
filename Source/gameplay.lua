@@ -129,7 +129,7 @@ function Handle_input()
     -- end
     -- if playdate.buttonJustPressed( playdate.kButtonA ) then
     --     receive_correct_toy()
-    end
+    -- end
 end
 
 function check_toys_got_out()
