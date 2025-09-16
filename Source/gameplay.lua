@@ -51,6 +51,7 @@ end
 local function reset_gameplay_deferred()
   -- Done on every (re)start of the play.
     Reset_gameplay_entities()
+    Reset_hearts()
     GAMEPLAY_STATE.current_strikes = 0
     GAMEPLAY_STATE.previous_strikes = 0
     claw:move_down()
@@ -123,12 +124,12 @@ function Handle_input()
     GYRO_Y = Clamp(GYRO_Y + gravityY * 10, 0, 240)
 
     -- Placeholder debug for accumilating strikes
-    -- if playdate.buttonJustPressed( playdate.kButtonB ) then
-    --     receive_strike()
-    -- end
-    -- if playdate.buttonJustPressed( playdate.kButtonA ) then
-    --     receive_correct_toy()
-    -- end
+    if playdate.buttonJustPressed( playdate.kButtonB ) then
+        receive_strike()
+    end
+    if playdate.buttonJustPressed( playdate.kButtonA ) then
+        receive_correct_toy()
+    end
 end
 
 function check_toys_got_out()

@@ -104,19 +104,11 @@ local function draw_hud()
     end
     
     if GAMEPLAY_STATE.current_strikes == 0 then
-        -- print("Heart 1 position = " .. tostring(HEARTS.heart_1.current_animation:getPosition()))
         for k, heart in ipairs(HEARTS) do
             if not heart:isVisible() then
                 heart:setVisible(true)
             end
         end
-        --- all full
-    elseif GAMEPLAY_STATE.current_strikes == 1 then
-        --- heart 3 broken
-    elseif GAMEPLAY_STATE.current_strikes == 2 then
-        --- heart 2 & 3 broken
-    elseif GAMEPLAY_STATE.current_strikes == 3 then
-        --- All broken
     end
 end
 
@@ -145,17 +137,11 @@ function kiddo_is_pleased()
     ANIMATIONS.kiddo_heavy_breathing:setVisible(false)
     ANIMATIONS.kiddo_heavy_breathing:stopAnimation()
     
-    -- Heart animation
-    ANIMATIONS.heart_mending:setVisible(true)
-    -- Which heart is getting mended
-    if GAMEPLAY_STATE.current_strikes == 0 and GAMEPLAY_STATE.previous_strikes == 1 then
-        ANIMATIONS.heart_mending:moveTo(heart3_anim_pos.x, heart3_anim_pos.y)
-        ANIMATIONS.heart_mending:playAnimation()
-    elseif GAMEPLAY_STATE.current_strikes == 1 then
-        ANIMATIONS.heart_mending:moveTo(heart2_anim_pos.x, heart2_anim_pos.y)
-        ANIMATIONS.heart_mending:playAnimation()
-    else
-        ANIMATIONS.heart_mending:setVisible(false)
+    --- Heart mending
+    if GAMEPLAY_STATE.current_strikes == 1 and GAMEPLAY_STATE.previous_strikes == 2 then
+        HEARTS.heart_2:mend_heart()
+    elseif GAMEPLAY_STATE.current_strikes == 0 and GAMEPLAY_STATE.previous_strikes == 1 then
+        HEARTS.heart_3:mend_heart()
     end
 end
 
@@ -171,15 +157,13 @@ function Kiddo_gets_mad()
     ANIMATIONS.kiddo_heavy_breathing:setVisible(false)
     ANIMATIONS.kiddo_heavy_breathing:stopAnimation()
 
-    -- Heart animation
-
-    -- Which heart is getting mended
-    if GAMEPLAY_STATE.current_strikes == 1 then
-        -- heal heart 3
-    elseif GAMEPLAY_STATE.current_strikes == 2 then
-        -- heal heart 2
-    elseif GAMEPLAY_STATE.current_strikes == 3 then
-        -- heal heart 1
+    --- Heart breaking
+    if GAMEPLAY_STATE.current_strikes == 1 and GAMEPLAY_STATE.previous_strikes == 0 then
+        HEARTS.heart_3:break_heart()
+    elseif GAMEPLAY_STATE.current_strikes == 2 and GAMEPLAY_STATE.previous_strikes == 1 then
+        HEARTS.heart_2:break_heart()
+    elseif GAMEPLAY_STATE.current_strikes == 3 and GAMEPLAY_STATE.previous_strikes == 2 then
+        HEARTS.heart_1:break_heart()
     end
     
 end
@@ -210,17 +194,54 @@ function Kiddo_gets_disappointed()
     ANIMATIONS.kiddo_angry:setVisible(false)
     ANIMATIONS.kiddo_heavy_breathing:setVisible(false)
     ANIMATIONS.kiddo_heavy_breathing:stopAnimation()
+
+    --- Heart breaking
+    if GAMEPLAY_STATE.current_strikes == 1 and GAMEPLAY_STATE.previous_strikes == 0 then
+        HEARTS.heart_3:break_heart()
+    elseif GAMEPLAY_STATE.current_strikes == 2 and GAMEPLAY_STATE.previous_strikes == 1 then
+        HEARTS.heart_2:break_heart()
+    elseif GAMEPLAY_STATE.current_strikes == 3 and GAMEPLAY_STATE.previous_strikes == 2 then
+        HEARTS.heart_1:break_heart()
+    end
 end
 
 
-function on_heart_mending_finished()
-    -- ANIMATIONS.heart_mending:setVisible(false)
+function Reset_hearts()
+    for k, heart in pairs(HEARTS) do
+        for k, animation in pairs(heart.animations) do
+            animation:setVisible(false)
+        end
+        heart.animations.heart_idle_full:setVisible(true)
+        heart.animations.heart_idle_full:playAnimation()
+        heart.current_animation = heart.animations.heart_idle_full
+    end
 end
 
 
-function on_heart_breaking_finished()
-    -- ANIMATIONS.heart_breaking:setVisible(false)
+function Check_if_heart_animations_finished()
+
+    
+    for k, heart in pairs(HEARTS) do
+        if heart.current_animation:isVisible() then
+            goto continue
+        end
+        if heart.current_animation == heart.animations.heart_breaking then       
+            heart.animations.heart_idle_broken:setVisible(true)
+            heart.animations.heart_idle_broken:playAnimation()
+
+            heart.current_animation = heart.animations.heart_idle_broken
+        elseif heart.current_animation == heart.animations.heart_mending  then
+            heart.animations.heart_idle_full:setVisible(true)
+            heart.animations.heart_idle_full:playAnimation()
+
+            heart.current_animation = heart.animations.heart_idle_full
+        end
+
+        ::continue::
+    end
+    
 end
+
 
 
 local function draw_debug()
@@ -376,10 +397,7 @@ function Init_visuals()
     TEXTURES.static_fg_toys = gfxi.new("images/environment/static_fg_toys")
 
     --- Animated heart objects
-    
-    -- HEARTS.heart_1 = Heart.new(point.new(53, 21))
-    -- HEARTS.heart_2 = Heart.new(point.new(93, 21))
-    -- HEARTS.heart_3 = Heart.new(point.new(133, 21))
+    --- 
     HEARTS.heart_1 = Heart.new(52.0, 21.0)
     HEARTS.heart_2 = Heart.new(93.0, 21.0)
     HEARTS.heart_3 = Heart.new(133.0, 21.0)

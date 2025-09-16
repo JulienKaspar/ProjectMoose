@@ -51,6 +51,8 @@ function playdate.update()
         end
     end
 
+    Check_if_heart_animations_finished()
+
     -- Always redraw and update entities (sprites) and timers.
     gfx.clear()
     for _, toy in ipairs(TOYS) do
