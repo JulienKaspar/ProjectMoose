@@ -26,6 +26,8 @@ fg_boxes = {}
 local MASS_MIN <const> = 50
 local MASS_MAX <const> = 120
 
+local Z_INDEX_CLAW <const> = 6
+
 function draw_polygon(object)
   local polygon = geometry.polygon.new(object:getPolygon())
   polygon:close()
@@ -172,5 +174,5 @@ function Reset_gameplay_entities()
   end
 
   -- Create claw
-  claw = Claw(2)
+  claw = Claw(Z_INDEX_CLAW)
 end
