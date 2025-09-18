@@ -190,7 +190,7 @@ function update(dt)
         world:setGravity(math.sin(angle) * 9.81, math.cos(angle) * 9.81)
     end
 
-    if playdate.buttonJustPressed(playdate.kButtonA) and jump_timeout_value <= 0.0 then
+    if playdate.buttonJustPressed(playdate.kButtonUp) and jump_timeout_value <= 0.0 then
         jump_timeout_value = jump_timeout_max
         -- Use the size of the body as a factor for the added force.
         local jump_force = -180.0 / (#selected_toy.bodies)
