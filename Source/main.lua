@@ -36,6 +36,8 @@ Enter_loading_screen()
 
 
 function playdate.update()
+    local dt <const> = 1.0 / playdate.getFPS()
+
     -- Called before every frame is drawn.
     if MENU_STATE.screen ~= MENU_SCREEN.gameplay then
         -- In Menu system.
@@ -45,11 +47,14 @@ function playdate.update()
     if MENU_STATE.screen == MENU_SCREEN.gameplay then
         -- In gameplay.
         Handle_input()
-        local dt <const> = 1.0 / playdate.getFPS()
         if dt > 0 then
-            update(dt)
+        update(dt)
         end
     end
+    if dt > 0 then
+        update_physics(dt)
+    end
+    -- end
 
     Check_if_heart_animations_finished()
 

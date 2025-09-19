@@ -167,28 +167,31 @@ function check_toys_got_out()
 end
 
 
-function update(dt)
+function update_physics(dt)
     world:update(dt)
+  
+    -- TODO(weizhen): stop reading the accelerometer if moving?
+    local gravityX, gravityY, _ = pd.readAccelerometer()
+    angle = Clamp(math.atan2(gravityX, gravityY), -MAX_ANGLE, MAX_ANGLE)
+
+    -- TODO: limit resolution
+      if angle ~= world_angle then
+          world_angle = angle
+          world:setGravity(math.sin(angle) * 9.81, math.cos(angle) * 9.81)
+      end
+end
+
+
+function update(dt)
 
     -- Update timers
     jump_timeout_value -= dt
     jump_timeout_value = Clamp(jump_timeout_value, 0, jump_timeout_max)
 
-
     -- See if the game is lost or won
     try_ending_game()
 
-    -- TODO(weizhen): stop reading the accelerometer if moving?
-    local gravityX, gravityY, _ = pd.readAccelerometer()
-    angle = Clamp(math.atan2(gravityX, gravityY), -MAX_ANGLE, MAX_ANGLE)
-
     claw:update(dt)
-
-  -- TODO: limit resolution
-    if angle ~= world_angle then
-        world_angle = angle
-        world:setGravity(math.sin(angle) * 9.81, math.cos(angle) * 9.81)
-    end
 
     if playdate.buttonJustPressed(playdate.kButtonUp) and jump_timeout_value <= 0.0 then
         jump_timeout_value = jump_timeout_max
