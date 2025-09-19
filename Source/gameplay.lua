@@ -192,12 +192,33 @@ function update(dt)
 
     if playdate.buttonJustPressed(playdate.kButtonUp) and jump_timeout_value <= 0.0 then
         jump_timeout_value = jump_timeout_max
-        -- Use the size of the body as a factor for the added force.
-        local jump_force = -180.0 / (#selected_toy.bodies)
-        for k, body in ipairs(selected_toy.bodies) do
-          local mass = selected_toy.bodies[1]:getMass()
-          body:addForce(0, mass * jump_force)
+        local kick_jump_force_min = -3500.0
+        local kick_jump_force_max = -6000.0
+
+        -- Make all toys jump a bit randomly
+        for k, toy in ipairs(TOYS) do
+          if toy == selected_toy then
+              goto continue
+            end
           
+          for key, body in ipairs(toy.bodies) do
+            
+            -- local mass = selected_toy.bodies[1]:getMass()
+            local random_jump_force = math.random(kick_jump_force_max, kick_jump_force_min)
+            -- body:addForce(0, mass * kick_jump_force_max)
+            body:addForce(0, random_jump_force)
+          end
+
+          ::continue::
+        end
+        -- Make the active toy jump a bit higher
+
+        local jump_force_per_body = kick_jump_force_max + -1000.0
+        for k, body in ipairs(selected_toy.bodies) do
+          -- local mass = selected_toy.bodies[1]:getMass()
+          -- body:addForce(0, mass * jump_force_per_body)
+          body:addForce(0, jump_force_per_body)
+        
         end
     end
 
