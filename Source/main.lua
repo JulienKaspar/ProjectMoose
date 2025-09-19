@@ -36,21 +36,25 @@ Enter_loading_screen()
 
 
 function playdate.update()
-    local dt <const> = 1.0 / playdate.getFPS()
-
     -- Called before every frame is drawn.
     if MENU_STATE.screen ~= MENU_SCREEN.gameplay then
         -- In Menu system.
         Handle_menu_input()
     end
-    -- Intentionally check again (no else), the menu might have just started gameplay
-    if MENU_STATE.screen == MENU_SCREEN.gameplay then
-        -- In gameplay.
-        if dt > 0 then
+
+    -- Update world based on fps
+    local fps = playdate.getFPS()
+    if fps > 0 then
+        -- Clamp so that the physics doesn't go crazy
+        fps = Clamp(fps, 18, 50)
+        local dt <const> = 1.0 / fps
+        force_scale = 0.03 * fps
+
+        -- Intentionally check again (no else), the menu might have just started gameplay
+        if MENU_STATE.screen == MENU_SCREEN.gameplay then
+            -- In gameplay.
             update(dt)
         end
-    end
-    if dt > 0 then
         update_physics(dt)
     end
 

@@ -27,6 +27,9 @@ local geometry <const> = playdate.geometry
 local world_angle = 0
 local angle = 1
 
+-- Scale for forces that are only applied for one frame, so that we add the same energy regardless of the framerate
+force_scale = 1
+
 
 -- Local methods
 
@@ -193,8 +196,8 @@ function update(dt)
             
             -- local mass = selected_toy.bodies[1]:getMass()
             local random_jump_force = math.random(kick_jump_force_max, kick_jump_force_min)
-            -- body:addForce(0, mass * kick_jump_force_max)
-            body:addForce(0, random_jump_force)
+            -- body:addForce(0, mass * kick_jump_force_max * force_scale)
+            body:addForce(0, random_jump_force * force_scale)
           end
 
           ::continue::
@@ -204,8 +207,8 @@ function update(dt)
         local jump_force_per_body = kick_jump_force_max + -1000.0
         for k, body in ipairs(selected_toy.bodies) do
           -- local mass = selected_toy.bodies[1]:getMass()
-          -- body:addForce(0, mass * jump_force_per_body)
-          body:addForce(0, jump_force_per_body)
+          -- body:addForce(0, mass * jump_force_per_body * force_scale)
+          body:addForce(0, jump_force_per_body * force_scale)
         
         end
     end
@@ -236,7 +239,7 @@ function playdate.cranked(change, acceleratedChange)
 
   -- Push the toy a bit as well
   local mass = selected_toy.bodies[1]:getMass()
-  selected_toy.bodies[1]:addForce(ang_vel * mass, 0)
+  selected_toy.bodies[1]:addForce(ang_vel * mass * force_scale, 0)
   
   -- if crank is yanked enough, play toy sound
   if acceleratedChange > 20 and MENU_STATE.screen == MENU_SCREEN.gameplay then
