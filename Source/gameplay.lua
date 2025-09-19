@@ -188,28 +188,22 @@ function update(dt)
 
         -- Make all toys jump a bit randomly
         for k, toy in ipairs(TOYS) do
-          if toy == selected_toy then
-              goto continue
+            if toy == selected_toy then
+                -- Make the active toy jump a bit higher
+                local jump_force_per_body = kick_jump_force_max + -1000.0
+                for k, body in ipairs(toy.bodies) do
+                    -- local mass = selected_toy.bodies[1]:getMass()
+                    -- body:addForce(0, mass * jump_force_per_body * force_scale)
+                    body:addForce(0, jump_force_per_body * force_scale)
+                end
+            else
+                for key, body in ipairs(toy.bodies) do
+                    -- local mass = selected_toy.bodies[1]:getMass()
+                    local random_jump_force = math.random(kick_jump_force_max, kick_jump_force_min)
+                    -- body:addForce(0, mass * kick_jump_force_max * force_scale)
+                    body:addForce(0, random_jump_force * force_scale)
+                end
             end
-          
-          for key, body in ipairs(toy.bodies) do
-            
-            -- local mass = selected_toy.bodies[1]:getMass()
-            local random_jump_force = math.random(kick_jump_force_max, kick_jump_force_min)
-            -- body:addForce(0, mass * kick_jump_force_max * force_scale)
-            body:addForce(0, random_jump_force * force_scale)
-          end
-
-          ::continue::
-        end
-        -- Make the active toy jump a bit higher
-
-        local jump_force_per_body = kick_jump_force_max + -1000.0
-        for k, body in ipairs(selected_toy.bodies) do
-          -- local mass = selected_toy.bodies[1]:getMass()
-          -- body:addForce(0, mass * jump_force_per_body * force_scale)
-          body:addForce(0, jump_force_per_body * force_scale)
-        
         end
     end
 
