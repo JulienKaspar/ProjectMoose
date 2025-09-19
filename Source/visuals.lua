@@ -102,14 +102,6 @@ local function draw_hud()
     then
         return
     end
-    
-    if GAMEPLAY_STATE.current_strikes == 0 then
-        for k, heart in ipairs(HEARTS) do
-            if not heart:isVisible() then
-                heart:setVisible(true)
-            end
-        end
-    end
 end
 
 

@@ -51,7 +51,6 @@ end
 local function reset_gameplay_deferred()
   -- Done on every (re)start of the play.
     Reset_gameplay_entities()
-    Reset_hearts()
     GAMEPLAY_STATE.current_strikes = 0
     GAMEPLAY_STATE.previous_strikes = 0
     claw:move_down()
@@ -67,6 +66,7 @@ function Reset_gameplay()
 
     -- While the game freezes, show a loading screen
     Overlay_loading = true
+    Reset_hearts()
 
     -- Delay the rest of the calculations by one frame so the UI texture can draw
     one_frame_delay = playdate.frameTimer.new(0)
