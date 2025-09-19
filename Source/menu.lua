@@ -71,6 +71,7 @@ end
 
 function Enter_game_over_screen()
     MENU_STATE.screen = MENU_SCREEN.gameover
+    --SOUND.game_over:play()
 end
 
 

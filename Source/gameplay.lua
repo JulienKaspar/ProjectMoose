@@ -95,13 +95,13 @@ function receive_strike()
     GAMEPLAY_STATE.previous_strikes = GAMEPLAY_STATE.current_strikes
     GAMEPLAY_STATE.current_strikes += 1
     GAMEPLAY_STATE.current_strikes = Clamp(GAMEPLAY_STATE.current_strikes, 0, 3)
-    SOUND.child_disappointed:play()
-    SOUND.kiddo_bang_glass:play()
+    SOUND.kiddo_disappointed:play()
 
     if GAMEPLAY_STATE.current_strikes < maximum_strikes then
       Kiddo_gets_disappointed()
     else
       Kiddo_gets_mad()
+      SOUND.kiddo_bang_glass:play()
     end
 end
 
@@ -111,7 +111,7 @@ function receive_correct_toy()
     GAMEPLAY_STATE.current_strikes -= 1
     GAMEPLAY_STATE.current_strikes = Clamp(GAMEPLAY_STATE.current_strikes, 0, 3)
     kiddo_is_pleased()
-    SOUND.child_wow:play()
+    SOUND.kiddo_wow:play()
     SOUND.toy_ascend:play()
 end
 
