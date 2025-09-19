@@ -54,7 +54,6 @@ function playdate.update()
     if dt > 0 then
         update_physics(dt)
     end
-    -- end
 
     Check_if_heart_animations_finished()
 
