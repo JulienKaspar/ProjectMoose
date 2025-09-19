@@ -141,7 +141,6 @@ function Reset_gameplay_entities()
   add_fg_boxes()
 
   local wall_height <const> = WORLD_HEIGHT - CEILING_HEIGHT_MIN
-  print(wall_height)
 
   -- Create wall
   left_wall = playbox.body.new(WALL_WIDTH, wall_height, 0)

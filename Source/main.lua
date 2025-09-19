@@ -46,9 +46,8 @@ function playdate.update()
     -- Intentionally check again (no else), the menu might have just started gameplay
     if MENU_STATE.screen == MENU_SCREEN.gameplay then
         -- In gameplay.
-        Handle_input()
         if dt > 0 then
-        update(dt)
+            update(dt)
         end
     end
     if dt > 0 then

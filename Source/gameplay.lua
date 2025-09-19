@@ -117,21 +117,6 @@ end
 
 
 -- Update Loop
-
-function Handle_input()
-    local gravityX, gravityY, _gravityZ = playdate.readAccelerometer()
-    GYRO_X = Clamp(GYRO_X + gravityX * 10, 0, 400)
-    GYRO_Y = Clamp(GYRO_Y + gravityY * 10, 0, 240)
-
-    -- Placeholder debug for accumilating strikes
-    -- if playdate.buttonJustPressed( playdate.kButtonB ) then
-    --     receive_strike()
-    -- end
-    -- if playdate.buttonJustPressed( playdate.kButtonA ) then
-    --     receive_correct_toy()
-    -- end
-end
-
 function check_toys_got_out()
   local cx, cy = claw.ceiling:getCenter()
   if claw_is_moving_up() and cy < CEILING_DETECTION_HEIGHT then
