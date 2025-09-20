@@ -184,7 +184,7 @@ function update(dt)
     if playdate.buttonJustPressed(playdate.kButtonUp) and jump_timeout_value <= 0.0 then
         jump_timeout_value = jump_timeout_max
         local kick_jump_force_min = -3500.0
-        local kick_jump_force_max = -6000.0
+        local kick_jump_force_max = -4500.0
 
         -- Make all toys jump a bit randomly
         for k, toy in ipairs(TOYS) do
@@ -214,7 +214,7 @@ function playdate.cranked(change, acceleratedChange)
 
   local rotation_velocity_acceleration <const> = 0.25
   local min_rotation_velocity <const> = 3.0
-  local max_rotation_velocity <const> = 16.0
+  local max_rotation_velocity <const> = 8.0
   
   if #TOYS <= 0 or selected_toy == nil then
     return
@@ -227,13 +227,14 @@ function playdate.cranked(change, acceleratedChange)
   local ang_vel_sign = Sign(ang_vel)
   local ang_vel_abs = math.abs(ang_vel)
 
-  ang_vel_abs = Clamp(ang_vel_abs, min_rotation_velocity, max_rotation_velocity)
-  ang_vel = ang_vel_abs * ang_vel_sign
-  selected_toy.bodies[1]:setAngularVelocity(ang_vel)
-
-  -- Push the toy a bit as well
-  local mass = selected_toy.bodies[1]:getMass()
-  selected_toy.bodies[1]:addForce(ang_vel * mass * force_scale, 0)
+  for k, body in pairs(selected_toy.bodies) do
+    ang_vel_abs = Clamp(ang_vel_abs, min_rotation_velocity, max_rotation_velocity)
+    ang_vel = ang_vel_abs * ang_vel_sign
+  
+    body:setAngularVelocity(ang_vel)
+    -- Push the toy a bit as well
+    body:addForce(ang_vel * force_scale, 0)
+  end
   
   -- if crank is yanked enough, play toy sound
   if acceleratedChange > 20 and MENU_STATE.screen == MENU_SCREEN.gameplay then

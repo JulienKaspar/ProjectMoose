@@ -10,7 +10,7 @@ WORLD_PIXEL_SCALE = 80
 local WALL_FRICTION <const> = 0.2
 WALL_WIDTH = 150
 local PAD <const> = 10
-MAX_ANGLE = 0.3
+MAX_ANGLE = math.pi * 0.222222
 BOX_COUNT = 20
 local TOYS_COUNT <const> = 8
 
