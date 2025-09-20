@@ -48,7 +48,7 @@ function playdate.update()
         -- Clamp so that the physics doesn't go crazy
         fps = Clamp(fps, 18, 50)
         local dt <const> = 1.0 / fps
-        force_scale = 0.03 * fps
+        force_scale = 0.03333 * fps
 
         -- Intentionally check again (no else), the menu might have just started gameplay
         if MENU_STATE.screen == MENU_SCREEN.gameplay then
