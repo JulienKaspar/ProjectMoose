@@ -127,7 +127,7 @@ local function draw_ui()
         UI_TEXTURES.game_over_indicator:draw(124, 80)
         UI_TEXTURES.success_header:draw(90, 6)
     elseif MENU_STATE.screen == MENU_SCREEN.how_to then
-        UI_TEXTURES.instructions:draw(58, 3)
+        UI_TEXTURES.instructions:draw(0, 0)
     end
 end
 
