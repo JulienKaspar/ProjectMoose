@@ -214,7 +214,7 @@ function playdate.cranked(change, acceleratedChange)
 
   local rotation_velocity_acceleration <const> = 0.25
   local min_rotation_velocity <const> = 3.0
-  local max_rotation_velocity <const> = 8.0
+  local max_rotation_velocity <const> = 15.0
   
   if #TOYS <= 0 or selected_toy == nil then
     return
