@@ -303,7 +303,7 @@ function Init_visuals()
             1,
             imagetable_kiddo_idle:getLength(),
             {
-                tickStep = 30.0/1.0,
+                tickStep = 30.0/2.0,
                 loop = true,
             }
         ).asDefault()
@@ -355,7 +355,7 @@ function Init_visuals()
             1,
             imagetable_kiddo_heavy_breathing:getLength(),
             {
-                tickStep = 30.0/3.0,
+                tickStep = 30.0/4.0,
                 loop = true,
             }
         ).asDefault()
